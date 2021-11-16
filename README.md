@@ -15,3 +15,5 @@
 - [What is Infrastructure as Code](https://github.com/solarsdev/TIL/blob/master/Terraform/what_is_IaC.md)
 
 - [What is Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform/what_is_terraform.md)
+
+- [AMI - Amazon Machine Image](https://github.com/solarsdev/TIL/blob/master/AWS/ami.md)
