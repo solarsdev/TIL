@@ -1,6 +1,14 @@
-### TIL (Today I Learned)
+# TIL (Today I Learned)
 
-##### [AWS](https://github.com/solarsdev/TIL/blob/master/AWS)
+## Frontend
+
+### [CSS3](https://github.com/solarsdev/TIL/blob/master/CSS3)
+
+- [CSS: Tips from DreamCoding](https://github.com/solarsdev/TIL/blob/master/CSS3/css3_tips_from_dreamcoding.md)
+
+## Infrastructure
+
+### [AWS](https://github.com/solarsdev/TIL/blob/master/AWS)
 
 - [EC2 Basics](https://github.com/solarsdev/TIL/blob/master/AWS/EC2Basics.md)
 
@@ -8,7 +16,7 @@
 
 - [CloudFormation 101](https://github.com/solarsdev/TIL/blob/master/AWS/cloudformation_101.md)
 
-##### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
+### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
 - [Traditional IT and Challenges](https://github.com/solarsdev/TIL/blob/master/Terraform/traditional_it_and_challenges.md)
 
