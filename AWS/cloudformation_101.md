@@ -69,14 +69,14 @@
   - 이 템플릿이 추후에 변경될 것인가?
   - 만약 그렇다면 이것은 패러미터화 시켜야 할것이다.
   - 패러미터를 사용하면 템플릿을 다시 업로드 해야 할 필요가 없어진다
-    ![images/cloudformation_101_1.png](images/cloudformation_101_1.png)
+    ![images/cloudformation_101/1.png](images/cloudformation_101/1.png)
   - **어떻게 패러미터를 참조하는가?**
     - Fn::Ref 함수가 패러미터 참조를 가능하게 한다
     - 템플릿의 어떤 곳에서도 사용할 수 있다
     - YAML에서 !Ref로 축약 사용 가능하다
   - **pseudo 패러미터**
     - AWS측에서 미리 지정해놓은 패러미터로 참조하면 바로 사용 가능
-      ![images/cloudformation_101_2.png](images/cloudformation_101_2.png)
+      ![images/cloudformation_101/2.png](images/cloudformation_101/2.png)
 
 ### 클라우드포메이션 맵핑
 
@@ -87,15 +87,15 @@
   - AWS Account
   - Environment (dev, prod)
   - 그 외 필요한 정적인 값들 (변하지 않는 경우)
-    ![images/cloudformation_101_3.png](images/cloudformation_101_3.png)
+    ![images/cloudformation_101/3.png](images/cloudformation_101/3.png)
 
 ### 클라우드포메이션 아웃풋
 
 - 아웃풋 섹션은 필수는 아니지만, 다른 스택에 임포트할수 있는 값들이다. (먼저 엑스포트 한 이후에)
   - 엑스포트 예제
-    ![images/cloudformation_101_4.png](images/cloudformation_101_4.png)
+    ![images/cloudformation_101/4.png](images/cloudformation_101/4.png)
   - 임포트 예제
-    ![images/cloudformation_101_5.png](images/cloudformation_101_5.png)
+    ![images/cloudformation_101/5.png](images/cloudformation_101/5.png)
 - 콘솔상에서도 아웃풋을 확인할 수 있다. (AWS CLI를 통해서도 가능)
 - 네트워킹에 관련된 클라우드포메이션 템플릿을 작성하고 VPC ID나 SUBNET ID를 아웃풋으로 활용하는 경우에 매우 유용하다
 - 스택 간의 콜라보레이션 등에 활용 할 수 있고 코드를 나누어 개발가능하다는 점에서 좋은 활용이 될 수 있다.
@@ -143,7 +143,7 @@
 - **Fn::GetAtt**
   - 해당 리소스가 가진 고유값을 리턴한다.
   - 예를 들면 EC2 리소스는 AvailabilityZone, PrivateDnsName, PublicDnsName, PrivateIp, PublicIP 등을 속성으로 가진다.
-    ![images/cloudformation_101_6.png](images/cloudformation_101_6.png)
+    ![images/cloudformation_101/6.png](images/cloudformation_101/6.png)
 - **Fn::FindInMap**
   - 맵을 참조할 경우 사용
 - **Fn::ImportValue**
@@ -155,10 +155,10 @@
   - Fn::Sub 또는 !Sub로 작성 가능한데, 어떠한 텍스트로부터 특정한 값을 제거할 때 사용한다
   - 예를들면 Fn::Sub 함수를 AWS 수도코드 혹은 참조값과 같이 사용할 수 있다
   - String 타입의 경우에는 ${VariableName} 과 같이 사용해야 한다
-    ![images/cloudformation_101_7.png](images/cloudformation_101_7.png)
+    ![images/cloudformation_101/7.png](images/cloudformation_101/7.png)
 - **Condition Functions**
   - 논리ID와 함께 사용한다.
-    ![images/cloudformation_101_8.png](images/cloudformation_101_8.png)
+    ![images/cloudformation_101/8.png](images/cloudformation_101/8.png)
     - 연산으로 활용할 수 있는것은 다음과 같다.
       - Fn::And
       - Fn::Equals
@@ -171,7 +171,7 @@
 - EC2를 기동할때 사용하는 user data를 CloudFormation에 직접 사용할수 있다
 - 다만, 중요한 점은 클라우드포메이션에서 기입할때는 **Fn::Base64** 를 이용해서 변환해야 한다는 점
   - 예제
-    ![images/cloudformation_101_9.png](images/cloudformation_101_9.png)
+    ![images/cloudformation_101/9.png](images/cloudformation_101/9.png)
 - 유저 데이터에 작성된 스크립트의 로그는 **/var/log/cloud-init-output.log** 에 기록된다.
 
 ### cfn-init
@@ -180,7 +180,7 @@
 - cfn-init 스크립트를 이용하면, 복잡한 EC2 설정을 읽기 쉽게 해준다
 - init data를 통해 EC2 인스턴스는 클라우드포메이션에 직접 쿼리를 수행한다
 - 작업에 대한 로그는 **/var/log/cfn-init.log** 에 저장된다
-  ![images/cloudformation_101_10.png](images/cloudformation_101_10.png)
+  ![images/cloudformation_101/10.png](images/cloudformation_101/10.png)
 
 ### cfn-signal & wait conditions
 
@@ -188,7 +188,7 @@
 - 따라서 cfn-signal을 이용해서 성공, 실패 여부를 검증해야 한다
 - 클라우드포메이션에서 WaitCondition을 이용하면, 클라우드포메이션을 시그널을 기다리는 상태로 진입시킬 수 있다
 - 이 후 cfn-signal을 이용해서 클라우드포메이션에 메시지를 주면, 성공여부를 판단하고 클라우드포메이션이 진행방향이 결정된다
-  ![images/cloudformation_101_11.png](images/cloudformation_101_11.png)
+  ![images/cloudformation_101/11.png](images/cloudformation_101/11.png)
 
 ### WaitCondition이 EC2 인스턴스로부터 시그널을 받지 못하는 경우
 
@@ -215,7 +215,7 @@
 - 스택을 업데이트 할 때, 어떤것들이 변화하는지 파악할 필요가 있다.
 - 체인지셋은 업데이트 자체가 성공일지 실패일지는 알려주지 않는다.
 
-![images/cloudformation_101_12.png](images/cloudformation_101_12.png)
+![images/cloudformation_101/12.png](images/cloudformation_101/12.png)
 
 ### 클라우드포메이션 중첩 스택
 
@@ -257,9 +257,9 @@
 - 온프레미스 리소스
 - S3버킷이 삭제될때 비우기
 - AMI id를 가져오기
-  ![images/cloudformation_101_13.png](images/cloudformation_101_13.png)
+  ![images/cloudformation_101/13.png](images/cloudformation_101/13.png)
 - 정의한 람다함수는 오직 생성, 업데이트, 삭제시에만 트리거되며, 템플릿이 실행될때 반드시 같이 실행되는것은 아님
-  ![images/cloudformation_101_14.png](images/cloudformation_101_14.png)
+  ![images/cloudformation_101/14.png](images/cloudformation_101/14.png)
 
 ### 클라우드포메이션 스택세트
 
@@ -267,4 +267,4 @@
 - 어드민 계정이 스택세트를 만들게 된다
 - 신뢰되는 계정이 스택 세트로부터 인스턴스를 생성, 업데이트, 삭제할 경우 스택세트에 반영된다
 - 스택 세트를 업데이트 하면 모든 계정과 리전에 영향을 준다
-  ![images/cloudformation_101_15.png](images/cloudformation_101_15.png)
+  ![images/cloudformation_101/15.png](images/cloudformation_101/15.png)
