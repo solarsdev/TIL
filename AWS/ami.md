@@ -1,4 +1,4 @@
-### AMI Overview
+# AMI Overview
 
 - AMI : Amazon Machine Image
 - AMI는 EC2인스턴스의 커스텀화
@@ -10,7 +10,7 @@
   - Pricate : 직접 제작한 AMI
   - Marketplace : 다른 사람에 의해 만들어진 AMI (그리고 과금 형태일 가능성이 높음)
 
-### AMI Process (from an EC2 instance)
+## AMI Process (from an EC2 instance)
 
 - EC2 인스턴스를 시작한 뒤 각종 설정을 마침
 - 인스턴스를 정지 (데이터의 일관성 보호를 위해, 실행중에도 옵션을 통해 AMI 제작 가능)
@@ -19,7 +19,7 @@
 
 ![1](images/ami/1.png)
 
-### AMI No-Reboot Option
+## AMI No-Reboot Option
 
 - AMI 작성시 인스턴스를 종료하지 않는 기능
 - 기본적으로는 옵션이 선택되어 있지 않음 (AWS는 데이터 일관성 보호를 위해 AMI를 작성하기 전 인스턴스를 정지시킴)
@@ -27,7 +27,7 @@
 
 ![2](images/ami/2.png)
 
-### AWS Backup Plans to create AMI
+## AWS Backup Plans to create AMI
 
 - AWS Backup은 EBS 스냅샷을 작성할때 인스턴스를 리붓하지 않음
   - 파일 시스템 일관성 체크를 하지 않는다는 뜻
@@ -35,13 +35,13 @@
 
 ![3](images/ami/3.png)
 
-### EC2 Instance Migration between AZ
+## EC2 Instance Migration between AZ
 
 - 특정 AZ의 인스턴스로부터 AMI를 작성한 뒤 해당 AMI로부터 다른 AZ에 인스턴스를 작성하면 됨
 
 ![4](images/ami/4.png)
 
-### Cross Account AMI Sharing
+## Cross Account AMI Sharing
 
 - AWS의 다른 계정과 AMI를 공유할 수 있음
 - AMI를 공유하는것은 소유권에 영향을 주지 않음
@@ -50,7 +50,7 @@
 
 ![5](images/ami/5.png)
 
-### AMI Sharing with KMS Encryption
+## AMI Sharing with KMS Encryption
 
 ![6](images/ami/6.png)
 
@@ -62,7 +62,7 @@
   - kms:GenerateDataKey
   - kms:ReEncrypt
 
-### Cross Account AMI Copy
+## Cross Account AMI Copy
 
 - 공유된 AMI를 복사하게 되면 AMI에 대한 권한을 획득하게 됨
 - 원본 AMI에 대한 오너가 읽기 권한을 허용해야 함
@@ -74,7 +74,7 @@
 
 ![8](images/ami/8.png)
 
-### EC2 Image Builder
+## EC2 Image Builder
 
 ![9](images/ami/9.png)
 
@@ -84,7 +84,7 @@
 - 스케줄을 작성할 수 있으므로, 기간, 어떤 업데이트를 수행할지 등등
 - 무료 서비스이며 생성 과정 중에 작성되는 EC2에 대한 비용정도만 지불하게 됨
 
-### AMI in Production
+## AMI in Production
 
 - 유저권한을 조정하여 미리 승인된 AMI로부터만 인스턴스를 실행할수 있도록 할 수 있음
 
