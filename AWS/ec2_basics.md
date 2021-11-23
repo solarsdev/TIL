@@ -1,4 +1,4 @@
-# EBS 101
+# EC2 Basics
 
 ## 인스턴스 타입 변경
 
@@ -31,14 +31,14 @@
 - 배치 그룹을 통해 정의됨
 - 배치 그룹을 만들때 다음 중 하나의 전략을 선택할 수 있음
   - 클러스터: 싱글 AZ에 낮은 지연속도 그룹으로 클러스터를 구성 가능
-    ![Cluster](images/cluster.png)
+    ![1](images/ec2_basics/1.png)
     - 같은 랙, 같은 AZ상에 모든 인스턴스를 그룹으로 묶음
     - 10Gbps 네트워크를 직접 접속형태로 사용 가능함
     - 이점: 네트워크 성능
     - 단점: 랙이 망가질 경우 모든 인스턴스를 사용할수 없게됨
     - 사용처: 빅데이터 처리, 매우 낮은 응답속도를 원하는 어플리케이션이나 고성능의 네트워크를 요구할 경우
   - 스프레드: 인스턴스를 AZ 안에서 다른 하드웨어 (호스트) 에 제공받는것을 보장받음, 단 7 인스턴스가 최대치
-    ![Spread](images/spread.png)
+    ![1](images/ec2_basics/2.png)
     - 스프레드는 장애를 최대한 회피하기 위한 전략임
     - 이점: 다른 크로스 AZ로도 배포할 수 있음, 동시다발적인 장애에 대처 가능
     - 단점: 그룹당 가용 영역별로 최대 7개의 실행중인 인스턴스를 가질 수 있음
@@ -46,7 +46,7 @@
       - 고가용성을 최대한 활용하고 싶은 어플리케이션
       - 서로 다른 하드웨어 장애로부터 영향을 받지 말하야 하는 크리티컬한 어플리케이션
   - 파티션: 인스턴스의 그룹을 스프레드 형태로 분산함. 인스턴스 그룹에는 수백대의 인스턴스가 존재할 수 있음
-    ![Partition](images/partition.png)
+    ![3](images/ec2_basics/3.png)
     - 스프레드를 하나의 인스턴스가 아닌 인스턴스 그룹으로 운용하는 형태
     - 각각의 파티션은 같은 랙이며, 다른 파티션과는 랙을 공유하지 않는다
     - 파티션은 각 리전당 최대 7개까지 설치 가능하다
@@ -54,7 +54,7 @@
 
 ## Shutdown 액션
 
-![ShutdownFlow](images/shutdown_flow.png)
+![4](images/ec2_basics/4.png)
 
 - Shutdown 액션: OS상에서 shutdown을 했을 경우 어떤 일이 일어날까?
   - Stop (기본)
@@ -100,7 +100,7 @@
 
 ## SSH와 EC2 인스턴스 접속 (Instance Connect)와의 차이점
 
-![SSHVsInstanceConnect](images/ssh_vs_instance_connect.png)
+![5](images/ec2_basics/5.png)
 
 - SSH를 접속할때는 보안그룹에 직접 접속자의 IP를 지정하는 방식
 - Instance Connect의 경우에는 EC2가 속한 네트쿼으 영역에 API로 접속해서 해당 아이피를 이용하여 접속하는 방식
@@ -164,7 +164,7 @@
 
 ## EC2 전용 인스턴스
 
-![DedicatedInstance](images/dedicated_instance.png)
+![6](images/ec2_basics/6.png)
 
 - 전용으로 제공되는 하드웨어에서 인스턴스를 동작시킴
 - 같은 계정의 다른 인스턴스들과 하드웨어를 공유할 수 있음
@@ -184,7 +184,7 @@
 
 ## EC2 Spot Instance 요금
 
-![SpotInstancePricing](images/spot_instance_pricing.png)
+![7](images/ec2_basics/7.png)
 
 - 스팟 요금이 계속해서 변화하지만 온디맨드보다 훨씬 저렴한것을 알 수 있음
 - 스팟 요금이 설정한 최대 스팟 요금을 넘어설 경우 인스턴스를 종료하거나 삭제당함
@@ -192,7 +192,7 @@
 
 ## 스팟 인스턴스를 종료하는 방법
 
-![SpotInstanceFlow](images/spot_instance_flow.png)
+![8](images/ec2_basics/8.png)
 
 - 스팟 요청의 구성
   - 최대 스팟 요금
@@ -200,7 +200,7 @@
   - 시작 설정 (인스턴스 타입 등등)
   - 요청 타입 (1회성, 계속)
   - 언제부터 언제까지 요청이 유효한지
-    ![SpotRequestFlow](images/spot_request_flow.png)
+    ![9](images/ec2_basics/9.png)
 - 스팟 요청을 하게 될 경우 1회성이면 요청이 성공하면 사라짐
 - 그게 아닐 경우 계속해서 요청이 유효하게 됨
   - 스팟 요청을 무기한으로 둘 경우, 스팟을 취소하고 싶으면 인스턴스부터 취소하는것이 아닌 요청을 먼저 삭제해야 함
@@ -242,13 +242,13 @@
 - 2017 11월에 릴리즈한 형태로 무제한 버스팅이 가능한 타입
 - 크레딧을 전부 소진한 이후에는 과금을 통해 버스팅을 유지할 수 있음
 - CPU 크레딧을 전부 소진한 형태의 그래프를 알아두면 도움이 될 수 있음
-  ![BurstCredit](images/burst_credit.png)
+  ![10](images/ec2_basics/10.png)
   - 크레딧이 있을때는 100%의 CPU 사용률을 보여주지만, 전부 소진되면 베이스라인 CPU까지 제한이 걸림
 - 무제한 타입
   - 무제한 버스트 크레딧을 사용할 수 있음
   - 크레딧이 전부 소진될 경우 과금을 통해 CPU제한을 해제할 수 있음
   - 과금이 계속되면 비용이 상당히 많이 나오기 때문에 조심해야 함
-    ![BurstCreditUnlimited](images/burst_credit_unlimited.png)
+    ![11](images/ec2_basics/11.png)
 
 ### 엘라스틱 IP
 
@@ -291,7 +291,7 @@
 
 ## 통합 클라우드워치 에이전트
 
-![UnifiedCloudWatchAgent](images/unified_cloudwatch_agent.png)
+![12](images/ec2_basics/12.png)
 
 - EC2 혹은 온프레미스에서도 사용 가능
 - 추가적인 시스템단위 지표(예를 들면 램이나 프로세서, 사용된 디스크 용량 등등)를 수집
@@ -321,7 +321,7 @@
   - AWS 시스템의 문제등을 모니터링 (물리적 호스트의 소프트웨어/하드웨어 이슈나 파워 다운 등)
   - 퍼스널 헬스 대시보드에서 예정된 크리티컬 유지보수가 있다면 알림을 받게 됨
   - 하드웨어 장애를 발견할시 해야할 조치와 내부 흐름에 대해
-    ![AWSSystemStatusCheck](images/aws_system_status_check.png)
+    ![13](images/ec2_basics/13.png)
   1. 기존 Host1 시스템에 EC2가 운용되고 있을때 Host 시스템에 장애가 생김
   2. 유저는 EC2를 정지 및 재시작
   3. 새로운 Host로 EC2가 할당됨 (그래서 퍼블릭 IP가 변경되는 것임 - 기존 AWS사양)
@@ -338,7 +338,7 @@
   - StatusCheckFailed_Instance
   - StatusCheckFailed (for both)
 - 옵션1: 클라우드워치 알람
-  ![CloudWatchAlarm](images/cloudwatch_alarm.png)
+  ![14](images/ec2_basics/14.png)
   - 클라우드워치 알람을 이용해서 Action: recover를 통해 EC2의 기존 private/public IP, EIP, 메타데이터, 배치 그룹등을 동일한 상태로 복구시도
   - 시스템 상태 체크에만 이용 가능, 인스턴스 상태 실패에는 재시작을 설정할 수 있다
   - SNS 알림을 전송
@@ -382,7 +382,7 @@
   - 인스턴스의 부팅이 훨씬 빠름 (OS가 재시작된것이 아니기 때문)
   - 실제 뒷단에서는 어떤일이? : 모든 램 데이터가 EBS에 파일로 기재됨
   - 루트 EBS 볼륨은 반드시 암호화 되어 있어야 함
-    ![EC2Hibernate](images/ec2_hibernate.png)
+    ![15](images/ec2_basics/15.png)
   1. 암호화된 EBS 루트 볼륨에서 돌아가는 EC2 인스턴스
   2. RAM에 있는 모든 작업내용이 정지되고 EBS 볼륨에 저장됨
   3. 재시작시에 EBS에 있는 내용을 램으로 복구
