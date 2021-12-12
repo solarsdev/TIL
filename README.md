@@ -14,6 +14,11 @@
 - [Create React App](https://github.com/solarsdev/TIL/blob/master/React/create_react_app.md)
 - [React Effects](https://github.com/solarsdev/TIL/blob/master/React/react_effects.md)
 
+### [TypeScript](https://github.com/solarsdev/TIL/blob/master/TypeScript)
+
+- [Introduction (React Master Class)](https://github.com/solarsdev/TIL/blob/master/TypeScript/react_master_class_introduction.md)
+- [DefinitelyTyped](https://github.com/solarsdev/TIL/blob/master/TypeScript/definitely_typed.md)
+
 ## Infrastructure
 
 ### [AWS](https://github.com/solarsdev/TIL/blob/master/AWS)
