@@ -6,6 +6,8 @@
 
 - [CSS: Tips from DreamCoding](https://github.com/solarsdev/TIL/blob/master/CSS3/css3_tips_from_dreamcoding.md)
 
+### [JavaScript](https://github.com/solarsdev/TIL/blob/master/JavaScript)
+
 ### [React](https://github.com/solarsdev/TIL/blob/master/React)
 
 - [React Basics](https://github.com/solarsdev/TIL/blob/master/React/react_basics.md)
@@ -13,6 +15,7 @@
 - [React Props](https://github.com/solarsdev/TIL/blob/master/React/react_props.md)
 - [Create React App](https://github.com/solarsdev/TIL/blob/master/React/create_react_app.md)
 - [React Effects](https://github.com/solarsdev/TIL/blob/master/React/react_effects.md)
+- [State and Form Control](https://github.com/solarsdev/TIL/blob/master/React/state_and_form_control.md)
 
 ### [TypeScript](https://github.com/solarsdev/TIL/blob/master/TypeScript)
 
