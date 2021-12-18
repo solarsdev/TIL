@@ -15,13 +15,13 @@
 - [React Props](https://github.com/solarsdev/TIL/blob/master/React/react_props.md)
 - [Create React App](https://github.com/solarsdev/TIL/blob/master/React/create_react_app.md)
 - [React Effects](https://github.com/solarsdev/TIL/blob/master/React/react_effects.md)
-- [State and Form Control](https://github.com/solarsdev/TIL/blob/master/React/state_and_form_control.md)
 
 ### [TypeScript](https://github.com/solarsdev/TIL/blob/master/TypeScript)
 
 - [Introduction (React Master Class)](https://github.com/solarsdev/TIL/blob/master/TypeScript/react_master_class_introduction.md)
 - [DefinitelyTyped](https://github.com/solarsdev/TIL/blob/master/TypeScript/definitely_typed.md)
 - [Typing and Props](https://github.com/solarsdev/TIL/blob/master/TypeScript/typing_and_props.md)
+- [React state and Form control](https://github.com/solarsdev/TIL/blob/master/React/react_state_and_form_control.md)
 
 ## Infrastructure
 
