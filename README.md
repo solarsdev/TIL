@@ -8,6 +8,8 @@
 
 ### [JavaScript](https://github.com/solarsdev/TIL/blob/master/JavaScript)
 
+- [Understanding of Web APIs](https://github.com/solarsdev/TIL/blob/master/JavaScript/understanding_of_webapis.md)
+
 ### [React](https://github.com/solarsdev/TIL/blob/master/React)
 
 - [React Basics](https://github.com/solarsdev/TIL/blob/master/React/react_basics.md)
@@ -21,7 +23,7 @@
 - [Introduction (React Master Class)](https://github.com/solarsdev/TIL/blob/master/TypeScript/react_master_class_introduction.md)
 - [DefinitelyTyped](https://github.com/solarsdev/TIL/blob/master/TypeScript/definitely_typed.md)
 - [Typing and Props](https://github.com/solarsdev/TIL/blob/master/TypeScript/typing_and_props.md)
-- [React state and Form control](https://github.com/solarsdev/TIL/blob/master/React/react_state_and_form_control.md)
+- [React state and Form control](https://github.com/solarsdev/TIL/blob/master/TypeScript/react_state_and_form_control.md)
 
 ## Infrastructure
 
