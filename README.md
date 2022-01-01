@@ -47,6 +47,7 @@
 - [RDS 101](https://github.com/solarsdev/TIL/blob/master/AWS/rds_101.md)
 - [DynamoDB](https://github.com/solarsdev/TIL/blob/master/AWS/dynamodb.md)
 - [CloudFront](https://github.com/solarsdev/TIL/blob/master/AWS/cloudfront.md)
+- [AWS CICD](https://github.com/solarsdev/TIL/blob/master/AWS/aws_cicd.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
