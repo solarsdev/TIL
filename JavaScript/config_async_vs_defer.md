@@ -1,4 +1,4 @@
-## 자바스크립트 환경설정, async vs defer
+# 자바스크립트 환경설정, async vs defer
 
 [자바스크립트 2. 콘솔에 출력, script async 와 defer의 차이점 및 앞으로 자바스크립트 공부 방향 | 프론트엔드 개발자 입문편 (JavaScript ES5+)](https://youtu.be/tJieVCgGzhs)
 
@@ -6,7 +6,7 @@
 - 자바스크립트의 공식 문서를 확인하고자 할 때는?
   [MDN Web Docs](https://developer.mozilla.org/ko/)
 
-### async vs defer
+## async vs defer
 
 ```tsx
 <!DOCTYPE html>
@@ -81,7 +81,7 @@ Image from Dream Coding
 - HTML이 파싱되는 동안 동시에 fetch과정이 병렬적으로 진행되며, 페이지가 로딩되고 나서 바로 js를 실행하게 됨
 - 도중에 DOM 파싱을 끊는것도 아니고, 병렬적으로 처리되며, 페이지가 로딩된 순간 필요한 스크립트가 동작하니 그나마 제일 최선이라고 말할 수 있음
 
-### use strict의 활용
+## use strict의 활용
 
 - 순수 바닐라 js를 사용할때는 제일 위에 적용해주면 좋음
 
