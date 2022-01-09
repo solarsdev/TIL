@@ -13,6 +13,8 @@
 - [History of JavaScript](https://github.com/solarsdev/TIL/blob/master/JavaScript/history_of_javascript.md)
 - [Configuration, async vs defer](https://github.com/solarsdev/TIL/blob/master/JavaScript/config_async_vs_defer.md)
 - [Data Types, hoisting](https://github.com/solarsdev/TIL/blob/master/JavaScript/data_types.md)
+- [Basic Operations](https://github.com/solarsdev/TIL/blob/master/JavaScript/basic_operations.md)
+- [Function Declaration](https://github.com/solarsdev/TIL/blob/master/JavaScript/function_declaration.md)
 
 ##### JavaScript Understanding
 
