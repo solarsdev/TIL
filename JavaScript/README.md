@@ -9,6 +9,7 @@
 - [Data Types, hoisting](https://github.com/solarsdev/TIL/blob/master/JavaScript/data_types.md)
 - [Basic Operations](https://github.com/solarsdev/TIL/blob/master/JavaScript/basic_operations.md)
 - [Function Declaration](https://github.com/solarsdev/TIL/blob/master/JavaScript/function_declaration.md)
+- [Class vs Object, OOP](https://github.com/solarsdev/TIL/blob/master/JavaScript/class_vs_object_oop.md)
 
 ### JavaScript Understanding
 
