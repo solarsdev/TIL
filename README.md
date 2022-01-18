@@ -1,5 +1,11 @@
 # TIL (Today I Learned)
 
+## Computer Sience
+
+### [Algorithm](https://github.com/solarsdev/TIL/blob/master/Algorithm)
+
+- [Recursion](https://github.com/solarsdev/TIL/blob/master/Algorithm/recursion.md)
+
 ## Frontend
 
 ### [CSS3](https://github.com/solarsdev/TIL/blob/master/CSS3)
