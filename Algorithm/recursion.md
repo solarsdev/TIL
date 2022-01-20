@@ -56,7 +56,6 @@ console.log(recursiveSum(10));
 각각의 Test case에 대해서 해당 집에 거주민 수를 출력하라.
 
 # 예제 입력 1
-```
 
 2
 1
@@ -64,17 +63,10 @@ console.log(recursiveSum(10));
 2
 3
 
-```
-
 # 예제 출력 1
-
-```
 
 6
 10
-
-```
-
 ```
 
 ```jsx
