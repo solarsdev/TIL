@@ -38,6 +38,7 @@
 - [React Props](https://github.com/solarsdev/TIL/blob/master/React/react_props.md)
 - [Create React App](https://github.com/solarsdev/TIL/blob/master/React/create_react_app.md)
 - [React Effects](https://github.com/solarsdev/TIL/blob/master/React/react_effects.md)
+- [React Refs and the DOM](https://github.com/solarsdev/TIL/blob/master/React/react_refs_and_the_dom.md)
 
 ##### Recoil (State management library)
 
