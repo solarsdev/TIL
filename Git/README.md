@@ -7,3 +7,4 @@
 - [Git Basic Concept](https://github.com/solarsdev/TIL/blob/master/Git/git_basic_concept.md)
 - [Git Basic Commands](https://github.com/solarsdev/TIL/blob/master/Git/git_basic_commands.md)
 - [Git Branch](https://github.com/solarsdev/TIL/blob/master/Git/git_branch.md)
+- [Git Merge](https://github.com/solarsdev/TIL/blob/master/Git/git_about_merge.md)
