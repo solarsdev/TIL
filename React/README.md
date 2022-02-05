@@ -10,6 +10,7 @@
 - [Create React App](https://github.com/solarsdev/TIL/blob/master/React/create_react_app.md)
 - [React Effects](https://github.com/solarsdev/TIL/blob/master/React/react_effects.md)
 - [React Refs and the DOM](https://github.com/solarsdev/TIL/blob/master/React/react_refs_and_the_dom.md)
+- [React PureComponent and Memo](https://github.com/solarsdev/TIL/blob/master/React/react_purecomponent_and_memo.md)
 
 ### Recoil (State management library)
 
