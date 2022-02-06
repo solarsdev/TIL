@@ -32,6 +32,25 @@
 - 즉, 오브젝트를 참조하는지 아닌지만 확인하고, 오브젝트 내부의 키까지 전부 참조하여 값을 비교하지는 않는다는 의미
 - 오브젝트 내부의 키까지 전부 참조하여 값을 가져와서 비교하는것은 `deep comparison`이라고 불린다.
 
+### 👉React.Memo를 사용
+
+리액트 공식문서에서는 React.Memo에 대해서 다음과 같이 설명하고 있다.
+
+```jsx
+const MyComponent = React.memo(function MyComponent(props) {
+  /* props를 사용하여 렌더링 */
+});
+```
+
+> `React.memo`는 `고차 컴포넌트(Higher Order Component)`입니다.
+
+> 컴포넌트가 동일한 props로 동일한 결과를 렌더링해낸다면, `React.memo`를 호출하고 결과를 메모이징(Memoizing)하도록 래핑하여 경우에 따라 성능 향상을 누릴 수 있습니다. 즉, React는 컴포넌트를 렌더링하지 않고 마지막으로 렌더링된 결과를 재사용합니다.
+
+> `React.memo`는 props 변화에만 영향을 줍니다. `React.memo`로 감싸진 함수 컴포넌트 구현에 `useState`, `useReducer` 또는 `useContext` 훅을 사용한다면, 여전히 state나 context가 변할 때 다시 렌더링됩니다.
+
+- 클래스형 컴포넌트인 PureComponent와는 다르게 Memo는 props의 변화에만 영향을 주게 된다는 점이다. props를 shallow comparison으로 비교해서 성능 향상을 가져올 수 있지만, state등의 훅을 이용한다면 내부의 state가 변경되었을때는 `render()` 함수를 호출한다.
+- Memo는 오직 성능 최적화 만을 위해서 사용해야 한다.
+
 ## Reference
 
 [React 최상위 API - React](https://ko.reactjs.org/docs/react-api.html#reactpurecomponent)
