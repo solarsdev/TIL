@@ -78,3 +78,68 @@ D---E---F-------- feature
 - 2 way merge의 경우에는 양쪽에서 동일한 코드로 보이는 b를 제외하면 어떤 코드를 취해야 하는지 알 수 없으므로 충돌로 판정이 될 수밖에 없음
 - 그러나 공통 조상을 포함하여 3 way merge를 이용할 경우 자동으로 어떤 커밋을 취해야 할지 그 자리에서 결정할 수 있음
   ![git_about_merge/5.png](git_about_merge/5.png)
+
+### merge
+
+```bash
+git merge [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+	[--[no-]allow-unrelated-histories]
+	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>]
+	[--into-name <branch>] [<commit>…]
+git merge (--continue | --abort | --quit)
+```
+
+- 두개 이상의 commit을 합침
+  - 기존 브랜치에서 갈라져 나온 각기 다른 commit들(별도의 branch로서 명명되어 관리되고 있는 그룹)을 현재의 브랜치로 병합함
+- 다른 repository에서 `git pull`을 통해서 변경 사항을 병합하는것과 로직은 동일함, 다만 merge의 경우에는 동일한 repository에서 수행된다는것이 차이점
+  - 기타 merge 전략등에 대해서는 공식문서를 참고할것
+    [Git - git-merge Documentation](https://git-scm.com/docs/git-merge)
+
+### deal with conflict
+
+- merge를 진행하게 되면 그 결과로 변경사항이 현재 브랜치에 적용되게 됨
+- fast forward merge는 충돌이 발생하지 않음 (현재 브랜치는 과거로부터의 변경이력을 그대로 보존하고 있기 때문에, 덮어씌우기를 해도 문제 없기 때문임
+- three way merge를 진행하게 되면 과거의 커밋으로부터 파생하여 변경이 발생하게 되는데, 이때 현재 브랜치와의 변경사항이 충돌할 가능성이 있음
+- 충돌이 발생하게 되면 git은 충돌파일에 메시지를 남기게 됨
+
+```bash
+Here are lines that are either unchanged from the common
+ancestor, or cleanly resolved because only one side changed,
+or cleanly resolved because both sides changed the same way.
+<<<<<< yours:sample.txt
+Conflict resolution is hard;
+let's go shopping.
+=======
+Git makes conflict resolution easy.
+>>>>>> theirs:sample.txt
+And here is another line that is cleanly resolved or unmodified.
+```
+
+- 충돌을 해결하기 위해서 2가지 해결방안이 있음
+  1. merge를 하지 않고 이전 상태로 되돌림 (merge 취소)
+     - HEAD를 이전 병합 이전 상태로 되돌림
+     - `git merge —abort` 명령어를 입력하면 됨
+  2. 충돌을 해결하고 merge를 진행
+     - conflict가 마킹된 파일을 열어 내용을 수정함
+     - 대상 파일을 git add로 추가한 뒤, `git commit` 또는 `git merge —continue`를 통해 병합 진행
+     - `git merge —continue` 명령어로 병합을 진행할 경우 commit 하기 전에 중단된 merge가 존재하는지 다시한번 확인하는 과정을 거침
+- merge를 하기 위한 공식문서에서 제안하는 방법들
+
+  1. `mergetool`을 이용
+
+     ```bash
+     git mergetool [--tool=<tool>] [-y | --[no-]prompt] [<file>…]
+     ```
+
+     - 병합시 충돌을 해결하는 도구들을 이용해서 충돌을 해결함
+     - `git merge`를 이용해서 병합을 진행한 후에 충돌이 발생하면 `git mergetool`을 이용할 수 있음
+     - 기본 설정에서는 `mergetool`을 이용해서 merge 변경사항을 적용하고 나면 `filename.orig`가 생기는데, 이를 없애고 싶으면 `git config --global mergetool.keepBackup false`를 이용해서 옵션을 끄자
+         <aside>
+         💡 `mergetool.keepBackup` After performing a merge, the original file with conflict markers can be saved as a file with a `.orig` extension. If this variable is set to `false` then this file is not preserved. Defaults to `true` (i.e. keep the backup files).
+         
+         </aside>
+
+  2. `git diff`를 이용
+  3. `git log —merge -p`를 이용
+  4. `git show :1:filename`을 이용해서 오리지널 파일을 확인
