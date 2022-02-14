@@ -143,3 +143,23 @@ And here is another line that is cleanly resolved or unmodified.
   2. `git diff`를 이용
   3. `git log —merge -p`를 이용
   4. `git show :1:filename`을 이용해서 오리지널 파일을 확인
+
+### rebase
+
+```bash
+git rebase [-i | --interactive] [<options>] [--exec <cmd>]
+	[--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+git rebase [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+	--root [<branch>]
+git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+```
+
+- 현재 브랜치의 파생점(원본 커밋)을 변경함
+- 대상 옵션 중 `<branch>` 가 정의되지 않으면 기본적으로 현재 브랜치를 rebase 하게 됨
+- 대상 옵션 중 `<upstream>` 이 정의되지 않으면 branch.<name>.remote와 branch에 upstream이 설정됨
+  - upstream이란?
+    - 다른 사람의 git을 fork한 경우 내 remote repository(github)가 origin이 됨
+    - 이때 fork의 원본 저장소가 upstream이 되며 origin과 upstream 모두 remote 저장소임
+    - origin과 구별하기 위해 upstream이라는 명칭을 사용
+- rebase에 대한 자세한 설명
+  [🎢 Git Rebase 활용하기](https://velog.io/@godori/Git-Rebase)
