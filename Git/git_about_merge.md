@@ -163,3 +163,27 @@ git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-curren
     - origin과 구별하기 위해 upstream이라는 명칭을 사용
 - rebase에 대한 자세한 설명
   [🎢 Git Rebase 활용하기](https://velog.io/@godori/Git-Rebase)
+
+### cherry-pick
+
+```bash
+git cherry-pick [--edit] [-n] [-m <parent-number>] [-s] [-x] [--ff]
+		  [-S[<keyid>]] <commit>…
+git cherry-pick (--continue | --skip | --abort | --quit)
+```
+
+- 다른 브랜치에 있는 커밋을 선택적으로 내 브랜치에 적용하고자 할때 사용
+- 예를 들어 다음과 같은 상황이 진행된다고 가정하자
+
+![git_about_merge/6.png](git_about_merge/6.png)
+
+- 이때 `git cherry-pick`을 이용해서 `76ae30ef` `13af32cc`를 브랜치 X로 복사하고 싶을 경우
+  ```bash
+  git cherry-pick 76ae30ef 13af32cc
+  ```
+  - 가져오고 싶은 커밋의 해시코드를 입력해주면 됨
+
+![git_about_merge/7.png](git_about_merge/7.png)
+
+- 그러면 그림과 같이 브랜치 Y의 커밋이 브랜치 X로 복사된 것을 확인할 수 있음
+- cherry-pick은 작업중인 다른 브랜치의 내용에서 종속성이 발생한 개발내용이 추가되었을 경우나 실수로 다른 브랜치에 커밋내용을 추가해버렸을때 원래 작업대상이었던 브랜치로 작업을 가져와야 할 경우 등에 사용이 가능
