@@ -15,3 +15,4 @@
 - [AWS CICD](https://github.com/solarsdev/TIL/blob/master/AWS/aws_cicd.md)
 - [S3](https://github.com/solarsdev/TIL/blob/master/AWS/s3.md)
 - [Security Models](https://github.com/solarsdev/TIL/blob/master/AWS/security_model.md)
+- [API Gateway 101](https://github.com/solarsdev/TIL/blob/master/AWS/api_gateway_101.md)
