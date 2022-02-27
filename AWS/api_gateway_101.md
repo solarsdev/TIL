@@ -266,3 +266,71 @@
   - 유저 풀을 관리할 수 있다 (뒷단에는 페이스북이나 구글 로그인을 활용 가능하다)
   - 커스텀 코드를 작성할 필요가 없다
   - 백엔드에서 인증을 직접 구성해야 한다
+
+## API 게이트웨이 - HTTP API vs REST API
+
+- HTTP APIs
+  - 낮은 지연시간, 더 높은 과금 효율성
+  - 람다 프록시 HTTP 프록시 API 는 프라이빗 통합을 지원 (데이터 맵핑 없음)
+  - OIDC와 OAuth 2.0 인증을 지원하고 CORS 또한 지원한다.
+  - Usage plan과 API 키를 사용할 수 없음
+- REST APIs
+  - 모든 기능을 지원함 (Native OpenID Connect / OAuth 2.0을 제외하고)
+    ![images/api_gateway_101/12.png](images/api_gateway_101/12.png)
+
+## API 게이트웨이 웹소켓API
+
+- 웹 소켓이 무엇인가
+  - 유저 브라우저와 서버간의 2방향 소통 커뮤니케이션
+  - 서버는 클라이언트에게 정보를 푸시할 수 있음
+  - 이 기능을 통해 상태 중심의 어플리케이션을 구현할 수 있음
+- 웹 소켓 API는 채팅, 콜라보레이션 플랫폼, 멀티플레이어 게임, 금융 거래 플랫폼과 같은 리얼타임 어플리케이션에 주로 이용됨
+- 다른 AWS 서비스들 (람다함수, 다이나모DB) 혹은 HTTP 엔드포인트와 동작한다
+
+![images/api_gateway_101/13.png](images/api_gateway_101/13.png)
+
+## 웹소켓 접속
+
+![images/api_gateway_101/14.png](images/api_gateway_101/14.png)
+
+## 웹소켓 메시징
+
+![images/api_gateway_101/15.png](images/api_gateway_101/15.png)
+
+## 웹소켓 메시징 (서버측에서)
+
+![images/api_gateway_101/16.png](images/api_gateway_101/16.png)
+
+## 커넥션 URL 동작
+
+- Connection URL
+  - wss://[UniqueName].execute-api.[region].amazonaws.com/[stage]/@connections/connectionid
+
+![images/api_gateway_101/17.png](images/api_gateway_101/17.png)
+
+## API 게이트웨이 웹소켓 API 라우팅
+
+- 들어오는 JSON 메시지를 통해 어떤 백엔드로 연결할지 판단할 수 있다
+- 만약 라우팅이 없다면 → $default 로 라우팅을 하게 됨
+- JSON에서 어떤 것을 라우팅으로 사용할지 정의함
+  - 예를 들어 $request.body.action 을 라우팅으로 정의했을때 다음과 같은 JSON 요청이 들어오면
+  ```json
+  {
+    "service": "chat",
+    "action": "join",
+    "data": {
+      "room": "room1234"
+    }
+  }
+  ```
+  - action란에 있는 join이 라우팅이며 해당 백엔드가 정의되었다면 호출하고 없다면 $default를 호출함
+
+## API 게이트웨이 아키텍쳐
+
+- 회사의 전체 마이크로 서비스를 담당하는 하나의 인터페이스로서 작동할 수 있다
+- API 엔드포인트를 각 리소스별로 다르게 지정할수 있으며
+- 각각의 도메인을 유저에게 발행하여 다른 방식의 접근을 허용할수도 있고
+- 도메인을 부여하여 SSL도 적용 가능
+- API 게이트웨어 단에서 포워딩등 여러가지 작업을 할 수 있게 된다
+
+![images/api_gateway_101/18.png](images/api_gateway_101/18.png)
