@@ -16,3 +16,4 @@
 - [S3](https://github.com/solarsdev/TIL/blob/master/AWS/s3.md)
 - [Security Models](https://github.com/solarsdev/TIL/blob/master/AWS/security_model.md)
 - [API Gateway 101](https://github.com/solarsdev/TIL/blob/master/AWS/api_gateway_101.md)
+- [AWS X-Ray](https://github.com/solarsdev/TIL/blob/master/AWS/x-ray.md)
