@@ -98,3 +98,67 @@
   - S3에서 Event 설정 후 put object 이벤트를 걸어둠
   - SQS큐를 목적지로 설정하고 저장할때 그냥 저장하면 에러가 남
   - SQS큐에서 미리 S3 ARN을 허용해놓고 설정해야 함
+
+### SQS 메시지 가시성 개념 (visibility timeout)
+
+- 소비자에 의해 메시지가 폴링되면, 해당 메시지는 다른 소비자에게 보이지 않는 상태가 된다.
+- 기본 설정으로 이 시간은 30초가 된다.
+- 이 시간안에 메시지는 처리되어야 한다.
+- 이 시간안에 다른 소비자가 폴링을 하게 되면 메시지는 보이지 않는다.
+- 이 시간이 지나고 난 뒤에 실행되는 폴링에서 처리되지 않았다면 다시 메시지를 폴링하게 된다.
+
+![images/sqs/9.png](images/sqs/9.png)
+
+- 메시지가 타임아웃 안에 처리되지 않는다면, 메시지는 여러번 처리될 수도 있다.
+- 소비자는 **ChangeMessageVisibility** API를 이용해서 더 많은 시간을 설정할 수도 있다. (메시지 별로)
+- 메시지 타임아웃이 높고 (몇시간 등) 소비자가 처리못하고 다운됐을 경우에, 시간이 지난 뒤에야 다시 처리 할 수 있다.
+- 메시지 타임아웃이 너무 낮으면 (초단위 등), 해당 시간안에 메시지를 처리 못하면 메시지가 중복으로 보여지게 되어 여러번 처리될 수도 있다.
+
+### SQS DLQ(Dead Letter Queue)
+
+- 만약 소비자가 제한시간 내에 메시지 처리에 실패한다면 메시지는 다시 큐로 돌아가게 된다.
+- 큐로 돌아오는 횟수의 상한을 걸 수 있다.
+- MaximumRecives가 넘어가게 되면, 메시지는 DLQ(Dead Letter Queue)에 들어가게 할 수 있다.
+
+![images/sqs/10.png](images/sqs/10.png)
+
+- 이는 디버깅에 유용하게 활용할 수 있음 (왜 문제가 되었는지 나중에 분석)
+- DLQ에서 메시지가 만료되기 전에 처리하는것이 좋다. (따라서 DLQ는 14일로 설정하는것이 좋음)
+
+### SQS 딜레이 메시지
+
+- 소비자에게 바로 보이지 않도록 메시지의 딜레이를 조정할 수 있다. (최대 15분)
+- 기본적으로 0초의 딜레이를 가지고 있음 (메시지가 바로 보임)
+- 디폴트 딜레이로 큐 레벨에서 설정 가능
+- 메시지마다 DelaySeconds라는 패러미터를 이용해서 시간 조절이 가능함
+
+![images/sqs/11.png](images/sqs/11.png)
+
+### SQS 개념
+
+- 롱 폴링
+  - 폴링시에 메시지가 없을 경우, 정해진 시간동안 기다리게 할 수 있음 (지속 폴링)
+    ![images/sqs/12.png](images/sqs/12.png)
+  - 왜 롱 폴링을 할까?
+    - 메시지 콜 수를 줄이기 위함이 가장 큰 목적 (효율화)
+    - 지연시간을 줄이는 효과가 있음
+  - 1~20초로 설정할 수 있음 (20초가 선호됨)
+  - WaitTimeSeconds API를 이용해서 시간을 설정할 수 있음 (폴링 단위로)
+- SQS Extended Client
+  - 만약 256KB의 제한 길이가 있음으로, 만약 메시지가 1GB등 클 경우에는 어떻게 해야 할까?
+  - 이때 자바 라이브러리인 SQS Extended Client를 사용 가능
+    1. 생산자는 실제 큰 데이터는 S3에 업로드 하고, 실제로 큐에는 작은 메타데이터 메시지를 송신한다.
+    2. 소비자는 큐에서 메타데이터를 폴링하여, 실제 메시지가 저장되어 있는 S3을 참조하여 메시지를 처리한다.
+    - 비디오 파일 처리 등과 같은 경우가 이 유스케이스에 포함됨 (실제 비디오 데이터는 S3에 저장, 처리용 메타데이터를 큐에 저장)
+      ![images/sqs/13.png](images/sqs/13.png)
+
+### SQS에서 반드시 알아야 하는 API
+
+- CreateQueue (MessageRetentionPeriod), DeleteQueue
+- PurgeQueue: 모든 메시지를 삭제
+- SendMesssage (DelaySeconds), RecieveMessage, DeleteMessage
+- MaxNumerOfMessages: default 1, max 10 (for RecieveMessage API) 한번에 가져올 메시지의 갯수
+- RecieveMessageWaitTimeSeconds: 롱 폴링
+- ChangeMessageVisibility: 메시지의 가시성 타임아웃을 조정
+- 배치 API를 이용하여 SendMessage, DeleteMessage, ChangeMessageVisibility
+  - 코스트를 절감할 수 있음
