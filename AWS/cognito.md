@@ -28,3 +28,21 @@
 - CUP은 API 게이트웨이와 ALB와 통합된다
 
 ![images/cognito/2.png](images/cognito/2.png)
+
+## Cognito 람다 트리거
+
+![images/cognito/3.png](images/cognito/3.png)
+
+- 인증 이벤트
+  - 인증 전 람다 트리거
+  - 인증 후 람다 트리거
+  - 토큰 생성 전 람다 트리거
+- 사인업
+  - 사인업 전 트리거
+  - 확인 후 람다 트리거
+
+## Cognito 인증 UI
+
+- 코그니토는 UI를 제공해준다
+- OIDC SAML등 다른 서비스 연계도 지원
+- 커스텀 로고, CSS등을 삽입 가능
