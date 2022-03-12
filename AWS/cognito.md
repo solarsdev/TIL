@@ -46,3 +46,44 @@
 - 코그니토는 UI를 제공해준다
 - OIDC SAML등 다른 서비스 연계도 지원
 - 커스텀 로고, CSS등을 삽입 가능
+
+## Cognito Identity Pools (Federated Identities)
+
+- 유저에게 임시적인 AWS 크레덴셜을 제공하기 위함
+- 아이덴티티 풀은 신뢰할 수 있는 인증자들
+  - Amazon Facebook Google Apple
+  - Amazon Cognito user pool 에 있는 유저들
+  - OpenID 혹은 SAML
+  - 개발자 인증 아이덴티티 (커스텀 로그인 서버)
+  - 코그니토 아이덴티티 풀은 게스트 엑세스를 지원
+- 유저는 API게이트웨이를 이용, AWS 서비스에 직접 접근 할 수 있다
+  - 코그니토에서 정의한 IAM 정책이 적용된다
+
+![images/cognito/4.png](images/cognito/4.png)
+
+![images/cognito/5.png](images/cognito/5.png)
+
+## User pool vs Identity pool
+
+- 코그니토 유저 풀
+  - 웹이나 모바일 어플리케이션의 유저 데이터베이스
+  - 다른 퍼블릭 소셜 OIDC SAML과 연동
+  - UI 커스터마이징 로그인 옵션 제공
+  - 람다를 이용한 트리거링
+- 아이덴티티 풀
+  - AWS 크레덴셜을 제공
+  - 유저는 퍼블릭 소셜 OIDC 그리고 코그니토 유저 풀 에서 연동 가능
+  - 게스트 유저 IAM도 별도 제공
+  - 유저는 IAM 맵과 연동되어 역할 및 정책이 적용됨
+- CUP + CIP = 유저 관리 및 AWS 엑세스 가능
+
+## 코그니토 Sync
+
+- AppSync로 대체됨
+- 앱 설정이나 상태를 저장
+- 크로스 디바이스 연동 (ios 안드로이드 기타 등등)
+- 오프라인 용량 (온라인으로 되었을때 다시 연동)
+- 데이터베이스에 데이터를 저장하고 20개의 데이터셋까지 싱크 가능
+- Push Sync : 뒷단에서 조용히 모든 디바이스를 연동한다
+- Cognito Stream : 코그니토 데이터를 키네시스로 전송
+- Cognito Events : 응답이 오면 람다 함수를 가동
