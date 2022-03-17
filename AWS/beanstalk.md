@@ -172,3 +172,31 @@
 - Dockerrun.aws.json은 ECS 작업 정의를 생성하는데 활용된다.
 - 도커 이미지는 ECR에 미리 빌드되어 업로드 되어 있어야 함
   ![images/beanstalk/5.png](images/beanstalk/5.png)
+
+## HTTPS 빈스토크
+
+- 로드밸런서에 SSL 인증서를 로드하기
+- 콘솔에서 설정하거나
+- .ebextionstions/securelistener-alb.config에서 설정하거나
+- 보안그룹에 443을 열어주기 (로드 밸런서 보안그룹)
+- HTTP를 HTTPS로 전환하기
+- 인스턴스를 HTTP에서 HTTPS로 전환하거나
+- ALB에서 전환하거나
+
+## 웹서버 vs 워커 환경 비교
+
+![images/beanstalk/6.png](images/beanstalk/6.png)
+
+## 엘라스틱 빈스토크 커스텀 플랫폼
+
+- 커스텀 플랫폼은 매우 고급과정
+  - OS
+  - 추가적인 소프트웨어
+  - 스크립트들
+- 앱 언어가 제공되지 않을때 그리고 도커를 사용하지 않을때
+- 고유한 플랫폼을 만들고 싶다면
+  - AMI를 정의하고 platform.yaml에 정의
+  - 패커 소프트웨어를 이용해서 플랫폼을 빌드
+- 커스텀 플랫폼 vs 커스텀 이미지
+  - 커스텀 이미지는 이미 있는 환경을 패키징
+  - 커스텀 플랫폼은 전혀 새로운 환경을 만들때 사용
