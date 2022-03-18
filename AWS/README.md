@@ -20,3 +20,4 @@
 - [AWS SQS](https://github.com/solarsdev/TIL/blob/master/AWS/sqs.md)
 - [Cognito](https://github.com/solarsdev/TIL/blob/master/AWS/cognito.md)
 - [Beanstalk](https://github.com/solarsdev/TIL/blob/master/AWS/beanstalk.md)
+- [SNS](https://github.com/solarsdev/TIL/blob/master/AWS/sns.md)
