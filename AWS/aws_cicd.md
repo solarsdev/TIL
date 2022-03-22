@@ -203,6 +203,26 @@
 - 그 후에 코드빌드가 EC2나 RDS나 ElastiCache등에 접근이 가능하다
 - 유스케이스: 데이터쿼리나 인터널 로드 밸런서를 이용한 통합 테스트중 데이터가 필요할때
 
+## CodeBuild 핸즈온
+
+- buildspec.yml 파일을 이용하면 코드빌드에서 어떤 순서로 어떤 작업을 해야하는지 명시해줄수 있다.
+- 코드커밋 → 코드빌드 → ECR에 도커로 빌드된 파일을 업로드
+- 자동화는 아니지만 buildspec.yml 파일을 이용해서 어떤 파일을 빌드할지 정의하고 실행하여 ECR에 결과물을 도출할 수 있었음
+- 코드빌드 환경변수편
+  - 코드빌드의 환경변수는 기본적으로 AWS에서 제공해주는 것들이 있다.
+    [Environment variables in build environments](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
+  - 하지만 추가적으로 빌드에 필요한 환경변수를 설정할수 있으며, DB비밀번호와 같이 민감한 정보의 경우에는 parameter store를 이용해서 kms로 암호화된 secure-string을 이용할수도 있다.
+  - 다만, parameter store에 접근권한이 IAM으로 설정가능하며, SSMReadOnlyPolicy를 허용해주면 된다.
+- 아티팩트
+  - 아티팩트란 CodeBuild로 수행한 빌드의 산물을 의미한다.
+  - 코드빌드를 수행한 뒤 아티팩트를 S3으로 업로드 할 수있다.
+  - 기본적으로 아티팩트에 대한 암호화를 수행하며, 비활성화 할 수 있다.
+- 클라우드워치와 연동
+  - 클라우드워치 이벤트와 연동해서 자동화를 구현할 수 있다.
+  - 코드빌드의 상태변화에 따라서 다양한 타겟 (람다, SNS, SQS..) 호출 가능
+  - 코드커밋의 상태변화에 따라서 타겟 호출 가능
+- 코드커밋 풀 리퀘스트의 검증
+
 ## AWS CodeDeploy
 
 - 만들어진 어플리케이션은 많은 EC2에 배포해야 할 경우가 있다
