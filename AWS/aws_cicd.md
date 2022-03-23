@@ -314,6 +314,37 @@
 - 롤백 자체를 비활성화 할 수 있다.
 - 롤백을 수행하게 되면, 실질적으로는 과거에 성공했던 버전을 새롭게 배포하는것과 동일하다.
 
+### CodeDeploy 핸즈온
+
+- 코드 디플로이는 **appspec.yaml** 파일을 이용해서 디플로이 작업을 명세한다.
+- 코드디플로이 에이전트가 설치되어 있는 EC2 인스턴스에서 코드디플로이를 폴링해서 1번에서 명세된 새로운 디플로이가 있을 경우에 순서에 따라 배포를 진행한다.
+- 기본 EC2에 에이전트가 없기 때문에 에이전트를 먼저 설치한 뒤에, S3등에서 아티팩트, 자료를 받아오기 위해서 S3ReadOnlyAccess 권한으로 IAM 역할을 부여해준다.
+- 코드디플로이 에이전트 설치방법
+
+[에이전트 설치 에이전트 설치](https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/codedeploy-agent-operations-install.html)
+
+```bash
+sudo yum update -y
+sudo yum install -y ruby wget
+wget https://aws-codedeploy-eu-west-1.s3.eu-west-1.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+sudo service codedeploy-agent status
+```
+
+- 배포 그룹을 작성 (태그 기반)
+- 배포 그룹에 앱 리비전을 이용해서 배포 가능
+- 먼저 실습할 S3버킷을 작성한 뒤 버전관리 기능을 켜준다
+  ```bash
+  aws s3 mb s3://aws-devops-course-ssalguk --region ap-northeast-1
+  aws s3api put-bucket-versioning --bucket aws-devops-course-ssalguk --versioning-configuration Status=Enabled --region ap-northeast-1
+  ```
+- appspec.yaml 파일이 들어있는 폴더에서 전체를 압축한 뒤에 코드디플로이에서 활용할수 있도록 푸시하기
+  ```bash
+  aws deploy push --application-name CodeDeployDemo --s3-location s3://aws-devops-course-ssalguk/CodeDeployDemo/app.zip --ignore-hidden-files --region ap-northeast-1
+  ```
+- 코드디플로이는 배포 그룹을 선택한 뒤 배포를 진행할 수 있으므로, 적절한 태깅과 함께라면 훌륭한 배포를 진행할 수 있다.
+
 ## CodeStar
 
 - 코드스타는 현재까지 사용했던 모든 CICD 툴을 한번에 묶어놓은 통합 툴이다.
