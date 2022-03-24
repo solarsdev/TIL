@@ -345,6 +345,15 @@ sudo service codedeploy-agent status
   ```
 - 코드디플로이는 배포 그룹을 선택한 뒤 배포를 진행할 수 있으므로, 적절한 태깅과 함께라면 훌륭한 배포를 진행할 수 있다.
 
+## Jenkins on AWS
+
+- 젠킨스는 오픈소스 CICD 툴
+- 코드빌드, 코드파이프라인 & 코드디플로이를 대체 가능
+- 마스터 / 슬레이브 구조로 배포해야 함
+- 온프레미스 구조이기 때문에 손상에 대비하기 위해 멀티AZ를 작성해야 할 필요가 있으며, EC2에 배포하는 설정을 하는 등 복잡한 요구사항이 있다
+- Jenkinsfile이라는 파일을 통해서 (buildspec.yml과 비슷) 젠킨스가 어떤 일을 해야할지 명세한다
+- 젠킨스는 다양한 플러그인을 통해 AWS와 통합된다
+
 ## CodeStar
 
 - 코드스타는 현재까지 사용했던 모든 CICD 툴을 한번에 묶어놓은 통합 툴이다.
@@ -354,3 +363,36 @@ sudo service codedeploy-agent status
 - Cloud9과의 통합도 가능함 (모든 리전은 아님)
 - 대시보드를 제공하므로 한번에 다양한 컴포넌트들의 상태를 볼 수 있다.
 - 커스터마이징을 다양하게 제공해주는 편은 아님 (제한적임)
+
+## Elastic Beanstalk for DevOps
+
+- EB CLI를 통해서 엘라스틱 빈스토크 환경을 구축할 수 있음
+- eb init → 가이드에 따라서 환경 설정 완료 후 구축됨
+- eb open
+- eb status
+- eb health —refresh
+- eb deploy
+- eb terminate
+- 엘라스틱 빈스토크는 설정에 의한 자동구축 시스템이기 때문에, 설정을 저장해두면 다른 리전, 계정등에서 동일한 환경을 금방 구축할 수 있음
+  - 하는 방법
+    - eb config save dev-env --cfg initial-configuration (dev-env 환경을 저장)
+      - 명령 실행 후 환경의 모든 설정이 파일에 저장되지 않을수도 있는데, 그 이유는 EB의 기본 설정을 사용하기 때문에 백업 자체가 필요 없는 설정은 등장하지 않기 때문임
+    - eb config put prod
+    - eb config dev-env —cfg prod (prod 설정을 dev-env 환경으로)
+    - eb create —cfg prod
+- .ebextensions 폴더에 \*\*\*.config 파일을 정의하면 저장된 설정 이외에도 직접 소스코드로 설정을 할 수 있음
+- **설정의 우선순위**
+  - 콘솔이나 EB CLI에서 직접 설정한 설정
+  - 저장된 설정
+  - .ebextensions 에 정의된 설정
+  - 기본값
+
+## .ebextensions의 commands와 container_commands의 차이점
+
+- 실행 시점
+  - commands : 각종 설정과 소스코드가 배포되기 전에 인스턴스에서 먼저 수행할 것들을 정의
+  - container_commands : 각종 설정이 완료되고 소스코드의 압축이 스테이징 폴더에 풀리고 난 뒤, 실제로 코드가 릴리즈 되기 적전 시점
+- leader_only의 사용 가능 여부
+  - leader_only 옵션은 container_commands에서만 사용 가능한데, container_commands를 최초 실행되는 인스턴스에서만 수행하도록 하는 옵션임
+  - 자세한 내용은 아래 링크를 참조할 것
+    [what is difference between commands and container commands in elasticbean talk](https://stackoverflow.com/questions/35788499/what-is-difference-between-commands-and-container-commands-in-elasticbean-talk/40096352#40096352)
