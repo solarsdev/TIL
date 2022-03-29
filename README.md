@@ -72,6 +72,7 @@
 - [EBS 101](https://github.com/solarsdev/TIL/blob/master/AWS/ebs_101.md)
 - [EC2 Basics](https://github.com/solarsdev/TIL/blob/master/AWS/ec2_basics.md)
 - [ECS](https://github.com/solarsdev/TIL/blob/master/AWS/ecs.md)
+- [Elastic Load Blancer](https://github.com/solarsdev/TIL/blob/master/AWS/elb.md)
 - [Kinesis 101](https://github.com/solarsdev/TIL/blob/master/AWS/kinesis_101.md)
 - [Lambda](https://github.com/solarsdev/TIL/blob/master/AWS/lambda.md)
 - [Parameter Store](https://github.com/solarsdev/TIL/blob/master/AWS/parameter_store.md)
