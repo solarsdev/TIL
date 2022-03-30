@@ -31,3 +31,31 @@
 - 단, 로드밸런서가 IP와 포트를 알고 있기 때문에, 헤더정보에 클라이언트의 IP, 포트정보를 담아주게 된다.
   - X-Forwarded-For (IP주소)
   - X-Forwarded-Port or X-Forwarded-Proto (PORT번호)
+
+## ELB 추가정보
+
+로드 밸런서를 모니터링 하는 방법은 기본적으로 클라우드워치 지표를 통해서 관리한다.
+
+- BackendConnectionErrors
+- HealthyHostCount / UnHealthyHostCount
+- HTTPCode_Backend_2XX
+- HTTPCode_Backend_3XX
+- HTTPCode_ELB_4XX
+- HTTPCode_ELB_5XX
+- Latency
+- RequestCount
+- SurgeQueueLength：정상적인 인스턴으로 가기전 대기하고 있는 요청의 숫자로, 1024가 최대치이다.
+- SpilloverCount：서지 큐가 1024를 넘어갈 경우 그 이후에는 spillover가 발생하는데, 이는 요청이 실패하게 되며 카운팅된다.
+
+## 로그밸런서 로깅 (엑세스 로그)
+
+- 로드밸런서의 엑세스 로그는 s3에 저장되며 미리 암호화된 상태로 들어간다.
+  - Time
+  - Client IP Address
+  - Latencies
+  - Request paths
+  - Server reponse
+  - Trace id
+- s3저장용량에 대한 지불만 하면 된다.
+- 컴플라이언스용 저장으로 유용하다.
+- EC2등의 인스턴스가 종료되어도 기존 로그등을 분석 가능하기 때문에 유용하다.
