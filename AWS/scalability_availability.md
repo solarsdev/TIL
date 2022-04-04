@@ -10,6 +10,8 @@
 
 ## 수직적인 확장
 
+![images/scalability_availability/1.png](images/scalability_availability/1.png)
+
 - 수직적 확장이란 본체의 사이즈를 증가시켜 처리 능력을 향상시키는것을 의미한다.
 - 예를 들어 웹 사이트의 서버가 t2.micro를 사용하고 있을 경우에 처리 능력이 부족할 경우, 단순히 t2.large로 증가시키는것을 통해 부하를 해결할 수 있다.
 - 수직적 확장은 분산이 불가능한 중앙 집중식 시스템에서 주로 채택하는 방식이다. (예를 들어 데이터베이스)
@@ -17,10 +19,14 @@
 
 ## 수평적인 확장
 
+![images/scalability_availability/2.png](images/scalability_availability/2.png)
+
 - 수평적인 확장이란 본체 자체를 복제하여 처리 능력을 향상시키는것을 의미한다.
 - 부하분산이 가능한 시스템에서 주로 채택되는 방식이다.
 
 ## 고가용성
+
+![images/scalability_availability/3.png](images/scalability_availability/3.png)
 
 - 고가용성이란 일반적으로 구성 자체는 수평적인 확장처럼 보일수 있다. (본체를 복제하는 방식)
 - 하지만 고가용성은 궁극적으로는 복제된 본체들 중 어느 하나의 손실에 대비하는것에 그 목적이 있다는 것이 확장과는 다르다. (참고로 확장의 경우에는 처리 부하를 늘리는데 그 목적이 있다.)

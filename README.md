@@ -80,6 +80,7 @@
 - [Parameter Store](https://github.com/solarsdev/TIL/blob/master/AWS/parameter_store.md)
 - [RDS 101](https://github.com/solarsdev/TIL/blob/master/AWS/rds_101.md)
 - [S3](https://github.com/solarsdev/TIL/blob/master/AWS/s3.md)
+- [Scalability and Availability](https://github.com/solarsdev/TIL/blob/master/AWS/scalability_availability.md)
 - [Security Models](https://github.com/solarsdev/TIL/blob/master/AWS/security_model.md)
 - [SNS](https://github.com/solarsdev/TIL/blob/master/AWS/sns.md)
 - [SQS](https://github.com/solarsdev/TIL/blob/master/AWS/sqs.md)
