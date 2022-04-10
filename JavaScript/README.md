@@ -21,3 +21,4 @@
 
 - [What is JavaScript](https://github.com/solarsdev/TIL/blob/master/JavaScript/what_is_javascript.md)
 - [Variable](https://github.com/solarsdev/TIL/blob/master/JavaScript/variable.md)
+- [Operators](https://github.com/solarsdev/TIL/blob/master/JavaScript/operators.md)
