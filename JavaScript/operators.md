@@ -102,3 +102,106 @@ console.log(+true);
 console.log(+'text');
 console.log(+undefined);
 ```
+
+## 할당연산자 (Assignment operators)
+
+```jsx
+// 할당연산자 (Assignment operators)
+let a = 1;
+a = a + 2;
+console.log(a);
+
+a += 2; // a = a + 2; 축약버전
+console.log(a);
+
+a -= 2;
+console.log(a);
+
+a *= 2;
+console.log(a);
+```
+
+## 증가 & 감소 연산자 (Increment & Decrement Operators)
+
+```jsx
+// 증가 & 감소 연산자 Increment & Decrement Operators
+let a = 0;
+console.log(a);
+
+a++; // a = a + 1;
+console.log(a);
+
+a--; // a = a - 1;
+console.log(a);
+
+console.clear();
+// 주의!
+// a++ 필요한 연산을 하고, 그 뒤 값을 증가시킴
+// ++a 값을 먼저 증가하고, 필요한 연산을 함
+a = 0;
+let b = a++;
+console.log(b);
+console.log(a);
+```
+
+## 대소 관계 비교 연산자 (Relational Operators)
+
+```jsx
+// 대소 관계 비교 연산자 (Relational operators)
+// > 크다
+// < 작다
+// >= 크거나 같다
+// <= 작거나 같다
+console.log(2 > 3);
+console.log(2 < 3);
+console.log(3 < 2);
+console.log(3 <= 2);
+console.log(3 >= 2);
+```
+
+## 연산자 우선순위
+
+[Operator precedence - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
+
+```jsx
+let a = 2;
+let b = 3;
+let result = a + b * 4;
+console.log(result);
+
+result = a++ + b * 4;
+console.log(result);
+```
+
+## 동등 비교 관계 연산자 (Equality Operators)
+
+```jsx
+// 동등 비교 관계 연산자 (Equality Operators)
+// == 값이 같음
+// != 값이 다름
+// === 값과 타입이 둘다 같음
+// !== 값과 타입이 다름
+console.log(2 == 2);
+console.log(2 != 2);
+console.log(2 != 3);
+console.log(2 == '2');
+console.log(2 === '2');
+console.log(true == 1);
+console.log(true === 1);
+console.log(false == 0);
+console.log(false === 0);
+
+console.clear();
+
+const obj1 = {
+  name: 'js',
+};
+
+const obj2 = {
+  name: 'js',
+};
+
+console.log(obj1 == obj2);
+console.log(obj1.name == obj2.name);
+console.log(obj1.name === obj2.name);
+```
