@@ -23,3 +23,4 @@
 - [Variable](https://github.com/solarsdev/TIL/blob/master/JavaScript/variable.md)
 - [Operators](https://github.com/solarsdev/TIL/blob/master/JavaScript/operators.md)
 - [Statement](https://github.com/solarsdev/TIL/blob/master/JavaScript/statement.md)
+- [Function](https://github.com/solarsdev/TIL/blob/master/JavaScript/function.md)
