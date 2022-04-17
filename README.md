@@ -36,6 +36,7 @@
 - [Operators](https://github.com/solarsdev/TIL/blob/master/JavaScript/operators.md)
 - [Statement](https://github.com/solarsdev/TIL/blob/master/JavaScript/statement.md)
 - [Function](https://github.com/solarsdev/TIL/blob/master/JavaScript/function.md)
+- [Class](https://github.com/solarsdev/TIL/blob/master/JavaScript/class.md)
 
 ### [React](https://github.com/solarsdev/TIL/blob/master/React)
 
