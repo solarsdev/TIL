@@ -162,3 +162,115 @@ console.log(isEqualImproved(num, 0.1)); // false
 ## 수학 관련 함수들
 
 [Math - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
+
+```jsx
+// Math
+// static properties, method
+console.log(Math.E); // 오일러의 상수, 자연로그의 밑
+console.log(Math.PI); // 원주율 PI값
+
+// static method
+// 절대값
+console.log(Math.abs(-10));
+// 소수점 이하를 올림
+console.log(Math.ceil(1.4));
+// 소수점 이하를 내림
+console.log(Math.floor(1.4));
+// 소수점 이하를 반올림
+console.log(Math.round(1.4));
+console.log(Math.round(1.7));
+// 정수만 반환
+console.log(Math.trunc(1.7123));
+
+// 최대, 최소값을 찾기
+console.log(Math.max(1, 2, 3, 4));
+console.log(Math.min(1, 2, 3, 4));
+
+// 거듭제곱
+console.log(3 ** 2);
+console.log(Math.pow(3, 2));
+
+// 제곱근
+console.log(Math.sqrt(9));
+
+// 랜덤한 값을 반환
+console.log(Math.random());
+
+// 1~10
+console.log(Math.floor(Math.random() * 10 + 1));
+```
+
+## 문자열 함수들 ⭐️
+
+[String - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+```jsx
+const textObj = new String('Hello World!');
+const text = 'Hello World!';
+console.log(textObj);
+console.log(text);
+
+console.log(text[0]);
+console.log(text[11]);
+console.log(textObj.charAt(0));
+console.log(textObj.charAt(11));
+
+console.log(textObj.indexOf('o'));
+console.log(textObj.lastIndexOf('o'));
+
+console.log(textObj.includes('a'));
+console.log(textObj.includes('H'));
+
+console.log(textObj.startsWith('H'));
+console.log(textObj.startsWith('!'));
+
+const space = '                space              ';
+console.log(space.trim());
+
+const longText = 'Get to the point';
+console.log(longText.split(' '));
+```
+
+## 날짜 관련 함수들
+
+[Date - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+```jsx
+console.log(new Date());
+console.log(new Date('2022/04/01'));
+
+// UTC (협정 세계시, 1970년 1월 1일 UTC 자정과의 시간차이를 밀리초 단위로 표기)
+console.log(Date.now());
+
+const now = new Date();
+now.setFullYear(2023);
+now.setMonth(0); // 1월
+now.getDate(); // 0은 1일
+now.getDay(); // 0은 월요일
+
+console.log(now.toString());
+console.log(now.toDateString());
+console.log(now.toTimeString());
+console.log(now.toLocaleDateString('ja-JP'));
+```
+
+## 퀴즈
+
+```jsx
+// 퀴즈!
+// 1. 문자열의 모든 캐럭터를 하나씩 출력하라
+const text = 'Hello World!';
+text.split('').forEach((char) => {
+  console.log(char);
+});
+
+// 2. 사용자들의 id를 잘라내어 각각의 id를 배열로 보관
+const ids = 'user1, user2, user3, user4';
+// ['user1', 'user2', 'user3', 'user4']
+console.log(ids.split(', '));
+
+// 3. 1초에 한번씩 시계를 (날짜포함) 출력해보자
+setInterval(() => {
+  console.log(new Date().toLocaleString('ja-JP'));
+}, 1000);
+```
