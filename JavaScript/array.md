@@ -195,3 +195,168 @@ console.log('store2', store2);
 // 자바스크립트에서는 복사할때 항상 얕은 복사가 이루어짐!
 // Array.from, concat, slice, spread(...), Object.assign
 ```
+
+## 퀴즈1
+
+```jsx
+// 퀴즈1: 주어진 배열 안의 딸기 아이템을 키위로 교체하는 함수를 만들기
+// 단, 주어진 배열을 수정하지 않도록!
+// input: ['🍌', '🍓', '🍇', '🍓']
+// output: [ '🍌', '🥝', '🍇', '🥝' ]
+function turnStrawberryIntoKiwiOnArray(original = []) {
+  return original.map((item) => {
+    if (item === '🍓') {
+      return '🥝';
+    }
+    return item;
+  });
+}
+console.log(turnStrawberryIntoKiwiOnArray(['🍌', '🍓', '🍇', '🍓']));
+
+// 퀴즈2:
+// 배열과 특정한 요소를 전달받아,
+// 배열안에 그 요소가 몇개나 있는지 카운트 하는 함수 만들기
+// input: [ '🍌', '🥝', '🍇', '🥝' ], '🥝'
+// output: 2
+function countItemOnArray(target = [], item) {
+  return target.filter((itemOnTarget) => itemOnTarget === item).length;
+}
+console.log(countItemOnArray(['🍌', '🥝', '🍇', '🥝'], '🥝'));
+
+// 퀴즈3: 배열1, 배열2 두개의 배열을 전달받아,
+// 배열1 아이템중 배열2에 존재하는 아이템만 담고 있는 배열 반환
+// input: ['🍌', '🥝', '🍇'],  ['🍌', '🍓', '🍇', '🍓']
+// output: [ '🍌', '🍇' ]
+function filterItemIsOnTheAnotherArray(target = [], another = []) {
+  return target.filter((targetItem) => another.includes(targetItem));
+}
+console.log(
+  filterItemIsOnTheAnotherArray(['🍌', '🥝', '🍇'], ['🍌', '🍓', '🍇', '🍓'])
+);
+```
+
+## 고차함수란?
+
+### 일급객체 복습, 함수형 프로그래밍이란?
+
+- 일급객체 (일급함수)
+  - 일반 객체처럼 모든 연산이 가능한 것
+    - 함수의 매개변수로 전달
+    - 함수의 반환값
+    - 할당 명령문
+    - 동일 비교 대상
+- 고차함수
+  - 인자로 함수를 받거나 (콜백함수)
+  - 함수를 반환하는 함수
+- 함수형 프로그래밍
+  - 절차지향식 → 코드 순서(위에서 아래)에 따라서 제어문을 통해 결과를 도출
+  - 함수형 프로그래밍은 작은 작업단위들을 함수로 전부 작성해두고, 함수의 연쇄 호출에 의해서 결과를 도출하는 방식
+  - 작업의 작은 단위를 순수함수로 만들어두는 것이 중요
+    - 순수함수란?
+    - 함수 내에서 매개변수를 수정한다거나 하는 부작용(사이드이펙트)없이 항상 동일한 결과가 예측(불변성)되는 함수
+  - 함수형 프로그래밍을 하게 되면
+    - 에러는 감소
+    - 가독성이 증가
+    - 데이터를 변경하지 않음
+    - 변수 사용 하지 않음
+    - 조건문과 반복문과 같은 제어문을 사용하지 않음
+
+### 배열에서도 함수형 프로그래밍이 가능하다고?
+
+```jsx
+const fruits = ['🍌', '🍓', '🍇', '🍓'];
+// for (let i = 0; i < fruits.length; i++) {
+//   console.log(fruits[i]);
+// }
+// 배열을 순회하며 원하는 것을 할때 forEach
+// fruits.forEach((value, index, array) => {
+//   console.log(value);
+//   console.log(index);
+//   console.log(array);
+//   console.log('-----');
+// });
+fruits.forEach((item) => console.log(item));
+
+// 조건에 맞는(콜백함수) 아이템을 찾을때
+// find: 제일 먼저 조건에 맞는 아이템을 반환
+const item1 = { name: '🥛', price: 2 };
+const item2 = { name: '🍪', price: 3 };
+const item3 = { name: '🍙', price: 1 };
+const products = [item1, item2, item3, item2];
+let result = products.find((value) => value.name === '🍪');
+console.log(result);
+
+// findIndex: 제일 먼저 조건에 맞는 인덱스를 반환
+result = products.findIndex((value) => value.name === '🍪');
+console.log(result);
+
+// 배열의 아이템들이 부분적으로 조건(콜백함수)에 맞는지 확인
+result = products.some((item) => item.name === '🍪');
+console.log(result);
+
+// 배열의 아이템들이 전부 조건(콜백함수)에 맞는지 확인
+result = products.every((item) => item.name === '🍪');
+console.log(result);
+
+// 조건에 맞는 모든 아이템들을 새로운 배열로 !
+result = products.filter((item) => item.name === '🍪');
+console.log(result);
+
+console.clear();
+
+// Map 배열의 아이템들을 각각 다른 아이템으로 매핑할 수 있는, 변환해서 새로운 배열 생성
+const nums = [1, 2, 3, 4, 5];
+result = nums.map((item) => item * 2);
+console.log(result);
+result = nums.map((item) => {
+  if (item % 2 === 0) {
+    return item * 2;
+  }
+  return item;
+});
+console.log(result);
+
+// flatMap: 중첩된 배열을 펴줌
+result = nums.map((item) => [1, 2]);
+console.log(result);
+result = nums.flatMap((item) => [1, 2]);
+console.log(result);
+
+result = ['hello', 'world!'].map((text) => text.split(''));
+console.log(result);
+result = ['hello', 'world!'].flatMap((text) => text.split(''));
+console.log(result);
+
+// sort: 배열의 아이템들을 정렬
+// 문자열 형태의 오른차순으로 요소를 정렬하고, 기존의 배열을 변경
+const texts = ['hi', 'abc'];
+texts.sort();
+console.log(texts);
+
+const numbers = [0, 5, 4, 2, 1, 10];
+numbers.sort();
+console.log(numbers);
+// 문자열순서이기 때문에, 1 다음 10
+// 전달한 콜백함수의 결과값이 음수라면 앞으로 정렬 (오름차순)
+// 양수라면 내림차순
+numbers.sort((a, b) => a - b);
+console.log(numbers);
+
+// reduce 배열의 요소들을 접어서 값을 하나로 만들어나감
+result = [1, 2, 3, 4, 5].reduce((sum, value) => (sum += value), 0);
+console.log(result);
+```
+
+## 고차함수 퀴즈 2
+
+```jsx
+// 퀴즈 4
+// 5이상(보다 큰)의 숫자들의 평균
+const nums = [3, 16, 5, 25, 4, 34, 21];
+
+console.log(
+  nums
+    .filter((num) => num > 5)
+    .reduce((avg, num, _, arr) => (avg + num) / arr.length)
+);
+```
