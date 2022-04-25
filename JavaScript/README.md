@@ -28,3 +28,4 @@
 - [Built-in Class](https://github.com/solarsdev/TIL/blob/master/JavaScript/built-in.md)
 - [Array](https://github.com/solarsdev/TIL/blob/master/JavaScript/array.md)
 - [Iterable](https://github.com/solarsdev/TIL/blob/master/JavaScript/iterable.md)
+- [Set and Map](https://github.com/solarsdev/TIL/blob/master/JavaScript/map.md)
