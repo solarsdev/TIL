@@ -41,6 +41,7 @@
 - [Array](https://github.com/solarsdev/TIL/blob/master/JavaScript/array.md)
 - [Iterable](https://github.com/solarsdev/TIL/blob/master/JavaScript/iterable.md)
 - [Set and Map](https://github.com/solarsdev/TIL/blob/master/JavaScript/map.md)
+- [More Operator](https://github.com/solarsdev/TIL/blob/master/JavaScript/more-operator.md)
 
 ### [React](https://github.com/solarsdev/TIL/blob/master/React)
 
