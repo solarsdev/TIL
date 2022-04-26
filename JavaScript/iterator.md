@@ -73,3 +73,120 @@ for (const num of makeIterable(0, 20, (num) => num * 2)) {
   console.log(num);
 }
 ```
+
+## 제너레이터란?
+
+- 제너레이터도 이터레이션 프로토콜을 준수하지만, 간단한 방식으로 이터레이터를 만들 수 있음
+- function 키워드 다음 _을 부착하면 제너레이터가 됨 `function_`
+
+```jsx
+// const makeIterable = (startValue, maxValue, callback) => {
+//   return {
+//     [Symbol.iterator]: () => {
+//       const max = maxValue;
+//       let num = startValue;
+//       return {
+//         next() {
+//           return { value: callback(num++), done: num > max };
+//         },
+//       };
+//     },
+//   };
+// };
+
+// 제너레이터를 만들게 되면 next를 호출해야 yield 다음 구문이 수행됨
+// -> 제너레이터 내부의 yield를 만나게 되면, value, done이 반환됨과 동시에 next() 호출 전까지 코드대기
+function* multipleGenerator() {
+  for (let i = 0; i < 10; i++) {
+    console.log(i);
+    yield i ** 2;
+  }
+}
+
+const multiple = multipleGenerator();
+let next = multiple.next();
+console.log(next.value, next.done);
+multiple.return(); // return을 호출하면 iterator가 즉시 종료되고 done은 true가 됨
+//multiple.throw('Error!'); // 에러 발생시키고 종료시킴 try-catch로 에러처리 가능
+next = multiple.next();
+console.log(next.value, next.done);
+```
+
+## 전개구문 연산자
+
+```jsx
+// Spread Operator, 전개구문
+// 모든 Iterable은 Spread될 수 있음
+// 순회가 가능한 모든 것들은 펼쳐질수 있음
+// function (...iterable)
+// [...iterable]
+// {...iterable}
+// ES 2018
+function add(a, b, c) {
+  return a + b + c;
+}
+
+const nums = [1, 2, 3];
+console.log(add(...nums));
+
+// Rest parameters
+function sum(...nums) {
+  return nums.reduce((result, num) => result + num);
+}
+console.log(sum(1, 2, 3, 4, 5, 6));
+
+// Array Concat
+const fruits1 = ['🍏', '🥝'];
+const fruits2 = ['🍓', '🍌'];
+let arr = fruits1.concat(fruits2);
+console.log(arr);
+arr = [...fruits1, '🍕', ...fruits2];
+console.log(arr);
+
+// Object
+const lee = { name: 'lee', age: 22 };
+const updated = {
+  ...lee,
+  job: 'engineer',
+};
+console.log(lee);
+console.log(updated);
+```
+
+## 구조분해 할당
+
+[Destructuring assignment - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+
+```jsx
+// 구조 분해 할당 Destructuring Assignment
+// 데이터 뭉치(그룹화)를 쉽게 만들 수 있다
+const fruits = ['🍏', '🥝', '🍓', '🍌'];
+const [first, second, ...others] = fruits;
+console.log(fruits[0]);
+console.log(first);
+console.log(second);
+console.log(others);
+
+const point = [1, 2];
+const [y, x, z = 0] = point;
+console.log(x);
+console.log(y);
+console.log(z);
+
+function createEmoji() {
+  return ['apple', '🍎'];
+}
+const [title, emoji] = createEmoji();
+console.log(title, emoji);
+
+// Object Destructuring
+const lee = { name: 'lee', age: 22 };
+function display({ name, age }) {
+  console.log('이름', name);
+  console.log('나이', age);
+}
+display(lee);
+
+const { name, age } = lee;
+console.log(name);
+```
