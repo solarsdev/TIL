@@ -44,6 +44,7 @@
 - [More Operator](https://github.com/solarsdev/TIL/blob/master/JavaScript/more-operator.md)
 - [Comment, Error Handling, Module](https://github.com/solarsdev/TIL/blob/master/JavaScript/module.md)
 - [Promise](https://github.com/solarsdev/TIL/blob/master/JavaScript/promise.md)
+- [Scope](https://github.com/solarsdev/TIL/blob/master/JavaScript/scope.md)
 
 ### [React](https://github.com/solarsdev/TIL/blob/master/React)
 
