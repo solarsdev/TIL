@@ -33,3 +33,4 @@
 - [Comment, Error Handling, Module](https://github.com/solarsdev/TIL/blob/master/JavaScript/module.md)
 - [Promise](https://github.com/solarsdev/TIL/blob/master/JavaScript/promise.md)
 - [Scope](https://github.com/solarsdev/TIL/blob/master/JavaScript/scope.md)
+- [Prototype](https://github.com/solarsdev/TIL/blob/master/JavaScript/prototype.md)
