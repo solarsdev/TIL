@@ -27,4 +27,5 @@
 - [SNS](https://github.com/solarsdev/TIL/blob/master/AWS/sns.md)
 - [SQS](https://github.com/solarsdev/TIL/blob/master/AWS/sqs.md)
 - [Systems Manager](https://github.com/solarsdev/TIL/blob/master/AWS/ssm.md)
+- [Virtual Private Gateway](https://github.com/solarsdev/TIL/blob/master/AWS/vpg.md)
 - [X-Ray](https://github.com/solarsdev/TIL/blob/master/AWS/x-ray.md)
