@@ -50,8 +50,10 @@
   - JavaScript가 동작하고 있는 Runtime Environment에서는 다른 방식을 이용해서 멀티 쓰레딩 효과를 얻을 수 있음
   - 뿐만 아니라 런타임에서는 이벤트 루프를 이용해서 다양한 동작을 실행할 수 있음
 - JavaScript가 브라우저에서 동작하는 원리
+
   - JavaScript가 브라우저에 탑재되어 실행되면 JavaScript 엔진이 소스코드를 줄단위로 해석하고 실행함
-    ```json
+
+    ```
     Memory Heap
     ----
     변수를 선언해서 오브젝트를 할당하거나, 문자열, 숫자를 할당하면 힙에 저장됨
@@ -69,6 +71,7 @@
 
     push, pop 등이 지원되는 자료구조
     ```
+
     ```jsx
     function second() {
       console.log('hello');
@@ -84,3 +87,35 @@
     }
     main();
     ```
+
+## 브라우저 런타임 환경 이해 (매우 중요)
+
+- 자바스크립트 런타임 환경만 가지고는 할 수 있는것이 한정적이고, Web APIs를 이용하면 할 수 있는것들이 많이 늘어남
+- Web APIs는 브라우저에서 제공하는 각종 유용한 API들임
+
+<aside>
+💡 그렇다면, 자바스크립트 런타임 (single threaded) 콜스택 구조와 브라우저 (multi threaded) 환경에서는 어떻게 콜백함수를 등록해서 연계하는 걸까?
+
+</aside>
+
+- `setTimeout()` 을 수행했다고 가정
+
+```jsx
+function second() {
+  setTimeout(() => console.log('hello!'), 1000);
+  // setTimeout()을 실행하는 순간 자바스크립트의 런타임 콜스택에서는 setTimeout()이 바로 사라지고 Web APIs에서 타이머가 수행됨
+  // 그렇게 되면 자바스크립트의 엔진은 바로 다음구문을 수행할수 있고 Web APIs가 작업을 수행하게 됨
+  // Web APIs는 작업이 완료되면 Task Queue라는 곳에 콜백 자체를 집어넣게 됨
+  // 상기 예에서는 1초가 지난 뒤에 arrow function을 Task Queue에 집어 넣음
+  return;
+}
+function first() {
+  second();
+  return;
+}
+function main() {
+  first();
+  return;
+}
+main();
+```
