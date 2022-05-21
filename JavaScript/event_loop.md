@@ -119,3 +119,23 @@ function main() {
 }
 main();
 ```
+
+### Task Queue란 무엇인가?
+
+- 큐도 자료구조의 일조인데 스택과 다르게 FIFO (First In First Out) 구조를 가진 형태를 말함
+- 처음에 들어온 데이터가 처음으로 나감
+- queue의 대표적인 수행으로는 add, remove
+
+<aside>
+💡 Task Queue에 들어온 콜백 함수는 언제 수행됨?
+
+</aside>
+
+- Task Queue를 관찰하는 아이가 바로 이벤트 루프 (Event Loop)
+- while이나 for loop 처럼 계속해서 Call Stack과 Task Queue를 체크하도록 설계되어 있음
+- 이벤트 루프의 우선순위로는 콜스택인데, 콜스택에 특정 일이 남아 있을 경우에는 콜스택에 있는 콜백을 먼저 수행하도록 설계되어 있음
+- 콜스택이 비어서 자바스크립트 엔진이 아무일도 수행하고 있지 않을 때, Task Queue에 있는 콜백 함수를 콜스택에 가져와서 수행함
+- Web APIs는 `setTimeout()` 외에도 다양한 API가 있는데, click 이벤트 등도 Task Queue에 포함됨
+  - 여러번 버튼이 눌리면 Task Queue에 계속 쌓임
+  - 콜스택이 비면 task queue를 콜스택으로 불러올 것임
+  - Task Queue에서는 한번에 하나씩 콜스택으로 가져옴
