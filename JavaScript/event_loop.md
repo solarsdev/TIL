@@ -178,3 +178,25 @@ main();
 - 마지막으로 Task Queue를 체크
   - Microtask Queue와의 차이점!
   - Task Queue에 있는 콜백함수는 1순회당 한개만 콜스택으로 가져온 뒤에 다음 루프로 진행
+
+## 데모: Event Loop (add element)
+
+```jsx
+const button = document.querySelector('button');
+button.addEventListener('click', () => {
+  const element = document.createElement('h1');
+  document.body.appendChild(element);
+  element.style.color = 'red';
+  element.innerText = 'Hello';
+});
+```
+
+- 클릭 리스너의 콜백함수의 정의 순서
+  1. h1 엘리먼트 생성
+  2. body에 append
+  3. 스타일 (컬러) 빨강으로 변경
+  4. innerText를 Hello로 설정
+- 상기 append부터 innerText까지의 속성설정에 순서가 상관없는 이유
+  - 브라우저 Web APIs 상에서 클릭 이벤트가 발생하면 콜백함수가 Task Queue에 등록됨
+  - Event Loop는 Task Queue를 확인하는 타이밍에 콜백 함수 전체를 콜스택에 가져와서 끝까지 실행
+  - 실행이 종료되고 난 이후에 렌더링에 이동해서 브라우저 표기를 업데이트 하기 때문에 문제없이 작동됨
