@@ -72,3 +72,34 @@
 - ErrorEquals: 해당 에러가 발생했을때 캐치된다
 - Next: 다음 상태명
 - ResultPath: 전 단계에서 어떤 인풋이 들어왔느냐에 따라 정해지는 다음 경로
+
+## 스텝펑션 - 결과경로
+
+- 결과경로는 다음 스텝으로 넘어갔을때 사용되는 인풋변수로서 작동한다
+
+![images/setpfunction/5.png](images/setpfunction/5.png)
+
+## AWS AppSync
+
+- 앱싱크는 GraphQL의 관리형 서비스이다
+- GraphQL은 어플리케이션에서 정확하게 원하는 데이터만 추출해낼 수 있는 기술
+- 하나 혹은 복수의 리소스로부터 데이터를 조합할 수 있다
+  - NoSQL데이터, RDB데이터, HTTP API등
+  - DynamoDB, Aurora, Elasticsearch 등등
+  - 람다에 의한 커스텀 리소스도 가능
+- 얻어온 데이터는 실시간 웹소켓 MQTT on 웹소켓 등에서 활용 가능
+- 모바일 앱을 위한 기능으로 오프라인 데이터 동기화 등 지원 → 코그니토 싱크의 대체
+- GraphQL 스키마를 업로드하면 시작할 수 있다
+
+![images/setpfunction/6.png](images/setpfunction/6.png)
+
+![images/setpfunction/7.png](images/setpfunction/7.png)
+
+## 앱싱크 보안
+
+- 4개의 보안 인증을 구현할수 있는 방식이 있음
+  - API_KEY
+  - AWS_IAM : IAM Users / Roles / Cross-account Access
+  - OPENID_CONNECT : 오픈아이디 커넥트 프로바이더 / JWT
+  - AMAZON_COGNITO_USER_POOLS
+- 커스텀 도메인 & HTTPS 클라우드프론트를 앱싱크 앞에 둘 수도 있음
