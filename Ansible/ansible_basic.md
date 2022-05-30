@@ -10,7 +10,7 @@
   - Operate
   - 사용자에게 프로덕트가 전달되기까지 개발 및 운영팀 내부에서 오랜 기간 코드가 체류함
 - 데브옵스 방식
-  ![images/ansible_basic/1.png](images/ansible_basic/1.png)
+  ![https://solomotechnology.com/wp-content/uploads/2021/04/7602.1513404277.png](https://solomotechnology.com/wp-content/uploads/2021/04/7602.1513404277.png)
   - 배포에 필요한 모든 중간과정에 있는 오퍼레이션에 도움을 주는 다양한 자동화 툴이 존재
   - git jira
   - gradle
@@ -49,11 +49,21 @@
 
 ## 앤서블 실습 환경 구축
 
-![images/ansible_basic/2.png](images/ansible_basic/2.png)
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dd42816a-c83f-448d-8b91-f4252f6774f7/Untitled.png)
 
-## 지원 운영체제들
+### 설치 순서
 
-- 기본적으로는 유닉스 기반의 운영체제
-  - MacOS
-  - Linux 배포판
-  - FreeBSD
+1. Oracle VM VirtualBox 다운로드 및 설치
+
+   [Oracle VM VirtualBox](https://www.virtualbox.org/)
+
+2. CentOS 7 다운로드
+3. Virtual Machine 구성
+   - Ansible-Server (1024MB)
+   - Ansible-Node01 (512MB)
+   - Ansible-Node02 (512MB)
+   - Ansible-Node03 (512MB)
+4. VM설정변경
+   1. Bridge Network로 구성
+5. VM에 CentOS 설치
+6. hostname 변경 및 IP 설정
