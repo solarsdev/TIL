@@ -78,6 +78,10 @@
 
 ## Backend
 
+### [Go](https://github.com/solarsdev/TIL/blob/master/Go)
+
+- [Interfaces](https://github.com/solarsdev/TIL/blob/master/Go/interfaces.md)
+
 ### [Python](https://github.com/solarsdev/TIL/blob/master/Python)
 
 ##### Python Frameworks
