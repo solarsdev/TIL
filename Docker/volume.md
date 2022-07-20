@@ -2,7 +2,7 @@
 
 ## Docker 레이어 아키텍쳐
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/985408a1-ccf5-40fe-b6e1-b01a87b7ddf8/Untitled.png)
+![images/volume/1.png](images/volume/1.png)
 
 ### 이미지 레이어
 
@@ -43,7 +43,7 @@ $ docker run -d \
 
 ## 볼륨 컨테이너
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0c002ac6-b5be-4230-b215-ffdddf2ddac8/Untitled.png)
+![images/volume/2.png](images/volume/2.png)
 
 - 특정 컨테이너의 볼륨 마운트를 공유
 
