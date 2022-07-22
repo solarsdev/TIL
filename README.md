@@ -147,6 +147,7 @@
 - [Logs](https://github.com/solarsdev/TIL/blob/master/Docker/logs.md)
 - [Image Build](https://github.com/solarsdev/TIL/blob/master/Docker/image_build.md)
 - [Dockerfile](https://github.com/solarsdev/TIL/blob/master/Docker/dockerfile.md)
+- [Image Compression (save and load)](https://github.com/solarsdev/TIL/blob/master/Docker/image_compression.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
