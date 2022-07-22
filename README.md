@@ -148,6 +148,7 @@
 - [Image Build](https://github.com/solarsdev/TIL/blob/master/Docker/image_build.md)
 - [Dockerfile](https://github.com/solarsdev/TIL/blob/master/Docker/dockerfile.md)
 - [Image Compression (save and load)](https://github.com/solarsdev/TIL/blob/master/Docker/image_compression.md)
+- [Image Optimization](https://github.com/solarsdev/TIL/blob/master/Docker/image_optimization.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
