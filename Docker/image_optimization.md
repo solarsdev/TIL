@@ -51,7 +51,7 @@ ENTRYPOINT ["/bin/bash", "-c", "./slacktee.sh"]
 - 베이스 이미지가 경량화된 것을 사용
   - `debian-slim`
   - `alpine`
-  - s`tretch` (파일시스템만 포함되어 있음, `golang`에서 바이너리를 작성한 뒤에 사용)
+  - `stretch` (파일시스템만 포함되어 있음, `golang`에서 바이너리를 작성한 뒤에 사용)
 
 ### 샘플코드에서 활용한 경량화 전략2
 
