@@ -2,7 +2,7 @@
 
 ## Docker Compose 소개
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/105d1bd4-b614-4268-bf0f-c5216aa0f04d/Untitled.png)
+![images/docker-compose/1.png](images/docker-compose/1.png)
 
 ### 도커 컴포트 (Docker Compose)
 
@@ -21,7 +21,7 @@
 - `yaml`의 `services` 키로 서비스 종류를 명세
   - `services`의 하부 키 (서비스) 안에 `scale: 3` 등으로 자연스러운 스케일 가능
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/15c2c888-bd12-4a49-af9c-3e559c7cded4/Untitled.png)
+![images/docker-compose/2.png](images/docker-compose/2.png)
 
 ### 프로젝트 (Project)
 
@@ -42,7 +42,7 @@
 
 - `version`, `services`, `networks`, `volumes`로 총 4개의 최상위 키로 구성
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a4d3d7c-0fdb-4238-b37c-d08d45364188/Untitled.png)
+![images/docker-compose/3.png](images/docker-compose/3.png)
 
 ### 버전 (version)
 
