@@ -78,6 +78,10 @@
 
 ## Backend
 
+### [Java](https://github.com/solarsdev/TIL/blob/master/Java)
+
+- [Information Hiding](https://github.com/solarsdev/TIL/blob/master/Java/information_hiding.md)
+
 ### [Go](https://github.com/solarsdev/TIL/blob/master/Go)
 
 - [Interfaces](https://github.com/solarsdev/TIL/blob/master/Go/interfaces.md)
