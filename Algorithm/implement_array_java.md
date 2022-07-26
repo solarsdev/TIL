@@ -133,28 +133,28 @@ MyArrayTest.java
 
 ```Java
 public class MyArrayTest {
-	public static void main(String[] args) {
-		MyArray array = new MyArray();
-		array.addElement(10);
-		array.addElement(20);
-		array.addElement(30);
-		array.insertElement(1, 50);
-		array.printAll();
+  public static void main(String[] args) {
+    MyArray array = new MyArray();
+    array.addElement(10);
+    array.addElement(20);
+    array.addElement(30);
+    array.insertElement(1, 50);
+    array.printAll();
 
-		System.out.println("===============");
-		array.removeElement(1);
-		array.printAll();
-		System.out.println("===============");
+    System.out.println("===============");
+    array.removeElement(1);
+    array.printAll();
+    System.out.println("===============");
 
-		array.addElement(70);
-		array.printAll();
-		System.out.println("===============");
-		array.removeElement(1);
-		array.printAll();
+    array.addElement(70);
+    array.printAll();
+    System.out.println("===============");
+    array.removeElement(1);
+    array.printAll();
 
-		System.out.println("===============");
-		System.out.println(array.getElement(2));
-	}
+    System.out.println("===============");
+    System.out.println(array.getElement(2));
+  }
 }
 ```
 
@@ -162,20 +162,18 @@ MyObjectArray.java
 
 ```Java
 public class MyObjectArray {
-	private int cout;
-	private Object[] array;
-	public int ARRAY_SIZE;
+  private int cout;
+  private Object[] array;
+  public int ARRAY_SIZE;
 
-	public MyObjectArray()
-	{
-		ARRAY_SIZE = 10;
-		array = new Object[ARRAY_SIZE];
-	}
+  public MyObjectArray() {
+    ARRAY_SIZE = 10;
+    array = new Object[ARRAY_SIZE];
+  }
 
-	public MyObjectArray(int size)
-	{
-		ARRAY_SIZE = size;
-		array = new Object[ARRAY_SIZE];
-	}
+  public MyObjectArray(int size) {
+    ARRAY_SIZE = size;
+    array = new Object[ARRAY_SIZE];
+  }
 }
 ```
