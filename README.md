@@ -87,6 +87,7 @@
 ### [Java](https://github.com/solarsdev/TIL/blob/master/Java)
 
 - [Information Hiding](https://github.com/solarsdev/TIL/blob/master/Java/information_hiding.md)
+- [Generics](https://github.com/solarsdev/TIL/blob/master/Java/generics.md)
 
 ##### [Java Frameworks : Spring](https://github.com/solarsdev/TIL/blob/master/Spring)
 
