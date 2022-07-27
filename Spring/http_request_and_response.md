@@ -177,7 +177,7 @@ request.getRemotePort()=54855
 
 ## Base64
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a7090060-751b-4f00-8075-8c61ff843789/Untitled.png)
+![images/http_request_and_response/7.png](images/http_request_and_response/7.png)
 
 - Base64는 64진법
 - 데이터를 표현하는 하나의 방식
