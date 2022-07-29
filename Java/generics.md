@@ -101,6 +101,7 @@ ArrayList<Object> list = new ArrayList<>();  // JDK 1.5이후
   }
   ```
 - 이렇게 동적 컴파일단계에서 치환되기 때문에 기존의 `Object` 클래스를 사용할와 비교하여 이점이 새
+
   ```java
   // 기존
   ArrayList tvList = new ArrayList();
@@ -264,3 +265,16 @@ System.out.println(<Fruit>makeJuice(fruitBox)); // ERROR
 System.out.println(this.<Fruit>makeJuice(fruitBox)); // OK
 System.out.println(Juicer.<Fruit>makeJuice(fruitBox)); // OK
 ```
+
+## 제네릭 타입의 형변환
+
+- 제네릭 타입과 원시 타입간의 형변환은 가능은 하지만 좋지 못함
+  ```java
+  Box<Object> objBox = null;
+  Box box = (Box) objBox;     // 명목상OK, 사용할때 문제점 다수 발생
+  objBox = (Box<String>) box; // 명목상OK, 사용할때 문제점 다수 발생
+
+  objBox = (Box<Object>) strBox;  // ERROR, 제네릭 타입만을 바꾼 형변환은 인정 안함
+  strBox = (Box<Object>) objBox;  // ERROR, 제네릭 타입만을 바꾼 형변환은 인정 안함
+  // Box<Object> objBox = new Box<String>(); // 이것이 안되는 이유랑 동일
+  ```
