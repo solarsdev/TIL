@@ -36,7 +36,7 @@
 
 - 상태도를 이용하면 어디서 성공하고 실패했는지 명확하게 알 수 있다
 
-![images/setpfunction/2.png](images/setpfunction/2.png)
+![images/stepfunction/2.png](images/stepfunction/2.png)
 
 ## 스텝펑션 에러 핸들링
 
@@ -55,7 +55,7 @@
 
 ## 스텝펑션 - 재시도
 
-![images/setpfunction/3.png](images/setpfunction/3.png)
+![images/stepfunction/3.png](images/stepfunction/3.png)
 
 - 상태는 위에서 아래로 가면서 평가된다
 - ErrorEquals: 해당 에러가 발생했을때 캐치된다
@@ -66,7 +66,7 @@
 
 ## 스텝펑션 - 캐치의 흐름
 
-![images/setpfunction/4.png](images/setpfunction/4.png)
+![images/stepfunction/4.png](images/stepfunction/4.png
 
 - 상태는 위에서 아래로 평가된다
 - ErrorEquals: 해당 에러가 발생했을때 캐치된다
@@ -77,7 +77,7 @@
 
 - 결과경로는 다음 스텝으로 넘어갔을때 사용되는 인풋변수로서 작동한다
 
-![images/setpfunction/5.png](images/setpfunction/5.png)
+![images/stepfunction/5.png](images/stepfunction/5.png)
 
 ## AWS AppSync
 
@@ -91,9 +91,9 @@
 - 모바일 앱을 위한 기능으로 오프라인 데이터 동기화 등 지원 → 코그니토 싱크의 대체
 - GraphQL 스키마를 업로드하면 시작할 수 있다
 
-![images/setpfunction/6.png](images/setpfunction/6.png)
+![images/stepfunction/6.png](images/stepfunction/6.png)
 
-![images/setpfunction/7.png](images/setpfunction/7.png)
+![images/stepfunction/7.png](images/stepfunction/7.png)
 
 ## 앱싱크 보안
 
