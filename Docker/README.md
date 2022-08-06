@@ -18,3 +18,4 @@
 - [Image Compression (save and load)](https://github.com/solarsdev/TIL/blob/master/Docker/image_compression.md)
 - [Image Optimization](https://github.com/solarsdev/TIL/blob/master/Docker/image_optimization.md)
 - [Docker Compose](https://github.com/solarsdev/TIL/blob/master/Docker/docker-compose.md)
+- [Grafana MySQL](https://github.com/solarsdev/TIL/blob/master/Docker/granafa_mysql.md)
