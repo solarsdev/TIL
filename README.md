@@ -189,6 +189,7 @@
 
 - [Docker CICD](https://github.com/solarsdev/TIL/blob/master/Docker/docker_cicd.md)
 - [Development with Docker](https://github.com/solarsdev/TIL/blob/master/Docker/dev_with_docker.md)
+- [Managing Operation](https://github.com/solarsdev/TIL/blob/master/Docker/managing_operation.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
