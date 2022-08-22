@@ -193,6 +193,8 @@
 
 ### [Kubernetes](https://github.com/solarsdev/TIL/blob/master/Kubernetes)
 
+- [Kubernetes 101](https://github.com/solarsdev/TIL/blob/master/Kubernetes/kubernetes_101.md)
+
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
 - [Traditional IT and Challenges](https://github.com/solarsdev/TIL/blob/master/Terraform/traditional_it_and_challenges.md)
