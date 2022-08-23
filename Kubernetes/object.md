@@ -51,42 +51,42 @@
 apiVersion: apps/v1 # 오브젝트를 생성할 때 사용하는 API 버전
 kind: Deployment # 생성하고자 하는 오브젝트 종류
 metadata: # 오브젝트를 구분지을수 있는 정보, name, resourceVersion, labels, namespace, ...
-	name: nginx-deployment
+  name: nginx-deployment
 spec: # 사용자가 원하는 오브젝트 상태로 선언할 수 있는 속성은 오브젝트 종류마다 다르다 *https://kubernetes.io/docs/reference/kubernetes-api/
-	selector:
-		matchLabels:
-			app: nginx
-	replicas: 2
-	template:
-		metadata:
-			labels:
-				app: nginx
-		spec:
-			containers:
-			- name: nginx
-				image: nginx:1.14.2
-				ports:
-				- containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+      spec:
+        containers:
+          - name: nginx
+          image: nginx:1.14.2
+          ports:
+          - containerPort: 80
 ```
 
 ### 쿠버네티스가 오브젝트 상태를 알려주는 status 필드
 
 ```yaml
 status:
-	availableReplicas: 2
-	conditions:
-		- lastTransitionTime: '2022-02-06T12:28:39Z'
-			lastUpdateTime: '2022-02-06T12:28:39Z'
-			message: Deployment has minimum availability.
-			reason: MinimumReplicasAvailable
-			status: 'True'
-			type: Available
-			- lastTransitionTime: '2022-02-06T12:28:16Z'
-				lastUpdateTime: '2022-02-06T12:28:39Z'
-				message: ReplicaSet "my-app-5b7548d6b" has successfully progressed.
-				reason: NewReplicaSetAvailable
-				status: 'True'
-				type: Progressing
+  availableReplicas: 2
+  conditions:
+    - lastTransitionTime: '2022-02-06T12:28:39Z'
+      lastUpdateTime: '2022-02-06T12:28:39Z'
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: 'True'
+      type: Available
+      - lastTransitionTime: '2022-02-06T12:28:16Z'
+        lastUpdateTime: '2022-02-06T12:28:39Z'
+        message: ReplicaSet "my-app-5b7548d6b" has successfully progressed.
+        reason: NewReplicaSetAvailable
+        status: 'True'
+        type: Progressing
 observedGeneration: 1
 readyReplicas: 2
 replicas: 2
