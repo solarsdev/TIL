@@ -201,6 +201,7 @@
 - [Label and Selector](https://github.com/solarsdev/TIL/blob/master/Kubernetes/label_and_selector.md)
 - [Practice Label and Selector](https://github.com/solarsdev/TIL/blob/master/Kubernetes/practice_label_selector.md)
 - [Using nodeSelector](https://github.com/solarsdev/TIL/blob/master/Kubernetes/using_nodeselector.md)
+- [ReplicaSet](https://github.com/solarsdev/TIL/blob/master/Kubernetes/replica_set.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
