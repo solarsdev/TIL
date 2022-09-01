@@ -14,3 +14,4 @@
 - [ReplicaSet for Duplicate Pod](https://github.com/solarsdev/TIL/blob/master/Kubernetes/replica_set_for_duplicate_pod.md)
 - [ReplicaSet after Pod is deleted](https://github.com/solarsdev/TIL/blob/master/Kubernetes/replica_set_test_after_pod_deleted.md)
 - [Change Pod Template](https://github.com/solarsdev/TIL/blob/master/Kubernetes/change_pod_template.md)
+- [Change replicas on Running ReplicaSet](https://github.com/solarsdev/TIL/blob/master/Kubernetes/change_replicas_on_running_replica_set.md)
