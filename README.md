@@ -203,6 +203,7 @@
 - [Using nodeSelector](https://github.com/solarsdev/TIL/blob/master/Kubernetes/using_nodeselector.md)
 - [ReplicaSet](https://github.com/solarsdev/TIL/blob/master/Kubernetes/replica_set.md)
 - [ReplicaSet for Duplicate Pod](https://github.com/solarsdev/TIL/blob/master/Kubernetes/replica_set_for_duplicate_pod.md)
+- [ReplicaSet after Pod is deleted](https://github.com/solarsdev/TIL/blob/master/Kubernetes/replica_set_test_after_pod_deleted.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
