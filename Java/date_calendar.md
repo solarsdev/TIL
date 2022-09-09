@@ -109,10 +109,14 @@ int lastDayOfMonth = cal.getActualMaximum(Calendar.DATE); // 이 달의 마지�
 ```
 
 - `Calendar`에 정의된 필드
-  ![images/date_calendar/1.png](images/date_calendar/1.png)
-  - `WEEK_OF_YEAR` (`1`월 `1`일로부터의 일)
-  - `MONTH`의 시작이 `0`인것에 주의 (요일은 또 `1`부터 시작함)
-    ![images/date_calendar/2.png](images/date_calendar/2.png)
+
+![images/date_calendar/1.png](images/date_calendar/1.png)
+
+- `WEEK_OF_YEAR` (`1`월 `1`일로부터의 일)
+- `MONTH`의 시작이 `0`인것에 주의 (요일은 또 `1`부터 시작함)
+
+![images/date_calendar/2.png](images/date_calendar/2.png)
+
 - `clear()`는 `Calendar` 객체의 모든 필드를 초기화
   - 초기화시 `EPOCH TIME`으로 초기화됨
   - `EPOCH TIME`은 유닉스 타임으로 불리는데 컴퓨터가 처음 존재하기 시작한 `1970년 1월 1일 0시`로 정함
