@@ -233,9 +233,11 @@ int size();
 ### 배열의 장점
 
 - 배열은 구조가 간단하고 데이터를 읽는데 걸리는 시간(`access time`)이 짧음
-  ![images/collection_framework/1.png](images/collection_framework/1.png)
-  - 연속적인 데이터이므로 요소를 읽을때 메모리에 직접 접근할경우 객체사이즈 \* 요소크기로 접근가능
-  - O(1)
+
+![images/collection_framework/1.png](images/collection_framework/1.png)
+
+- 연속적인 데이터이므로 요소를 읽을때 메모리에 직접 접근할경우 객체사이즈 \* 요소크기로 접근가능
+- O(1)
 
 ### 배열의 단점
 
@@ -257,8 +259,11 @@ int size();
 - 배열의 크기변경, 비 순차적인 데이터의 추가, 삭제에서의 오버헤드를 해결하고자 나온 구현체
 - 배열과 달리 `LinkedList`는 불연속적으로 존재하는 데이터를 연결 (`Link`)
 - 이렇게 하면 단 한번의 참조변경으로 데이터를 삭제 가능
-  ![images/collection_framework/2.png](images/collection_framework/2.png)
-  - 이후에는 `GC`가 찾아와서 끊어진 `0x350`를 회수함
+
+![images/collection_framework/2.png](images/collection_framework/2.png)
+
+- 이후에는 `GC`가 찾아와서 끊어진 `0x350`를 회수함
+
 - `LinkedList`의 각 객체는 `Node`로 정의됨
   ```java
   class Node {
