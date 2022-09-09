@@ -600,3 +600,153 @@ public interface Comparable {
 1. A, B 비교
 2. `compare`
 3. 반복
+
+## `HashSet` (순서X, 중복X)
+
+- `Set`의 구현체로 대표적인것은 `HashSet`과 `TreeSet`이 있음
+
+### `HashSet`
+
+- `Set`인터페이스를 구현한 대표적인 컬렉션 클래스
+- 순서를 유지하려면, `LinkedHashSet` 클래스를 사용하면 됨
+
+### `TreeSet`
+
+- 범위 검색과 정렬에 유리한 컬렉션 클래스
+- `HashSet`보다 데이터 추가, 삭제에 시간이 더 걸림
+
+### `HashSet`의 생성자
+
+```java
+HashSet();
+HashSet(Collection c);
+HashSet(int initialCapacity);
+HashSet(int initialCapacity, float loadFactor); // loadFactor는 언제 해시셋을 늘릴지 정함 예를 들어 0.8이면 80% 찼을때 증가시킴
+```
+
+### `HashSet`의 메서드
+
+```java
+boolean add(Object o);
+boolean addAll(Collection c);
+boolean remove(Object o);
+boolean removeAll(Collection c);
+boolean retainAll(Collection c); // 컬렉션 클래스와 겹치는 것만 남기고 나머지는 삭제
+void clear(); // 모두 식제
+
+boolean contains(Object o);
+boolean containsAll(Collection c); // 모두 다 들어있으면 true
+Iterator iterator();
+
+boolean isEmpty();
+int size();
+Object[] toArray();
+Object[] toArray(Object[] a);
+```
+
+## `HashSet` 추가자료
+
+- `HashSet`은 객체를 저장하기 전에 기존에 같은 객체가 있는지 확인
+- 같은 객체가 없으면 저장하고 있으면 저장하지 않음
+- `boolean add(Object o);` 는 저장할 객체의 `equals()`와 `hashCode()`를 호출
+- 커스텀으로 정의한 객체의 경우 `equals()`와 `hashCode()`를 제대로 오버라이딩 하지 않으면 중복을 보장할 수 없음
+
+```java
+class Person {
+	private String name;
+	private int age;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.name, this.age); // 최근에 자주 사용하는 방식
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!obj instanceof Person) {
+			return false;
+		}
+		Person tmp = (Person)obj;
+		return this.name.equals(tmp.name) && this.age == tmp.age;
+}
+```
+
+## `TreeSet` (범위 탐색, 정렬)
+
+![images/collection_framework/3.png](images/collection_framework/3.png)
+
+- 이진 탐색 트리(`binary search tree`)로 구현
+- 범위 탐색과 정렬에 유리
+- 이진 트리는 모든 노드가 최대 `2`개(`0~2`)의 하위 노드를 갖음
+- 각 요소(`node`)가 나무(`tree`)형태로 연결됨 (`LinkedList`의 변형)
+
+```java
+class TreeNode {
+	TreeNode left;
+	Object element;
+	TreeNode right;
+}
+
+// LinkedList와 비교해보자
+class Node {
+	Node next;
+	Object obj;
+}
+```
+
+## 이진 탐색 트리 (`binary search tree`)
+
+- 부모보다 작은 값은 왼쪽, 큰 값은 오른쪽에 저장
+- 이진 트리 (`binary tree`) 와의 차이점
+  - 부모 자식 노드간의 크고 작음에 따라 정렬이 되어 있지 않음
+  - 단순히 자식 노드를 `0~2`개 가질 수 있는 트리형태의 자료구조임
+- 이진트리의 단점
+  - 데이터가 많아질 수록 추가, 삭제에 시간이 더 걸림 (비교 횟수 증가)
+    - 데이터를 추가할 때 트리가 커질수록 비교를 하면서 트리를 타야 하기 때문임
+
+## `TreeSet`에 데이터 저장
+
+```java
+boolean add(Object o);
+
+// HashSet의 경우에는 아래 메카니즘으로 중복을 체크함
+// 1. equals()
+// 2. hashCode()
+
+// TreeSet의 경우에는
+// compare()를 호출해서 비교
+```
+
+### `TreeSet` 생성자
+
+```java
+TreeSet();
+TreeSet(Collection c);
+TreeSet(Comparator comp); // 주어진 정렬기준으로 정렬하는 TreeSet을 생성
+// 원래 TreeSet에 사용되는 객체들은 기본적으로 Comparable을 구현해야 함
+// 구현된 Comparable과 다른 조건을 사용하고 싶을때는 Comparator를 별도로 제공해서 이용 가능
+```
+
+### `TreeSet` 메서드
+
+```java
+Object first();
+Object last();
+
+// 지정된 객체와 같은 객체를 반환, 없으면 큰 값을 가진 객체 중 제일 가까운 값의 객체를 반환, 없으면 null
+Object ceiling(Object o); // 올림
+Object floor(Object o); // 버림
+Object higher(Object o); // 더 큰거
+Object lower(Object o); // 더 작은거
+
+SortedSet subSet(Object fromElement, Object toElement); // from to 포함시켜서
+SortedSet headSet(Object toElement); // 처음부터 to까지
+SortedSet tailSet(Object from Element); // 지정된것부터 마지막까지
+```
+
+- `TreeSet`은 `Comparable` 또는 `Comparator`를 구현하지 않은 객체를 `add()`하면 에러를 냄
+
+## 트리 순회 (`tree traversal`)
+
+- 이진 트리의 모든 노드를 한번씩 읽는 것을 순회(`traversal`)라고 함
+- 전위, 중위, 후위 순회법이 있으며, 중위 순회하면 오름차순으로 정렬됨
