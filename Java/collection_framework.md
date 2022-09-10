@@ -755,3 +755,202 @@ SortedSet tailSet(Object from Element); // 지정된것부터 마지막까지
 
 - 이진 트리의 모든 노드를 한번씩 읽는 것을 순회(`traversal`)라고 함
 - 전위, 중위, 후위 순회법이 있으며, 중위 순회하면 오름차순으로 정렬됨
+
+## `HashMap`과 `Hashtable` (순서X, 중복(키X, 값O))
+
+- `Map` 인터페이스의 구현체
+- 데이터를 키와 값의 쌍으로 저장
+- `Hashtable`은 이전 버전이며 동기화 처리가 되어 있음
+- `HashMap`은 새로운 버전이며 동기화 처리가 되어 있지 않음
+  - `ConcurrentHashMap`을 이용하면 동기화 처리가 되어 있는 `HashMap`을 사용할 수 있음
+- `TreeMap`은 이진 탐색 트리를 구현한 구현체임
+
+### `HashMap`
+
+- `Map` 인터페이스를 구현한 대표적인 컬렉션 클래스
+- 순서를 유지하려면 `LinkedHashMap` 클래스를 사용하면 됨
+
+### `TreeMap`
+
+- 범위 검색과 정렬에 유리한 컬렉션 클래스
+- `HashMap`보다 데이터 추가, 삭제에 시간이 더 걸림 (트리구조의 특성 때문임)
+
+## `HashMap`의 키(`key`)와 값(`value`)
+
+- 해싱(`hashing`)기법으로 데이터를 저장
+- 데이터가 많아도 검색이 빠름
+- `Map` 인터페이스를 구현
+- 데이터를 키와 쌍으로 저장
+
+```java
+// 키 -> 컬렉션 내의 키 중에서 유일해야 함
+// 값 -> 키(key)와 달리 데이터의 중복을 허용
+HashMap map = new HashMap();
+map.put("myId", "1234");
+map.put("asdf", "1111");
+map.put("asdf", "1234"); // 업데이트(overwrite)가 되어버림
+```
+
+```java
+public class HashMap extends AbstractMap implements Map, Cloneable, Serializable {
+	transient Entry[] table;
+
+	static class Entry implements Map.entry {
+		final Object key;
+		Object value;
+	}
+}
+
+// 비 객체지향적인 코드
+Object[] key;
+Object[] value;
+
+// 객체지향적인 코드 (HashMap 구현체가 채택한 방식, 현재는 좀 더 바뀜)
+Entry[] table;
+class Entry {
+	Object key;
+	Object value;
+}
+```
+
+### 해시함수의 원리
+
+- 해시 함수는 특정 데이터로부터 인덱싱된 어떤 값을 도출해내는 것
+- 입력에 해당하는 데이터가 동일하다면 출력에 해당하는 값도 동일해야 함
+
+### 해싱 (`hashing`)
+
+- 해시 함수 (`hash function`)로 해시테이블(`hash table`)에 데이터를 저장, 검색
+- 해시 테이블은 해시 값의 배열과 링크드리스트가 조합된 형태
+
+![images/collection_framework/4.png](images/collection_framework/4.png)
+
+- 원시 값의 집합을 어느정도 그룹화 시켜놓고, 충돌이 나는 부분을 연결리스트로 구현하면 데이터의 검색이 용이함
+- 해시테이블에 저장된 데이터를 가져오는 과정
+  1. 키로 해시함수를 호출해서 해시코드를 얻음 (연결리스트가 들어있는 배열의 인덱스)
+  2. 해시코드(해시함수의 반환값)에 대응하는 연결리스트를 배열에서 찾음
+  3. 연결리스트에서 키와 일치하는 데이터를 찾음
+  - 해시함수는 같은 키에 대해서 항상 같은 값을 반환해야 함
+  - 서로 다른 키일지라도 같은 값의 해시코드를 반환할 수도 있음 (충돌)
+
+## `HashMap`의 생성자 및 메서드
+
+- `Map`은 `Collection`의 자손이 아니고, 고유한 자료구조라는 점에 주의해야 함
+
+### 생성자
+
+```java
+HashMap();
+HashMap(int initialCapacity); // 엔트리 배열의 크기
+HashMap(int initialCapacity, float loadFactor); // 엔트리 배열이 어느정도 찼을때 증가시킬지 loadFactor 비율을 정해줌
+HashMap(Map m);
+```
+
+```java
+// 추가
+Object put(Object key, Object value);
+void putAll(Map m)
+
+// 삭제
+Object remove(Object key);
+
+// 변경
+Object replace(Object key, Object value); // 키가 존재하지 않으면 안됨 put은 없을땐 추가 있으면 overwrite
+boolean replace(Object key, Object oldValue, Object newValue);
+
+// 읽기 (엔트리, 키, 값에 대한 Set/Collection을 반환)
+Set entrySet();
+Set keySet();
+Collection values();
+
+// 읽기 Map (값 하나를 구하거나, 존재여부를 확인할때 사용)
+Object get(Object key);
+Object getOrDefault(Object key, Object defaultValue);
+boolean containsKey(Object key);
+boolean containsValue(Object value);
+
+// 기타
+int size();
+boolean isEmpty();
+void clear();
+Object clone(); // 복사
+```
+
+## `Collections`
+
+- 컬렉션을 위한 메서드(`static`)를 제공
+  - `Collections` (컬렉션 메서드)
+  - `Arrays` (배열 메서드)
+  - `Objects` (객체 메서드)
+
+1. 컬렉션 채우기, 복사, 정렬, 검색
+   1. `fill()`
+   2. `copy()`
+   3. `sort()`
+   4. `binarySearch()`
+2. 컬렉션의 동기화
+
+   1. `synchronized<methodName>()`
+
+   - 동기화 메서드를 나눠놓은 이유
+     - 동기화에 소모되는 오퍼레이션이 동기화가 필요없는 앱에서는 오버헤드로 작용하기 때문
+
+   ```java
+   List syncList = Collections.synchronizedList(new ArrayLost(...));
+   ```
+
+3. 변경불가 (`readOnly`) 컬렉션 만들기
+   - `unmodifiable<methodName>()`
+4. 싱글톤 컬렉션 만들기
+
+   - `singleton<methodName>()`
+
+   ```java
+   static List singletonList(Object o);
+   static Set singleton(Object o); // singletonSet이 아님에 주의!
+   static Map singletonMap(Object key, Object value);
+   ```
+
+5. 한 종류의 객체만 저장하는 컬렉션 만들기
+
+   ```java
+   // JDK 1.5 이전 (generics 등장 이전)
+   static Collection checkedCollection(Collection c, Class type);
+   static List checkedList(List list, Class type);
+   static Set checkedSet(Set s, Class type);
+   static Map checkedMap(Map m, Class type);
+   static Queue checkedQueue(Queue q, Class type);
+   static NavigableSet checkedNavigableSet(NavigableSet s, Class type);
+   static SortedSet checkedSortedSet(SortedSet s, Class type);
+   static NavigableMap checkedNavigableMap(NavigableMap m, Class keyType, Class valueType);
+   static SortedMap checkedSortedMap(SortedMap m, Class keyType, Class valueType);
+
+   // example
+   List list = new ArrayList();
+   List checkedList = Collections.checkedList(list, String.class);
+   checkedList.add("abc"); // OK
+   checkedList.add(1); // error
+   ```
+
+## 컬렉션 클래스 정리
+
+### 배열기반
+
+- `ArrayList`, `Vector` (`Object[]`)
+  - `Stack` (`LIFO`)
+
+### 연결기반
+
+- `LinkedList` (배열의 추가삭제가 어렵다는 단점을 보완)
+  - `Queue` (`FIFO`)
+- `TreeMap` (이진탐색 트리구조, 검색 범위검색 정렬기능 향상)
+- `TreeSet`
+
+### 검색기능향상
+
+- `HashMap`, `Hashtable` (`Object`, `Object`)
+  - 배열 + 연결리스트
+  - `LinkedHashMap` (순서가 필요할 때)
+- `HashSet`
+  - `LinkedHashSet` (순서가 필요할때)
+- `Properties` (`String`, `String`) 파일의 읽기 쓰기
