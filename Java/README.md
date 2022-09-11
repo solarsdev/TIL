@@ -8,4 +8,5 @@
 - [Date and Calendar](https://github.com/solarsdev/TIL/blob/master/Java/date_calendar.md)
 - [Collection Framework](https://github.com/solarsdev/TIL/blob/master/Java/collection_framework.md)
 - [Generics](https://github.com/solarsdev/TIL/blob/master/Java/generics.md)
+- [Enums](https://github.com/solarsdev/TIL/blob/master/Java/enums.md)
 - [Annotation](https://github.com/solarsdev/TIL/blob/master/Java/annotation.md)
