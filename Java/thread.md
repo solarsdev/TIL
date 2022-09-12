@@ -312,3 +312,191 @@ Thread(ThreadGroup group, Runnable target, String name, long stackSize);
 ThreadGroup getThreadGroup(); // 쓰레드 자신이 속한 쓰레드 그룹을 반환
 void uncaughtException(Thread t, Throwable e); // 처리되지 않은 예외에 의해 쓰레드 그룹의 쓰레드가 종료되었을때, JVM에 의해 이 메서드가 자동으로 호출됨
 ```
+
+## 데몬 쓰레드 (`daemon thread`)
+
+- 일반 쓰레드(`non-daemon thread`)의 작업을 돕는 보조적인 역할을 수행
+- 일반 쓰레드가 모두 종료되면 자동적으로 종료됨
+- 가비지 컬렉터, 자동저장, 화면 자동갱신 등에 사용됨
+- 무한루프와 조건문을 이용해서 실행 후 대기하다가 특정조건이 만족되면 작업을 수행하고 다시 대기하도록 작성
+
+```java
+@Override
+public void run() {
+	while (true) { // 무한루프
+		try {
+			Thread.sleep(3 * 1000); // 3초마다
+		} catch (InterruptedException e) {
+			// autoSave의 값이 true이면 autoSave()를 호출
+			if (autoSave) {
+				autoSave();
+			}
+		}
+	}
+}
+```
+
+```java
+boolean isDaemon(); // 쓰레드가 데몬 쓰레드인지 확인함 (데몬 쓰레드이면 true를 반환)
+void setDaemon(boolean on); // 쓰레드를 데몬 쓰레드로, 또는 사용자 쓰레드로 변경 (on을 true로 설정하면 데몬 쓰레드가 됨)
+```
+
+- `setDaemon(boolean on);` 은 반드시 `start()`를 호출하기 전에 실행되어야 함
+- 실행중에 `daemon` 상태를 변경하면 `IllegalThreadStateException`이 발생
+
+### 데몬쓰레드를 만드는 이유
+
+- 일반 쓰레드를 사용하면 사용자 쓰레드로 올라가기 때문에 일일히 작업종료를 선언해줘야 함
+- 사용자 쓰레드가 종료(프로그램 종료)시 자동으로 종료되는 쓰레드를 운영하기 위해 데몬 쓰레드를 선언
+
+## 쓰레드의 상태
+
+![images/thread/5.png](images/thread/5.png)
+
+### `NEW`
+
+- 쓰레드가 생성되고 아직 `start()`가 호출되지 않은 상태
+
+### `RUNNABLE`
+
+- 실행 중 또는 실행 가능한 상태
+  - 실행 가능한 상태란, 쓰레드가 실행 중 `OS` 스케줄러에 의해 작업권을 빼앗긴 상태임
+  - 언제든 다시 `OS` 스케줄러에 의해 작업권을 부여받을 수 있음 (순서 or 조건에 의해)
+
+### `BLOCKED`
+
+- 동기화 블럭에 의해서 일서 정지된 상태 (`lock`이 풀릴때 까지 기다리는 상태)
+
+### `WAITING`, `TIMED_WAITING`
+
+- 쓰레드의 작업이 종료되지는 않았지만, 실행가능하지 않은(`runnable` 하지 않은) 상태
+- `TIMED_WAITING`은 일시정지 시간이 지정된 경우를 의미
+- `sleep`등으로 정지중인 상태
+
+### `TERMINATED`
+
+- 쓰레드의 작업이 종료된 상태
+
+## 쓰레드의 실행제어
+
+- 쓰레드의 실행을 제어할 수 있는 메서드가 제공됨
+
+![images/thread/6.png](images/thread/6.png)
+
+- `static` sleep → 잠들기
+- join → 기다리기
+- interrupt → 잠들어있거나 기다리는 쓰레드를 깨움
+- stop → 쓰레드 즉시 종료
+- suspend → 일시정지
+- resume → 재개
+- `static` yield → 양보 (실행중인 쓰레드에게 즉시 양보하고 넘어감)
+- `static`이 붙어있는 메서드의 경우에는 자기 자신에게만 수행 가능함
+
+## `sleep()`
+
+- 현재 쓰레드를 지정된 시간동안 멈추게 함
+- `static` 메서드로 **자기 자신에 대해서만** 적용이 가능
+
+```java
+static void sleep(long millis); // 천분의 일초
+static void sleep(long millis, int nanos); // 천분의 일초+ 나노초
+```
+
+- 예외처리를 해야 함
+
+  - `InterruptedException`이 발생하면 깨어남
+  - 실제로 Thread.sleep()으로 자고 있는 쓰레드의 구문에 interrupt()를 던지게 되면 예외를 발생시킴
+    ```java
+    throw new InterruptedException();
+    ```
+  - 예외처리를 해야 하기 때문에 코드가 지저분해지고, 그래서 직접 사용하기보다는 별도 메서드를 작성
+
+    ```java
+    void delay(long millis) {
+    	try {
+    		Thread.sleep(millis);
+    	} catch (InterruptedException e) {
+    		// 예외캐치
+    	}
+    }
+
+    void test() {
+    	delay(1000);
+    }
+    ```
+
+- `sleep` 상태의 쓰레드는 지정된 시간이 지나가거나 `Interrupt`가 발생하지 않으면 깨어나지 않음
+
+## `interrupt()`
+
+- 대기상태(`WAITING`)인 쓰레드를 실행대기 상태(`RUNNABLE`)로 만듬
+
+```java
+void interrupt(); // 쓰레드의 interrupted상태를 false에서 true로 변경
+boolean isInterruped(); // 쓰레드의 interrupted 상태를 반환
+static boolean interruped(); // 현재 쓰레드의 interruped상태를 알려주고, false로 초기화
+```
+
+- `isInterrupted`와 `interrupted`의 차이
+  - `isInterrupted`는 수행중인 쓰레드가 인터럽트에 의해서 깨어나 동작하고 있는지를 확인만 함
+  - `interrupted`는 현재 상태를 반환함과 동시에 `interrupted`를 `false`로 변경
+
+## `suspend()`, `resume()`, `stop()`
+
+- 쓰레드의 실행을 일시정지
+
+```java
+void suspend(); // 쓰레드를 일시정지(Waiting) 시킴
+void resume(); // suspend()에 의해 일시정지된 쓰레드를 실행대기(Runnable)상태로 만듬
+void stop(); // 쓰레드를 즉시 종료시킴
+```
+
+- 상기 3개의 메서드는 `deprecated`됨
+  - 교착상태(`dead-lock`)를 발생시키기 쉬운 메서드들
+
+## `join()`
+
+- 지정된 시간동안 특정 쓰레드가 작업하는 것을 기다림
+
+```java
+void join(); // 작업이 끝날 때 까지
+void join(long millis); // 기간 지정
+void join(long millis, int nanos); // 나노초 개념 도입
+```
+
+```java
+// sample code
+@Override
+public void run() {
+	while (true) {
+		try {
+			Thread.sleep(10 * 1000); // 10초 대기
+		} catch(InterruptException e) {
+			System.out.println("awaken by interrupt().");
+		}
+
+		gc(); // garbage collection을 수행
+		System.out.println("Garbage Collected. Free memory : " + freeMemory());
+	}
+}
+
+//
+for (int i=0; i <20; i++) {
+	requiredMemory = (int) (Math.random() * 10) * 20;
+	// 필요한 메모리가 사용할 수 있는 양보다 적거나 전체 메모리의 60%이상 사용했을 경우 gc를 깨움
+	if(gc.freeMemory() < requiredMemory || gc.freeMemory() < gc.totalMemory * 0.4) {
+		gc.interrupt();
+	}
+	gc.usedMemory += requiredMemory;
+	System.out.println("usedMemory: " + gc.usedMemory);
+}
+```
+
+## `yield()`
+
+- 남은 시간을 다음 쓰레드에게 양보하고, 자신(현재 쓰레드)는 실행대기 함
+- `yield()`와 `interrupt()`를 적절히 활용하면, 응답성과 효율을 높일 수 있음
+  - 응답을 대기할때는 `yield()`를 호출
+  - 필요할때는 바로 `interrupt()`를 이용해서 잠자는 쓰레드를 깨우기
+  - 프로그램적으로 판단하기 때문에 `OS` 스케줄러보다 영리한 배분이 가능
+  - `OS` 스케줄러에게 현재 상황을 메서드를 이용해서 바로바로 전달할 수 있음
