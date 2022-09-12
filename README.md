@@ -97,6 +97,10 @@
 - [Enums](https://github.com/solarsdev/TIL/blob/master/Java/enums.md)
 - [Annotation](https://github.com/solarsdev/TIL/blob/master/Java/annotation.md)
 
+##### [Java Advanced](https://github.com/solarsdev/TIL/blob/master/Java)
+
+- [About JVM](https://github.com/solarsdev/TIL/blob/master/Java/about_jvm.md)
+
 ##### [Java Frameworks : Spring](https://github.com/solarsdev/TIL/blob/master/Spring)
 
 - [Deploy to Remote Host](https://github.com/solarsdev/TIL/blob/master/Spring/deploy_remote_host.md)
