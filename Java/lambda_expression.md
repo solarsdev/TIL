@@ -277,3 +277,34 @@ public class LambdaEx4 {
     }
 }
 ```
+
+## Predicate의 결합
+
+### and(), or(), negate()로 두 Predicate를 하나로 결합 (default 메서드)
+
+```java
+Predicate<Integer> p = i -> i < 100;
+Predicate<Integer> q = i -> i < 200;
+Predicate<Integer> r = i -> i % 2 == 0;
+```
+
+```java
+Predicate<Integer> notP = p.negate(); // i >= 100
+Predicate<Integer> all = notP.and(q).or(r); // i>=100 && i<200 || i % 2 == 0
+Predicate<Integer> all2 = notP.and(q.or(r));  // i>=100 && (i < 200 || i%2==0)
+```
+
+```java
+System.out.println(all.test(2)); // true
+System.out.println(all2.test(2)); // false
+```
+
+### 등기비교를 위한 Predicate의 작성에는 isEqual()를 사용 (static 메서드)
+
+```java
+Predicate<String> p = Predicate.isEqual(str1); // isEquals()은 static메서드
+Boolean result = p.test(str2); // str1과 str2가 같은지 비교한 결과를 반환
+
+// 줄임
+boolean result = Predicate.isEqual(str1).test(str2);
+```
