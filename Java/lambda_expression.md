@@ -308,3 +308,69 @@ Boolean result = p.test(str2); // str1과 str2가 같은지 비교한 결과를 
 // 줄임
 boolean result = Predicate.isEqual(str1).test(str2);
 ```
+
+```java
+import java.util.function.Function;
+
+public class LambdaEx7 {
+    public static void main(String[] args) {
+        Function<String, Integer> f = s -> Integer.parseInt(s, 16);
+        Function<Integer, String> g = i -> Integer.toBinaryString(i);
+
+        Function<String, String> h = f.andThen(g);
+        Function<Integer, Integer> h2 = f.compose(g);
+
+        System.out.println(h.apply("FF"));
+        System.out.println(h2.apply(2));
+
+        Function<String, String> f2 = x -> x;
+        System.out.println(f2.apply("AAA"));
+    }
+}
+```
+
+## 메서드 참조 (`method reference`)
+
+### 하나의 메서드만 호출하는 람다식은 “메서드 참조”로 간단히 할 수 있음
+
+1. `static` 메서드 참조
+2. 인스턴스 메서드 참조
+3. 특정 객체 인스턴스 메서드 참조
+
+### `static` 메서드 참조
+
+```java
+Integer method(String s) {
+	return Integer.parseInt(s);
+}
+
+int result = obj.method("123");
+int result = Integer.parseInt("123");
+
+Function<String, Integer> f = (String s) -> Integer.parseInt(s);
+Function<String, Integer> f = Integer::parseInt; // 메서드 참조
+```
+
+- 메서드 참조에서 생략 가능한 이유는 입력과 출력이 이미 지정되어 있기 때문임
+
+## 생성자의 메서드 참조
+
+### 생성자와 메서드 참조
+
+```java
+Supplier<MyClass> s = () -> new MyClass();
+
+Supplier<MyClass> s = MyClass::new;
+
+Function<Integer, MyClass> s = i -> new MyClass(i);
+
+Function<Integer, MyClass> s = MyClass::new;
+```
+
+### 배열과 메서드 참조
+
+```java
+Function<Integer, int[]> f = x -> new int[x]; // 람다식
+
+Function<Integer, int[]> f = int[]::new; // 메서드 참조
+```
