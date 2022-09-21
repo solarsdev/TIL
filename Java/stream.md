@@ -334,6 +334,90 @@ fileStream.map(File::getName)
 	.forEach(System.out::println);
 ```
 
+### 기본형 스트림으로 변환 `mapToInt()`, `mapToLong()`, `mapToDouble()`
+
+- `map()`은 연산의 결과로 `Stream<T>`를 반환
+- 반환하는 타입이 기본형이고, 기본형을 이용해서 최종연산을 하는 경우 기본형 스트림으로 변환하는게 유리
+  - `Integer`, `Long`과 같은 래퍼 클래스를 언박싱하는데 소요되는 오버헤드가 줄기 때문
+- 기본형 스트림은 `sum()`, `average()`, `max()`, `min()`과 같은 기본형 타입에 특화된 최종 연산 메서드를 제공
+- 최종연산을 반복적으로 사용할 수 없음 (예를 들면, `sum()`, `average()`를 연속적으로)
+  - 예를 들면 `sum()`, `average()` 등을 전부 구하고 싶을 경우 (스트림이 닫혀버림)
+  - 스트림이 닫히기 때문에, 별도 메서드를 제공하고 있음 `summaryStatistics()`
+
+```java
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StreamEx3 {
+    public static void main(String[] args) {
+        Student[] students = {
+                new Student("가자바", 3, 300)
+                , new Student("나자바", 1, 200)
+                , new Student("다자바", 2, 100)
+                , new Student("라자바", 2, 150)
+                , new Student("마자바", 1, 200)
+                , new Student("바자바", 3, 290)
+                , new Student("사자바", 3, 180)
+        };
+        Stream<Student> studentStream = Stream.of(students);
+
+        studentStream.sorted(Comparator.comparing(Student::getClassNo)
+                        .thenComparing(Comparator.naturalOrder()))
+                .forEach(System.out::println);
+
+        studentStream = Stream.of(students);
+        IntStream scoreStream = studentStream.mapToInt(Student::getTotalScore);
+
+        IntSummaryStatistics stat = scoreStream.summaryStatistics();
+        System.out.println("count=" + stat.getCount());
+        System.out.println("sum=" + stat.getSum());
+        System.out.println("avg=" + stat.getAverage());
+        System.out.println("min=" + stat.getMin());
+        System.out.println("max=" + stat.getMax());
+    }
+}
+
+class Student implements Comparable<Student> {
+    private final String name;
+    private final int classNo;
+    private final int totalScore;
+
+    public Student(String name, int classNo, int totalScore) {
+        this.name = name;
+        this.classNo = classNo;
+        this.totalScore = totalScore;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getClassNo() {
+        return classNo;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s, %d, %d]", name, classNo, totalScore);
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return o.totalScore - totalScore;
+    }
+}
+```
+
+### 기본형 스트림을 객체형 스트림으로 변환 `mapToObj()`
+
+- `IntStream`, `LongStream`과 같은 기본형 스트림을 다시 `Stream<T>` 같은 객체형 스트림으로 변경
+
 ### 스트림의 스트림을 스트림으로 변환 `flatMap()`
 
 ```java
