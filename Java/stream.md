@@ -226,3 +226,127 @@ Stream<String> lines() // BufferedReader클래스의 메서드
 Stream emptyStream = Stream.empty(); // empty()는 빈 스트림을 생성해서 반환
 long count = emptyStream.count(); // 0
 ```
+
+## 스트림의 연산 (중간 연산)
+
+![images/stream/2.png](images/stream/2.png)
+
+### 스트림 자르기 `skip()`, `limit()`
+
+```java
+Stream<T> skip(long n) // 앞에서부터 n개 건너뛰기
+Stream<T> limit(long maxSize) // maxSize 이후를 생략
+
+// example
+IntStream intStream = IntStream.rangeClosed(1, 10); // 1~10까지 요소를 담은 스트림
+intStream.skip(3).limit(5); // 4,5,6,7,8
+```
+
+### 스트림의 요소 걸러내기 `filter()`, `distinct()`
+
+```java
+Stream<T> filter(Predicate<? super T> predicate) // 조건에 맞지 않는 요소 제거
+Stream<T> distinct() // 중복 제거
+
+// example
+IntStream intStream = IntStream.of(1,2,2,3,3,3,4,5,5,6);
+intStream.distinct(); // 1,2,3,4,5,6
+
+// example
+IntStream intStream = IntStream.rangeClosed(1, 10); // 1~10까지 요소를 담은 스트림
+intStream.filter(i->i%2==0); // check even (2,4,6,8,10)
+
+// 중간연산은 연속으로 사용 가능
+intStream.filter(i->i%2==0 && i%3!=0);
+intStream.filter(i->i%2==0).filter(i%3!=0);
+```
+
+### 스트림 정렬 `sorted()`
+
+```java
+Stream<T> sorted() // 스트림 요소의 기본 정렬(Comparable)로 정렬
+Stream<T> sorted(Comparator<? super T> comparator) // 지정된 Comparator로 정렬
+```
+
+![images/stream/3.png](images/stream/3.png)
+
+### `Comparator`의 `comparing()`으로 정렬 기준을 제공
+
+```java
+comparing(Function<T, U> keyExtractor)
+comparing(Function<T, U> keyExtractor, Comparator<U> keyComparator)
+
+// example
+studentStream.sorted(Comparator.comparing(Student::getBan)) // 반별로 정렬
+```
+
+### 추가 정렬 기준을 제공할 때는 `thenComparing()`을 사용
+
+```java
+thenComparing(Comparator<T> other)
+thenComparing(Function<T, U> keyExtractor)
+thenComparing(Function<T, U> keyExtractor, Comparator<U> keyComparator)
+
+// example
+studentStream.sorted(Comparator.comparing(Student::getBan) // 반별로 정렬
+                               .thenComparing(Student::getTotalScore) // 그 다음 총점
+                               .thenComparing(Student::getName)) // 그 다음 이름
+```
+
+### 스트림의 요소 변환 `map()`
+
+```java
+Stream<R> map(Function<? super T, ? extends R> mapper) // Stream<T> -> Stream<R>
+```
+
+- 이 연산의 실행으로 인해 스트림의 타입이 변경됨
+
+```java
+Stream<File> fileStream = Stream.of(new File("Ex1.java"), new File("Ex1"), new File("Ex1.bak"), new File("Ex2.java"), new File("Ex1.txt"));
+Stream<String> filenameStream = fileStream.map(File::getName);
+// 파일 스트림을 스트링 스트림으로 변경
+// 정확하게는 파일 스트림에서 각 파일별로 제공하는 getName을 이용해서 새로운 스트림을 만든 것
+filenameStream.forEach(System.out::println); // 스트림의 모든 파일의 이름을 출력
+
+// example 파일 확장자 뽑아내기
+fileStream.map(File::getName)
+	.filter(s -> s.indexOf('.') != -1)
+	.map(s -> s.substring(s.indexOf('.')+1))
+	.map(String::toUpperCase)
+	.distinct()
+	.forEach(System.out::println);
+```
+
+### 스트림의 요소를 소비하지 않고 엿보기 `peek()`
+
+```java
+Stream<T> peek(Consumer<? super T> action) // 중간 연산 (스트림 소비 x)
+void forEach(Consumer<? super T> action) // 최종 연산 (스트림 소비 o)
+
+// example
+fileStream.map(File::getName)
+	.filter(s -> s.indexOf('.') != -1)
+	.peek(System.out::println)
+	.map(s -> s.substring(s.indexOf('.')+1))
+	.peek(System.out::println);
+	.map(String::toUpperCase)
+	.distinct()
+	.forEach(System.out::println);
+```
+
+### 스트림의 스트림을 스트림으로 변환 `flatMap()`
+
+```java
+Stream<String[]> strArrStrm = Stream.of(new String[]{"abc", "def", "ghi"}
+                                       ,new String[]{"ABC", "DEF", "GHI"});
+
+Stream<Stream<String>> strStrStrm = strArrStrm.map(Arrays::stream);
+```
+
+![images/stream/4.png](images/stream/4.png)
+
+```java
+Stream<String> strStream = strArrStrm.flatMap(Arrays::stream); // Arrays.stream(T[])
+```
+
+![images/stream/5.png](images/stream/5.png)
