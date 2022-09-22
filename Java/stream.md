@@ -434,3 +434,118 @@ Stream<String> strStream = strArrStrm.flatMap(Arrays::stream); // Arrays.stream(
 ```
 
 ![images/stream/5.png](images/stream/5.png)
+
+## `Optional<T>`
+
+### `T`타입 객체의 래퍼클래스 `Optional<T>`
+
+```java
+public final class Optional<T> {
+	private final T value; // 모든 종류의 객체를 저장 가능 or null
+	...
+}
+```
+
+### 왜 사용?
+
+1. `null`을 직접 다루는 것은 위험 (`NPE`) → 객체에 담아서 간접적으로 `null`을 다루기 위함
+2. `null`체크를 하려면 `if`문 필수, 코드가 지저분해짐
+
+```java
+Object result = getResult(); // 반환값은 1. null or 2. 객체
+System.out.println(result.toString()); // null일 경우 NPE 발생
+
+// 이렇게 코드가 지저분해짐
+if(result != null) { // 항상 널체크 필요
+	System.out.println(result.toString());
+}
+```
+
+### 기존에는 `null`을 직접 참조했지만 이제는 `Optional`을 통해 `null`을 간접적으로 다룸
+
+```java
+String str = null; // ❌
+String str = ""; // ✅
+
+int[] nums = null; // ❌
+int[] nums = new int[0]; // ✅
+```
+
+![images/stream/6.png](images/stream/6.png)
+
+## `Optional<T>` 객체 생성하기
+
+### `Optional<T>` 객체를 생성하는 다양한 방법
+
+```java
+String str = "abc";
+Optional<String> optVal = Optional.of(str);
+Optional<String> optVal = Optional.of("abc");
+Optional<String> optVal = Optional.of(null); // NullPointerException 발생
+Optional<String> optVal = Optional.ofNullable(null); // OK
+```
+
+![images/stream/7.png](images/stream/7.png)
+
+### `null` 대신 빈 `Optional<T>`객체를 사용하자
+
+```java
+Optional<String> optVal = null; // ❌ 널로 초기화하는 것은 바람직하지 않음
+Optional<String> optVal = Optional.empty();
+
+Object[] obj = null; // ❌
+Object[] obj = new Object[0]; // ✅
+```
+
+## `Optional<T>` 객체의 값 가져오기
+
+### `Optional` 객체의 값 가져오기 `get()`, `orElse()`, `orElseGet()`, `orElseThrow()`
+
+```java
+Optional<String> optVal = Optional.of("abc");
+String str1 = optVal.get(); // optVal에 저장된 값을 반환, null이면 예외발생
+String str2 = optVal.orElse(""); // null일때 반환할 값을 줌
+String str3 = optVal.orElseGet(String::new); // 람다식 사용가능 () -> new String()
+String str4 = optVal.orElseThrow(NullPointerException::new); // 널이면 예외 발생
+
+T orElseGet(Supplier<? extends T> other)
+T orElseThrow(Supplier<? extends X> exceptionSupplier)
+```
+
+### `Optional` 객체의 값이 `null`이면 `false`, `null`이 아니면 `true`를 반환 `isPresent()`
+
+```java
+if(Optional.ofNullable(str).isPresent()) { // if(str != null) {
+	System.out.println(str);
+}
+
+Optional.ofNullable(str).ifPresent(System.out::println);
+```
+
+## `Optional`의 기본형 `OptionalInt`, `OptionalLong`, `OptionalDouble`
+
+### 기본형 값을 감싸는 래퍼클래스 → 성능만 (`Optional<Integer>`보다 나음)
+
+```java
+public final class OptionalInt {
+	...
+	private final boolean isPresent;
+	private final int value;
+}
+```
+
+### `OptionalInt`의 값 가져오기 `int getAsInt()`
+
+```java
+Optional<T> T get()
+OptionalInt int getAsInt()
+OptionalLong long getAsLong()
+OptionalDouble double getAsDouble()
+```
+
+### 빈 `Optional` 객체와의 비교
+
+```java
+OptionalInt opt = OptionalInt.of(0); // isPresent() true
+OptionalInt opt2 = OptionalInt.empty(); // isPresent() false
+```
