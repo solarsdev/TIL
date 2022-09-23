@@ -549,3 +549,79 @@ OptionalDouble double getAsDouble()
 OptionalInt opt = OptionalInt.of(0); // isPresent() true
 OptionalInt opt2 = OptionalInt.empty(); // isPresent() false
 ```
+
+## 스트림의 연산 (최종 연산)
+
+![images/stream/8.png](images/stream/8.png)
+
+### 스트림의 연산
+
+- 중간 연산
+  - n번 수행 가능
+  - Stream을 반환하기 때문에 연속해서 중간연산 수행 가능
+- 최종 연산
+  - 1번 수행 가능
+  - 기본형 또는 Optional<T>를 반환하므로 더이상 스트림 연산 수행 불가
+
+## forEach()
+
+### 스트림의 모든 요소에 지정된 작업을 수행 forEach(), forEachOrdered()
+
+```java
+void forEach(Consumer<? super T> action) // 병렬스트림인 경우 순서가 보장되지 않음
+void forEachOrdered(Consumer<? super T> action) // 병렬스트림인 경우에도 순서가 보장됨
+
+IntStream.range(1, 10).sequantial().forEach(System.out::println); // ordered
+IntStream.range(1, 10).sequantial().forEach(System.out::println); // ordered
+
+IntStream.range(1, 10).parallel().forEach(System.out::println); // not ordered
+IntStream.range(1, 10).parallel().forEach(System.out::println); // ordered
+```
+
+## 조건 검사
+
+### allMatch(), anyMatch(), noneMatch()
+
+```java
+boolean allMatch(Predicate<? super T> predicate) // 모든 요소가 조건을 만족시키면 true
+boolean anyMatch(Predicate<? super T> predicate) // 한 요소라도 조건을 만족시키면 true
+boolean noneMatch(Predicate<? super T> predicate) // 모든 요소가 조건을 만족시키지 않으면 true
+
+// example
+boolean hasFailedStudent = studentStream.anyMatch(s -> s.getTotalScore() <= 100);
+```
+
+### 조건에 일치하는 요소 찾기 findFirst(), findAny()
+
+```java
+Optional<T> findFirst() // 첫 번째 요소를 반환, 순차 스트림에 사용
+Optional<T> findAny() // 아무거나 하나를 반환, 병렬 스트림에 사용
+
+// example
+Optional<Student> result = studentStream.filter(s -> s.getTotalScore <= 100).findFirst();
+Optional<Student> result = parallelStream.filter(s -> s.getTotalScore <= 100).findAny();
+```
+
+## 스트림 최종연산 (reduce)
+
+### 스트림의 요소를 하나씩 줄여(reduce)가면서 연산을 수행
+
+- 누적연산 accumulator (accumulate 누적하다
+
+```java
+Optional<T> reduce(BinaryOperator<T> accumulator)
+T           reduce(T identity, BinaryOperator<T> accumulator)
+U           reduce(U identity, BinaryOperator<T> accumulator, BinaryOperator<U> combiner)
+
+// identity 초기값
+// accumulator 이전 연산결과와 스트림의 요소에 수행할 연산
+// combiner 병렬처리된 결과를 합치는데 사용할 연산 (병렬 스트림)
+```
+
+```java
+// int reduce(int identity, IntBinaryOperator op)
+int count = intStream.reduce(0, (a,b) -> a + 1);
+int sum = intStream.reduce(0, (a,b) -> a + b);
+int max = intStream.reduce(Integer.MIN_VALUE, (a,b) -> a > b ? a : b);
+int min = intStream.reduce(Integer.MAX_VALUE, (a,b) -> a < b ? a : b);
+```
