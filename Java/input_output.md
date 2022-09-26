@@ -65,3 +65,91 @@
 ![images/input_output/8.png](images/input_output/8.png)
 
 - 문자보조 스트림 또한 존재하며 사용법은 동일
+
+## 바이트기반 스트림
+
+### `InputStream`과 `OutputStream`
+
+- `InputStream`과 `OutputStream`은 모두 바이트 기반 스트림
+
+![images/input_output/9.png](images/input_output/9.png)
+
+![images/input_output/10.png](images/input_output/10.png)
+
+- 읽기전용 스트림을 사용할 때 `mark()`와 `reset()`을 사용하면 읽던 중이라도 다시 처음으로 돌아가서 읽기가 가능
+  - 해당 기능을 지원하는지 확인하는 `markSupported()`가 존재
+- 출력전용 스트림을 사용할 때 `flush()`는 버퍼가 있는 출력 스트림의 경우에만 의미가 있고, 버퍼 없이 사용하는 `flush()`는 아무 동작을 하지 않음
+- 스트림을 사용하면 기본적으로 `close()`를 이용해서 닫는 습관을 들일것
+  - 프로그램이 종료되기 전 `JVM`이 자동으로 닫긴 하지만, 그 이전에 계속 남겨두는 스트림은 계속 남음
+  - `ByteArrayInputStream`과 같은 메모리를 사용하는 스트림과 `System.in`, `System.out`과 같은 표준 입출력 스트림은 닫을 필요 없음
+
+### `ByteArrayInputStream`과 `ByteArrayOutputStream`
+
+- 바이트 배열에 데이터를 입출력할 때 사용
+- 주로 다른 곳에 입출력하기 전 데이터를 임시로 바이트 배열에 담아서 변환등을 하는데 사용
+
+```java
+byte[] inSrc = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+byte[] outSrc = null;
+
+ByteArrayInputStream input = new ByteArrayInputStream(inSrc);
+ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+int data = 0;
+
+while ((data = input.read()) != -1) {
+    output.write(data);
+}
+
+outSrc = output.toByteArray();
+
+System.out.println("input source: " + Arrays.toString(inSrc));
+System.out.println("output source: " + Arrays.toString(outSrc));
+```
+
+```java
+while ((data = input.read()) != -1) {
+    output.write(data);
+}
+
+// 1. data = input.read() // read()를 호출한 반환값을 변수 data에 저장
+// 2. data != -1 // data에 저장된 값이 -1이 아닌지 비교
+```
+
+- 바이트 배열은 사용하는 자원이 메모리밖에 없으므로 가비지 컬렉터에 의해 자동으로 회수됨 → close()하지 않아도 됨
+- 상기 샘플은 한번에 1바이트씩 읽어서 쓰기 때문에 효율이 떨어짐
+
+```java
+byte[] temp = new byte[10];
+
+input.read(temp, 0, temp.length);
+output.write(temp, 5, 5);
+```
+
+- 한번에 여러개를 읽어올 수 있도록 버퍼(temp)를 마련하면 효율이 올라감
+  - 단, 버퍼는 메모리를 소모하므로 버퍼의 크기가 무한정 증가하는 것은 또 다른 문제를 야기
+
+### `FileInputStream`과 `FileOutputStream`
+
+- 파일을 입출력 하기 위한 스트림으로, 실제 코딩에서 많이 사용되는 스트림 중 하나
+
+![images/input_output/11.png](images/input_output/11.png)
+
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class FileViewer {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream(args[0]);
+        int data = 0;
+
+        while ((data = fis.read()) != -1) {
+            char c = (char) data;
+            System.out.print(c);
+        }
+    }
+}
+```
+
+- 심플한 파일 읽기 프로그램으로, `fis.read()`가 반환하는 값은 파일 내 문자열이므로 `0~255`와 값이 없을때 읽어오는 `-1`이면 충분하기 때문에 `int`로 입력받아 `char`로 형변환 하는것은 문제가 없음
