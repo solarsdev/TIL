@@ -153,3 +153,40 @@ public class FileViewer {
 ```
 
 - 심플한 파일 읽기 프로그램으로, `fis.read()`가 반환하는 값은 파일 내 문자열이므로 `0~255`와 값이 없을때 읽어오는 `-1`이면 충분하기 때문에 `int`로 입력받아 `char`로 형변환 하는것은 문제가 없음
+
+## 바이트기반의 보조스트림
+
+### `FilterInputStream`과 `FilterOutputStream`
+
+- 모든 보조스트림의 조상
+- 각각 `InputStream`과 `OutputStream`의 자손
+
+```java
+protected FilterInputStream(InputStream in)
+public FilterOutputStream(OutputStream out)
+```
+
+- `FilterInputStream`은 생성자가 `protected`로 설정되어 있으므로 직접 생성할 수 없고, 상속을 통해 오버라이딩한 클래스의 인스턴스를 생성해야 함
+- `FilterInputStream`의 자손
+  - `BufferedInputStream`
+  - `DataInputStream`
+  - `PushbackInputStream`
+  - …
+- `FilterOutputStream`의 자손
+  - `BufferedOutputStream`
+  - `DataOutputStream`
+  - `PrintStream`
+  - …
+
+### `BufferedInputStream`과 `BufferedOutputStream`
+
+- 스트림의 입출력 효율을 높이기 위해 버퍼를 사용하는 보조스트림
+- 한 바이트씩 입력/출력을 반복하는 것 보다는 버퍼(바이트배열)을 이용해서 한번에 여러 바이트씩 입출력 하는것이 빠름
+- 버퍼 크기를 정하는 것이 핵심인데, 일반적으로는 입력소스가 파일인 경우 8K(8192)를 기본으로 지정하며, 버퍼의 크기를 변경해가면서 최적화가 가능함
+
+![images/input_output/12.png](images/input_output/12.png)
+
+- 버퍼는 외부 입력소스에서 `InputStream`으로 계속 채워지고 (`read`) `OutputStream`의 `write`는 출력 내용을 계속해서 버퍼에 저장하고, 전부 채워지면 출력 소스에 저장
+- 출력 소스에 저장한 뒤에는 버퍼를 클리어하게 됨
+- 버퍼가 가득 찼을 때만 출력소스에 쓰기 때문에, 마지막 단계에서 버퍼 크기를 다 채우지 못하면 출력 소스에 해당 버퍼 부분만큼의 여분이 출력되지 않을 수 있음
+  - 이럴때는 `flush()`를 통해 강제로 버퍼를 비우고, 출력소스에 기록해야 함
