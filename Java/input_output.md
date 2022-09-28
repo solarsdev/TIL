@@ -190,3 +190,39 @@ public FilterOutputStream(OutputStream out)
 - 출력 소스에 저장한 뒤에는 버퍼를 클리어하게 됨
 - 버퍼가 가득 찼을 때만 출력소스에 쓰기 때문에, 마지막 단계에서 버퍼 크기를 다 채우지 못하면 출력 소스에 해당 버퍼 부분만큼의 여분이 출력되지 않을 수 있음
   - 이럴때는 `flush()`를 통해 강제로 버퍼를 비우고, 출력소스에 기록해야 함
+
+### `DataInputStream`과 `DataOutputStream`
+
+- `FilterInputStream`, `FilterOutputStream`의 자손
+- `DataInput` 인터페이스, `DataOutput` 인터페이스의 구현체
+- 데이터를 읽고 쓰는것이 바이트 단위가 아닌, 8가지 기본 자료형 단위로 가능
+  - 출력 형식은 각 기본 자료형을 16진수로 저장
+  - 예를 들어 `int`값을 출력하면 4바이트 16진수로 출력
+- 각 기본 자료형별로 크기가 다르기 때문에 입력과 출력시 염두해두어야 함
+
+![images/input_output/13.png](images/input_output/13.png)
+
+```java
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class DataOutputStreamEx1 {
+    public static void main(String[] args) {
+        FileOutputStream fos = null;
+        DataOutputStream dos = null;
+
+        try {
+            fos = new FileOutputStream("sample.dat");
+            dos = new DataOutputStream(fos);
+            dos.writeInt(100);
+            dos.writeFloat(20.0f);
+            dos.writeBoolean(true);
+
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
