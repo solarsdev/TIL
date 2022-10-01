@@ -202,27 +202,30 @@ public FilterOutputStream(OutputStream out)
 
 ![images/input_output/13.png](images/input_output/13.png)
 
+### `SequenceInputStream`
+
+![images/input_output/14.png](images/input_output/14.png)
+
+- 여러개의 입력 스트림을 연속적으로 연결해서 하나의 스트림으로부터 데이터를 읽는것과 같이 만들어줌
+- `Vector`에 연결할 입력스트림을 저장한 뒤 `Vector`의 `elements()`를 매개변수로 생성자를 호출
+
 ```java
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class DataOutputStreamEx1 {
-    public static void main(String[] args) {
-        FileOutputStream fos = null;
-        DataOutputStream dos = null;
-
-        try {
-            fos = new FileOutputStream("sample.dat");
-            dos = new DataOutputStream(fos);
-            dos.writeInt(100);
-            dos.writeFloat(20.0f);
-            dos.writeBoolean(true);
-
-            dos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+Vector files = new Vector();
+files.add(new FileInputStream("file.001");
+files.add(new FileInputStream("file.002");
+SequenceInputStream in = new SequenceInputStream(files.elements());
 ```
+
+- `Vector`에 추가된 입력스트림의 순서대로 입력되는 것에 주의
+
+### `PrintStream`
+
+![images/input_output/15.png](images/input_output/15.png)
+
+- 기반스트림의 데이터를 다양한 형태로 출력할수 있도록 `print`, `println`, `printf`와 같은 메서드를 제공
+- 자바에서 자주 사용하고 있던 `System.out`이 대표적인 `PrintStream`
+- 다만, `PrintWriter`가 더 다양한 문자를 처리하는데 적합하기 때문에 가능하면 `PrintWriter`를 사용하는것이 좋음
+
+### `printf`의 다양한 표현식
+
+![images/input_output/16.png](images/input_output/16.png)
