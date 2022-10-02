@@ -229,3 +229,199 @@ SequenceInputStream in = new SequenceInputStream(files.elements());
 ### `printf`의 다양한 표현식
 
 ![images/input_output/16.png](images/input_output/16.png)
+
+## 문자기반 스트림
+
+### `Reader`와 `Writer`
+
+![images/input_output/17.png](images/input_output/17.png)
+
+- 바이트기반 스트림의 `InputStream`/`OutputStream`과 같이 문자기반 스트림에서의 최고조상
+- `byte`대신 `char`를 사용하는것이 특징이며 기타는 바이트 기반 스트림과 다른것이 없음
+- 문자기반이라는 특징에는 단순히 2바이트 스트림을 처리한다는 것이 아닌, 문자가 가진 특성을 읽고 쓸수 있도록 인코딩을 지원하는것에 있음
+  - `Reader`는 특정 인코딩을 읽어서 유니코드로 변환
+  - `Writer`는 유니코드를 특정 인코딩으로 변환
+
+### `FileReader`와 `FileWriter`
+
+- 파일로부터 텍스트를 읽고 파일을 쓰는데 사용
+- 기본적인 사용법은 `FileInputStream`/`FileOutputStream`과 다른것이 없음
+
+### `PipedReader`와 `PipedWriter`
+
+- 쓰레드 간에 데이터를 주고 받을때 사용
+- 입력과 출력스트림을 하나의 스트림으로 연결해서 데이터를 주고 받음
+- 스트림을 생성 후 어느 한쪽 쓰레드에서 `connect()`를 호출하면 연결됨
+- 연결된 이후에는 입력이나 출력 어느 한쪽에서 스트림을 닫으면 반대편은 자동으로 닫힘
+
+### `StringReader`와 `StringWriter`
+
+![images/input_output/18.png](images/input_output/18.png)
+
+- `CharArrayReader`, `CharArrayWriter`처럼 메모리의 입출력에 사용
+- `StringWriter`에 출력되는 데이터는 내부의 `StringBuffer`에 저장됨
+
+## 문자기반의 보조스트림
+
+### `BufferedReader`와 `BufferedWriter`
+
+![images/input_output/19.png](images/input_output/19.png)
+
+- 버퍼를 이용해서 입출력의 효율을 증가시킴 (효율성이 비교할수 없을 정도이므로 가능한한 사용)
+- `BufferedReader`의 `readLine()`은 라인단위로 데이터를 읽을 수 있는 메서드
+- `BufferedWriter`의 `newLine()`은 출력시 줄바꿈을 자동으로 수행해줌
+
+### `InputStreamReader`와 `OutputStreamWriter`
+
+- 바이트기반 스트림을 문자기반 스트림처럼 쓸 수 있게 도와줌
+- 인코딩(`encoding`)을 변환하여 입출력이 가능하도록 해줌
+
+![images/input_output/20.png](images/input_output/20.png)
+
+```java
+// 콘솔(console,화면)로부터 라인단위로 입력받기
+InputStreamReader isr = new InputStreamReader(System.in);
+BufferedReader br = new BufferedReader(isr);
+String line = br.readLine();
+
+// 인코딩 변환하기
+FileInputStream fis = new FileInputStream("korea.txt");
+InputStreamReader isr = new InputStreamReader(fis, "KSC5601");
+```
+
+## 표준입출력과 File
+
+### 표준입출력 `System.in` `System.out` `System.err`
+
+![images/input_output/21.png](images/input_output/21.png)
+
+- 콘솔(`console`,화면)을 통한 데이터 입출력을 “표준 입출력”이라 부름
+- `JVM`이 시작되면 자동으로 생성되는 스트림으로 별도의 생성없이 바로 사용 가능
+
+### 표준입출력의 대상 변경 `setOut()`, `setErr()`, `setIn()`
+
+- 기본적으로는 `System.in`, `out`, `err`의 입출력대상은 콘솔이지만, `setOut()`, `setErr()`, `setIn()`등을 이용해 해당 대상을 다른것으로 변경 가능
+
+```java
+static void setOut(PrintStream out)
+static void setErr(PrintStream err)
+static void setIn(InputStream in)
+```
+
+- 예를 들어 예외의 경우에는 콘솔이 아닌 파일로 별도 로깅을 하고 싶을 때
+
+```java
+FileOutputStream fos = new FileOutputStream("error.log");
+ps = new PrintStream(fos);
+System.setOut(ps);
+```
+
+### `RandomAccessFile`
+
+- 하나의 스트림으로 입력과 출력을 모두 수행할 수 있는 스트림
+- 다른 스트림과 달리 `Object`를 상속
+- `DataInput`과 `DataOutput` 인터페이스의 구현체
+
+![images/input_output/22.png](images/input_output/22.png)
+
+### `File`
+
+- 자바에서는 파일을 다룰 수 있는 클래스를 별도 제공
+
+![images/input_output/23.png](images/input_output/23.png)
+
+- `OS`에 따라서 파일의 경로나 디렉토리의 이름을 구분하는 구분자가 다름
+- 즉, 세퍼레이터를 메서드로 사용하지 않고 직접 코드에 입력하면 `OS`에 종속적인 프로그램이 되어버림
+
+### 파일 클래스의 메서드들
+
+![images/input_output/24.png](images/input_output/24.png)
+
+## 직렬화 (`serialization`)
+
+### 직렬화(`serialization`)란?
+
+- 객체를 “연속적인 데이터”로 변환하는 것
+- 반대과정을 “역직렬화”라고 함
+- 객체들의 인스턴스 변수들의 값을 일렬로 나열하는 것
+- 객체를 저장하기 위해서는 객체를 직렬화 해야 함
+- 객체를 저장한다는 것은 객체가 가진 모든 인스턴스 변수의 값을 저장하는 것
+
+### `ObjectInputStream`, `ObjectOutputStream`
+
+- 객체를 직렬화하여 입출력 가느앟게 해주는 보조스트림
+
+```java
+ObjectInputStream(InputStream in);
+ObjectOutputStream(OutputStream out);
+```
+
+- 객체를 파일에 저장하는 방법
+
+```java
+FileOutputStream fos = new FileOutputStream("objectfile.ser");
+ObjectOutputStream out = new ObjectOutputStream(fos);
+
+out.writeObject(new UserInfo());
+```
+
+- 파일에 저장된 객체를 다시 읽어오는 법
+
+```java
+FileInputStream fis = new FileInputStream("objectfile.ser");
+ObjectInputStream in = new ObjectInputStream(fis);
+
+UserInfo info = (UserInfo) in.readObject();
+```
+
+### 직렬화 가능한 클래스 만들기
+
+- `java.io.Serializable`을 구현한 클래스만 직렬화가 가능
+
+```java
+public class UserInfo implements java.io.Serializable {
+	String name;
+	String password;
+	int age;
+}
+```
+
+- 제어자 `transient`가 붙은 인스턴스 변수는 직렬화 대상(저장대상)에서 제외
+
+```java
+public class UserInfo implements java.io.Serializable {
+	String name;
+	transient String password; // 직렬화 대상에서 제외됨
+	int age;
+}
+```
+
+- `Serializable`을 구현하지 않은 클래스의 인스턴스도 직렬화 대상에서 제외
+
+```java
+public class UserInfo implements java.io.Serializable {
+	String name;
+	transient String password; // 직렬화 대상에서 제외됨
+	int age;
+
+	Object obj = new Object(); // Object객체는 직렬화할 수 없음
+}
+```
+
+- `Serializable`을 구현하지 않은 조상의 멤버들은 직렬화 대상에서 제외
+
+```java
+public class SuperUserInfo {
+	String name; // 직렬화 하지 않음
+	String password; // 직렬화 하지 않음
+}
+
+public class UserInfo extends SuperUserInfo implements Serializable {
+	int age;
+}
+```
+
+- 직렬화 했을 때와 역직렬화했을때의 클래스가 같은지 확인할 필요가 있음
+- 직렬화 할 때 클래스의 버전 (`serialVersionUID`)를 자동계산해서 저장
+- 클래스의 버전을 수동으로 관리하려면 클래스 내에 정의해야 함
+- `serialver.exe`는 클래스의 `serialVersionUID`를 자동으로 생성해줌
