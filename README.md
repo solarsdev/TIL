@@ -131,6 +131,8 @@
 
 ### [Ruby](https://github.com/solarsdev/TIL/blob/master/Ruby)
 
+- [Ruby new](https://github.com/solarsdev/TIL/blob/master/Ruby/ruby_new.md)
+
 ### [Python](https://github.com/solarsdev/TIL/blob/master/Python)
 
 ##### Python Frameworks
