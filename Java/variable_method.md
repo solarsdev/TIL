@@ -153,3 +153,49 @@ int add(int x, int y) {
 - 메서드의 구현부를 작성할때, 매개변수가 반드시 정의된 타입, 적절한 값으로 입력될 것이라고 생각하면 안됨
 - 타입만 맞으면 어떠한 값도 넘어올수 있으며, 타입은 자동으로 형변환이 되므로 정확한 타입으로 호출했다고 보장하지 않음
 - 메서드를 실행할때 매개변수에 대한 타입, 값의 유효성 검사를 실시하는 것이 좋음
+
+## JVM의 메모리 구조
+
+- JVM의 세가지 주요 영역 (method area, call stack, heap)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/14c00f89-2484-4ec3-8ff0-7a8ab4b57653/Untitled.png)
+
+1. 메서드 영역 (method area)
+
+- 프로그램 실행 중 어떤 클래스가 사용되면, JVM은 해당 클래스의 .class 파일을 읽어 분석
+- 클래스 정보와 클래스 변수가 저장되는 곳
+
+1. 힙 (heap)
+
+- 인스턴스가 생성되는 공간
+- 프로그램 실행 중 생성되는 인스턴스는 모두 이곳에 생성됨
+
+1. 호출스택 (call stack)
+
+- 메서드의 작업공간
+- 메서드가 호출되면 수행에 필요한 메모리 공간을 할당받고, 종료되면 메모리를 반환
+
+### 실행과정
+
+- 메서드가 호출되면 수행에 필요한 만큼 메모리를 스택에 할당받음
+- 메서드가 종료되면 사용했던 메모리를 반환하고 스택에서 제거됨
+- 호출스택의 제일 위에 있는 메서드가 현재 실행중인 메서드
+- 바로 아래에 있는 메서드가 바로 위의 메서드를 호출한 메서드
+
+```java
+class CallStackTest {
+	public static void main(String[] args) {
+		firstMethod();
+	}
+
+	static void firstMethod() {
+		secondMethod();
+	}
+
+	static void secondMethod() {
+		System.out.println("secondMethod()");
+	}
+}
+```
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1a7fd6a6-c74a-4df1-987a-59e540e7d74b/Untitled.png)
