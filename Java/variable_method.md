@@ -199,3 +199,69 @@ class CallStackTest {
 ```
 
 ![images/variable_method/4.png](images/variable_method/4.png)
+
+## 기본형 매개변수와 참조형 매개변수
+
+### 기본형 매개변수
+
+- 변수의 값을 읽기만 할 수 있음 (read only)
+
+### 참조형 매개변수
+
+- 변수의 값을 읽고 변경 가능 (read & write)
+
+### 기본형 매개변수의 동작방식
+
+```java
+class Data { int x; }
+
+class PrimitiveParamEx {
+	public static void main(String args[]) {
+		Data d = new Data();
+		d.x = 10;
+		System.out.println("main() : x = " + d.x);
+
+		change(d.x);
+		System.out.println("After change(d.x)");
+		System.out.println("main() : x = " + d.x);
+	}
+
+	static void change(int x) {
+		x = 1000;
+		System.out.println("change() : x = " + x);
+}
+```
+
+![images/variable_method/5.png](images/variable_method/5.png)
+
+- change 메서드가 호출되면서 ‘d.x’가 change 메서드의 매개변수 x에 복사
+- change 메서드에서 x의 값을 1000으로 변경
+- change 메서드가 종료되면서 매개변수 x는 스택에서 제거됨
+
+### 참조형 매개변수의 동작방식
+
+```java
+class Data { int x; }
+
+class PrimitiveParamEx {
+	public static void main(String args[]) {
+		Data d = new Data();
+		d.x = 10;
+		System.out.println("main() : x = " + d.x);
+
+		change(d);
+		System.out.println("After change(d.x)");
+		System.out.println("main() : x = " + d.x);
+	}
+
+	static void change(Data d) {
+		d.x = 1000;
+		System.out.println("change() : x = " + d.x);
+}
+```
+
+![images/variable_method/6.png](images/variable_method/6.png)
+
+- change 메서드가 호출되면서 참조변수 d의 값(주소)이 매개변수 d에 복사됨
+- change 메서드에서 매개변수 d로 x의 값을 1000으로 변경
+- change 메서드가 종료되면서 매개변수 d는 스택에서 제거됨
