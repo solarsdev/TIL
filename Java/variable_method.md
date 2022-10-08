@@ -158,7 +158,7 @@ int add(int x, int y) {
 
 - JVM의 세가지 주요 영역 (method area, call stack, heap)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/14c00f89-2484-4ec3-8ff0-7a8ab4b57653/Untitled.png)
+![images/variable_method/3.png](images/variable_method/3.png)
 
 1. 메서드 영역 (method area)
 
@@ -198,4 +198,4 @@ class CallStackTest {
 }
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1a7fd6a6-c74a-4df1-987a-59e540e7d74b/Untitled.png)
+![images/variable_method/4.png](images/variable_method/4.png)
