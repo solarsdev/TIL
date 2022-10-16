@@ -11,6 +11,7 @@
 - [Overriding](https://github.com/solarsdev/TIL/blob/master/Java/overriding.md)
 - [Package and Import](https://github.com/solarsdev/TIL/blob/master/Java/package_import.md)
 - [Modifier](https://github.com/solarsdev/TIL/blob/master/Java/modifier.md)
+- [Polymorphism](https://github.com/solarsdev/TIL/blob/master/Java/polymorphism.md)
 - [Information Hiding](https://github.com/solarsdev/TIL/blob/master/Java/information_hiding.md)
 - [Exception](https://github.com/solarsdev/TIL/blob/master/Java/exception.md)
 - [Java.Lang Package](https://github.com/solarsdev/TIL/blob/master/Java/java_lang_package.md)
