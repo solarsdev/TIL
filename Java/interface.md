@@ -123,7 +123,59 @@
   - 주로 예시로 올라오는 것이 데이터베이스 커넥터
   - 커넥션에 필요한 메서드를 인터페이스로 정의하고 실제 내부 구현은 각 `DBMS` 회사별(`oracle`, `mysql`, `mssql`등)로 별도로 구현함으로써 프로그래머는 `DB`를 유연하게 변경 가능하게 됨
 
-## 인터페이스
+## 인터페이스의 이해
+
+### 인터페이스의 근본적인 이해를 위한 전제조건
+
+- 클래스를 사용하는 쪽(`User`)과 클래스를 제공하는 쪽(`Provider`)이 있음
+- 메서드를 사용(호출)하는 쪽(`User`)에서는 사용하려는 메서드(`Provider`)의 선언부만 알면 됨
+
+### 직접적인 클래스 관계
+
+```java
+class A {
+	public void method(B b) {
+		b.methodB();
+	}
+}
+
+class B {
+	public void methodB() {
+		System.out.println("methodB()");
+	}
+}
+
+class InterfaceTest {
+	public static void main(String args[]) {
+		A a = new A();
+		a.method(new B());
+	}
+}
+```
+
+- 클래스A는 클래스B의 인스턴스를 생성하고 메서드를 호출하기 때문에, 직접적인 관계에 있음
+  - A-B
+- 클래스A를 작성하기 위해서는 클래스B가 작성되어 있어야 함
+- 클래스B의 선언부가 변경되면 클래스A에도 수정이 필요함
+
+### 두 클래스의 관계를 간접적으로 변경하기
+
+```java
+class B Implements I {
+	public void methodB() {
+		System.out.println("methodB in B class");
+	}
+}
+
+class A {
+	public void methodA(I i) {
+		i.methodB();
+	}
+}
+```
+
+- 이제 클래스A는 클래스B가 아닌 인터페이스를 필요로 하므로, A-I의 관계가 됨
+  - A는 클래스B의 존재를 몰라도 상관없으며 변경에도 영향을 받지 않게 되었음
 
 ## 디폴트 메서드와 `static` 메서드
 
