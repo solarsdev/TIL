@@ -123,6 +123,7 @@
 
 ##### [Java Frameworks : Spring](https://github.com/solarsdev/TIL/blob/master/Spring)
 
+- [How to install STS4 on M1 Mac](https://github.com/solarsdev/TIL/blob/master/Spring/how_to_install_sts_on_mac_m1.md)
 - [Deploy to Remote Host](https://github.com/solarsdev/TIL/blob/master/Spring/deploy_remote_host.md)
 - [HTTP Request and Response](https://github.com/solarsdev/TIL/blob/master/Spring/http_request_and_response.md)
 - [Client and Server](https://github.com/solarsdev/TIL/blob/master/Spring/client_and_server.md)
