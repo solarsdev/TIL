@@ -11,6 +11,17 @@
 ### 서버 (`server`)
 
 - 서비스를 제공하는 어플리케이션 또는 컴퓨터
+- 어떤 서비스를 제공하는지에 따라 각각 다른 이름으로 불림
+  - Email server
+  - File server
+  - Web server
+
+![images/client_and_server/1.png](images/client_and_server/1.png)
+
+- 같은 호스트 내에 여러가지 종류의 서버를 가동할 수 있고, 포트번호로 분류함
+  ![images/client_and_server/2.png](images/client_and_server/2.png)
+  - 서버의 경우 항상 대기해야 하는데, 이를 리스닝(listening)한다 라고 함
+  - 포트번호는 예약번호(0~1023), 이후 65535까지는 자유롭게 사용 가능
 
 ## 웹 어플리케이션 서버(`WAS`)란?
 
@@ -19,14 +30,19 @@
 
 ## Tomcat의 내부구조
 
+![images/client_and_server/3.png](images/client_and_server/3.png)
+
 - 웹 브라우저에서 요청이 오면 서버 내 톰캣은 각각의 요청에 대해 스레드(`Thread`)를 작성
 - 톰캣은 요청을 분석
   - `Connector (Protocol : HTTP1.1, HTTP2, AJP)`
+    - 프로토콜에 맞는 커넥터가 요청을 프로세싱 (`Request`, `Response` 객체 등을 생성)
   - `Host (Domain)`
   - `Context (Project)`
     - `Spring Project`
   - `URI`
     - `Method`
+  - `Servlet`
+    - `Controller`
 - 컨텍스트 내 `URI`와 연결된 메서드(서블릿)을 병렬적으로 생성해서 요청과 매치시켜줌
   - `DispatcherServlet`이 `Controller`의 메서드를 호출
 
@@ -43,7 +59,7 @@
 
 ### 이클립스상에서의 서버 설정
 
-![images/client_and_server/1.png](images/client_and_server/1.png)
+![images/client_and_server/4.png](images/client_and_server/4.png)
 
 이클립스 상의 Servers
 
@@ -54,6 +70,7 @@
 
 - 원래 서블릿은 톰캣상에서 `web.xml` 파일을 통해 컨트롤러 등록이나 메서드의 매핑등을 전부 수동으로 해야 했음
 - 스프링에서는 `web.xml` 수동 설정을 어노테이션을 통해 자동으로 할 수 있도록 바뀜
+  - `@RequestMapping`
 
 ```xml
 <!-- The mapping for the default servlet -->
