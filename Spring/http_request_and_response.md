@@ -3,6 +3,8 @@
 ## `HttpServletRequest`
 
 - 톰캣은 클라이언트로부터의 요청을 `HttpServletRequest` 객체로 만들어서 메서드에 매개변수로 전달
+- 자바 인터프리터에서 `String args[]`에 매개변수를 담아준것과 같은데, 톰캣의 경우에는 `args[]` 대신 서블릿 객체(`HttpServletRequest`)를 전달해준다고 이해하면 됨
+  - 즉, 요청에 대한 모든 정보가 들어있는 객체가 전달되어 메서드 내부에서 사용 가능한 것
 
 ```java
 public static void main(String args[]) // 일반 자바 프로그램
@@ -18,6 +20,8 @@ public void main(HttpServletRequest request) // 톰캣 (단, 자바 어플리케
 ![images/http_request_and_response/1.png](images/http_request_and_response/1.png)
 
 ### 쿼리 스트링 (`query string`) 사용법
+
+![images/http_request_and_response/8.png](images/http_request_and_response/8.png)
 
 - `request` 객체 내부에 제공되는 메서드인 `getParameter()` 를 이용함
   - `java.lang.String getParameter()`
