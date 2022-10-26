@@ -201,6 +201,8 @@
 
 ##### Solutions Architect
 
+- [Regions and Availability Zones](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/regions_and_azs.md)
+
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
 ### [Docker](https://github.com/solarsdev/TIL/blob/master/Docker)
