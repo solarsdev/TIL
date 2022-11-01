@@ -93,3 +93,52 @@
 - 사용 예제
   - 빅데이터 처리 작업
   - 대규모 분산 환경
+
+## Elastic Network Interface (ENI)
+
+- 가상 네트워크 카드로 VPC내에 존재하는 논리적인 컴포넌트
+- ENI는 다음과 같은 속성을 가짐
+  - Private IPv4
+  - Private IPv4에 대한 Public IP or Elastic IP
+  - 1 or more 보안그룹
+  - MAC Address
+- EC2 인스턴스에 ENI를 적용/해제를 자유롭게 할 수 있음
+- AZ에 종속적임
+
+![images/ec2_saa/5.png](images/ec2_saa/5.png)
+
+## EC2 Hibernate
+
+- 인스턴스의 정지나 제거의 경우에는 이미 알려진 기능
+  - Stop
+    - EBS에 데이터가 보존되고 다음 시작때 그대로 사용됨
+  - Terminate
+    - EBS 볼륨 또한 같이 제거됨 (설정에 따라 남길 수는 있지만)
+- 인스턴스 시작시 다음과 같은 일이 일어남
+  - 인스턴스가 처음 실행될 경우 OS Boot와 더불어 EC2 User Data에 정의된 스크립트를 실행
+  - OS Boot up이 발생
+  - 그 이후에 어플리케이션이나 서비스 등이 실행되고 이용 가능
+- EC2 하이버네이트
+  - 메모리 상태를 저장하는 방식
+  - 인스턴스의 부팅이 매우 빨라짐 (실제로 OS는 정지하거나 재시작한것이 아닌것처럼 인식됨)
+  - RAM 정보를 전부 EBS에 저장했다가 깨울때 다시 RAM에 적재하는 방식
+  - 루트 EBS는 암호화된 상태여야 함
+- 사용 예제
+  - 매우 오랫동안 실행되는 프로세스
+  - RAM 상태를 저장
+  - 처음 실행시 오랜 시간이 걸리는 서비스 등
+
+![images/ec2_saa/6.png](images/ec2_saa/6.png)
+
+- 지원되는 인스턴스 패밀리
+  - C, I, M, R, T…
+- 인스턴스 RAM 사이즈
+  - 150GB보다 작아야 함
+- AMI
+  - Amazon Linux 2, Linux AMI, Ubuntu, RHEL, CentOS & Windows..
+- 루트 볼륨
+  - 반드시 암호화 해야 함
+  - 인스턴스 스토어가 아니어야 함
+  - 충분한 여유크기가 존재해야 함
+- 인스턴스 종류(온디맨드, 스팟, 예약)에 상관없이 이용 가능
+- 단, 60일 이내로 다시 재기동해야 함
