@@ -205,6 +205,7 @@
 - [IAM (Identity and Access Management)](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/iam.md)
 - [EC2 Fundamental](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_fundamental.md)
 - [EC2 SAA](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_saa.md)
+- [EC2 Instance Store](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_instance_store.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
