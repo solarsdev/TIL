@@ -7,3 +7,4 @@
 - [EC2 Fundamental](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_fundamental.md)
 - [EC2 SAA](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_saa.md)
 - [EC2 Instance Store](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_instance_store.md)
+- [High Availability and Scailability](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/high_availability_and_scailability.md)
