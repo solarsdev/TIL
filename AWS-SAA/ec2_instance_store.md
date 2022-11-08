@@ -223,3 +223,32 @@
     - 단일 AZ 구성으로 백업이 기본적으로 ON 상태로 진행됨
     - IA와 동시에 적용 가능 One Zone IA
 - 스토리지 티어와 가용성 내구성을 조절하면 비용의 최대 90% 까지 절약 가능
+
+## EBS vs EFS
+
+### EBS
+
+![images/ec2_instance_store/8.png](images/ec2_instance_store/8.png)
+
+- EBS 볼륨 특징
+  - 한번에 하나의 인스턴스에만 적용 가능 (io1/io2는 예외지만 일단)
+  - 특정 AZ에 종속됨
+  - gp2 → 디스크 사이즈에 따라서 IO가 증가함
+  - io1/io2 → 미리 IO를 정해서 사용 가능 (프로비저닝)
+- EBS 볼륨을 다른 AZ로 마이그레이션
+  - 스냅샷을 작성
+  - 스냅샷을 다른 AZ에 카피후 볼륨으로 복구
+  - EBS 백업 또한 IO를 사용하기 때문에, 하드한 작업이 진행중일때는 피하는 것이 좋음
+- 루트 볼륨은 인스턴스가 삭제되었을때 같이 삭제되도록 기본적으로 설정됨 (추후 해제 가능, CLI API로)
+
+### EFS
+
+![images/ec2_instance_store/9.png](images/ec2_instance_store/9.png)
+
+- EFS 특징
+  - 복수 AZ에 수백대의 EC2에 연결 가능
+  - EFS는 파일을 공유하기 때문에 워드프레스 웹서버등에 이용 가능
+  - 리눅스에만 이용 가능 (POSIX 파일 시스템이기 때문에)
+  - EFS는 EBS보다 고비용임
+  - EFS-IA를 통해 비용 절감방법이 존재함
+- EFS vs EBS vs Instance Store (각각의 차이점을 기억할것)
