@@ -13,7 +13,7 @@
 - 분산이 불가능한 시스템에서는 수직적 확장이 필요하고 데이터베이스 등이 그 예임
 - 하드웨어 제약으로 인해 무한정 증가시키기는 힘든 방식
 
-![images/high_availability_and_scailability/1.png](images/high_availability_and_scailability/1.png)
+![images/high_availability_and_scalability/1.png](images/high_availability_and_scalability/1.png)
 
 ## 수평적 확장 (Horizontal Scalability)
 
@@ -22,7 +22,7 @@
 - 웹 어플리케이션과 모던 어플리케이션에서 주로 사용되는 방식
 - 퍼블릭 클라우드의 등장으로 수평적 확장이 매우 쉬워짐 (클릭 몇번 혹은 자동으로 인스턴스 증설 가능)
 
-![images/high_availability_and_scailability/2.png](images/high_availability_and_scailability/2.png)
+![images/high_availability_and_scalability/2.png](images/high_availability_and_scalability/2.png)
 
 ## 고가용성 (High Availability)
 
@@ -35,7 +35,7 @@
   - 적극적 방식
     - 서비스나 어플리케이션을 직접 EC2등에 탑재하여 복수로 구성하는 방식
 
-![images/high_availability_and_scailability/3.png](images/high_availability_and_scailability/3.png)
+![images/high_availability_and_scalability/3.png](images/high_availability_and_scalability/3.png)
 
 ## EC2에서의 고가용성과 확장성
 
@@ -51,7 +51,7 @@
 
 - 로드 밸런싱은 이름 그대로 트래픽을 여러 서버로 분산시키는 것
 
-![images/high_availability_and_scailability/4.png](images/high_availability_and_scailability/4.png)
+![images/high_availability_and_scalability/4.png](images/high_availability_and_scalability/4.png)
 
 ## Load balancer를 사용하는 이유
 
@@ -83,7 +83,7 @@
 - 하나의 포트와 경로를 통해 주기적으로 요청을 보냄
 - 응답이 200이 아닌 경우 해당 다운스트림 객체를 비활성화 하여 트래픽을 보내지 않음
 
-![images/high_availability_and_scailability/5.png](images/high_availability_and_scailability/5.png)
+![images/high_availability_and_scalability/5.png](images/high_availability_and_scalability/5.png)
 
 ## AWS의 LB타입
 
@@ -101,7 +101,7 @@
 
 ## 로드밸런서의 보안그룹
 
-![images/high_availability_and_scailability/6.png](images/high_availability_and_scailability/6.png)
+![images/high_availability_and_scalability/6.png](images/high_availability_and_scalability/6.png)
 
 ## Classic Load Balancer (v1)
 
@@ -109,7 +109,7 @@
 - TCP 또는 HTTP 베이스로 동작감시 수행
 - CLB는 별도의 호스트네임으로 제공됨 (xxx.region.elb.amazonaws.com)
 
-![images/high_availability_and_scailability/7.png](images/high_availability_and_scailability/7.png)
+![images/high_availability_and_scalability/7.png](images/high_availability_and_scalability/7.png)
 
 ## Application Load Balancer (v2)
 
@@ -137,7 +137,7 @@
 
 ### HTTP Based Traffic 도식
 
-![images/high_availability_and_scailability/8.png](images/high_availability_and_scailability/8.png)
+![images/high_availability_and_scalability/8.png](images/high_availability_and_scalability/8.png)
 
 ## Target Groups
 
@@ -155,7 +155,7 @@
 
 ## 쿼리스트링 / 패러미터 라우팅
 
-![images/high_availability_and_scailability/9.png](images/high_availability_and_scailability/9.png)
+![images/high_availability_and_scalability/9.png](images/high_availability_and_scalability/9.png)
 
 ## ALB 추가정보
 
@@ -164,7 +164,7 @@
   - IP는 X-Forwarded-For 헤더명으로 기재됨
   - X-Forwarded-Port (포트), X-Forwarded-Proto (프로토콜) 또한 존재
 
-![images/high_availability_and_scailability/10.png](images/high_availability_and_scailability/10.png)
+![images/high_availability_and_scalability/10.png](images/high_availability_and_scalability/10.png)
 
 - 클라이언트는 로드밸런서를 거쳐서 들어오기 때문에 서버측에서는 로드밸런서의 아이피로만 표시됨
 
@@ -181,7 +181,7 @@
 
 ## NLB 트래픽 (TCP)
 
-![images/high_availability_and_scailability/11.png](images/high_availability_and_scailability/11.png)
+![images/high_availability_and_scalability/11.png](images/high_availability_and_scalability/11.png)
 
 ## NLB의 타겟그룹
 
@@ -191,7 +191,7 @@
   - NLB와의 콤비네이션으로 IP주소 노출을 통한 엑세스 및 ALB의 HTTP 룰을 동시에 이용하기 위함
 - NLB의 타겟그룹 동작감시는 TCP, HTTP, HTTPS 프로토콜로 진행됨
 
-![images/high_availability_and_scailability/12.png](images/high_availability_and_scailability/12.png)
+![images/high_availability_and_scalability/12.png](images/high_availability_and_scalability/12.png)
 
 ## Gateway Load Balancer
 
@@ -204,14 +204,14 @@
   - 서드파티 어플라이언스에 트래픽 분산
 - 내부적으로 GENEVE 프로토콜(포트 6081에서 동작)을 이용
 
-![images/high_availability_and_scailability/13.png](images/high_availability_and_scailability/13.png)
+![images/high_availability_and_scalability/13.png](images/high_availability_and_scalability/13.png)
 
 ### 타겟그룹
 
 - EC2 인스턴스
 - IP 주소 (온프레미스 머신)
 
-![images/high_availability_and_scailability/14.png](images/high_availability_and_scailability/14.png)
+![images/high_availability_and_scalability/14.png](images/high_availability_and_scalability/14.png)
 
 ## 스티키 세션 (Sticky Sessions)
 
@@ -236,4 +236,4 @@
   - 로드밸런서에 의해 자동으로 만들어지는 쿠키
   - 쿠키 이름은 ALB의 경우 AWSALB이며, CLB의 경우에는 AWSELB가 됨
 
-![images/high_availability_and_scailability/15.png](images/high_availability_and_scailability/15.png)
+![images/high_availability_and_scalability/15.png](images/high_availability_and_scalability/15.png)
