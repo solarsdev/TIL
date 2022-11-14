@@ -208,6 +208,7 @@
 - [EC2 Instance Store](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/ec2_instance_store.md)
 - [High Availability and Scalability](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/high_availability_and_scalability.md)
 - [RDS Aurora ElastiCache](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/rds_aurora_elasticache.md)
+- [Route 53](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/route53.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
