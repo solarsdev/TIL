@@ -243,7 +243,7 @@
 - 모든 AZ상에 있는 로드밸런서의 뒷단에 있는 백엔드 인스턴스의 트래픽을 균등하게 분배할 수 있는 기술
 - 기본적으로 로드밸런서는 AZ마다 엔드포인트가 존재하며, 엔드포인트에 있는 백엔드 인스턴스에 균등하게 분배함
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cbd0b719-0f59-48b7-8e54-bddb07390f95/Untitled.png)
+![images/high_availability_and_scalability/16.png](images/high_availability_and_scalability/16.png)
 
 - 상기 도식에서는 나와있지 않지만, 정확하게는 로드밸런서로 들어가는 트래픽이 분산되는것이 아닌, AZ1에 있는 로드밸런서로 이동했다 하더라도, 백엔드 인스턴스 전체를 균등하게 보고 나눠들어가는 방식
   - 따라서, 로드밸런서 AZ1에 이동했던 입구 트래픽을 AZ2에 있는 백엔드 인스턴스로 건네줄 경우가 생기는데, 이때 과금이 발생할수도 아닐수도 있음
@@ -269,7 +269,7 @@
 
 ## 로드밸런서의 SSL 인증서
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e389d51a-c69a-450f-8b28-b6978e121cf8/Untitled.png)
+![images/high_availability_and_scalability/17.png](images/high_availability_and_scalability/17.png)
 
 - 로드밸런서는 X.509 인증서를 이용 (SSL/TLS 서버 인증서)
 - ACM(AWS Certificate Manager)을 이용하면 인증서 관리가 가능
@@ -287,7 +287,7 @@
 - 서버측에서 올바른 인증서를 식별 가능하다면 올바르게 암호화되어 소통이 가능
 - 이 기능은 CLB에서는 제공하지 않음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e4c5a75a-fd7a-4f00-b746-dd6726f53ff1/Untitled.png)
+![images/high_availability_and_scalability/18.png](images/high_availability_and_scalability/18.png)
 
 ## Connection Draining (Deregistration Delay)
 
@@ -298,7 +298,7 @@
   - 0으로 설정하면 드레인 기능이 완전히 정지됨
 - 드레인 상태가 되면 접속이 불가능하지만 인스턴스가 존재하는것으로 인식되어 인스턴스의 교체 등이 일어나지 않기 때문에 최소한의 시간으로 설정하는 것이 좋음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1a21c53f-48d4-4f63-b950-8ee04b5f1880/Untitled.png)
+![images/high_availability_and_scalability/19.png](images/high_availability_and_scalability/19.png)
 
 ## Auto Scaling Group
 
@@ -312,9 +312,9 @@
   - 어떠한 이유로 인해 인스턴스에 오류가 발생했을 경우 새로운 대체 인스턴스로 교체
 - ASG를 운용하는 것은 과금이 아님, ASG로 인해 발생하는 인스턴스에 대해서만 비용이 발생함
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/80ef434d-8753-46a0-a9d5-e685f8b03d43/Untitled.png)
+![images/high_availability_and_scalability/20.png](images/high_availability_and_scalability/20.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ccde61e3-549c-43a2-87cc-7240d3b6c385/Untitled.png)
+![images/high_availability_and_scalability/21.png](images/high_availability_and_scalability/21.png)
 
 ### ASG 속성
 
@@ -330,7 +330,7 @@
 - 최소, 최대, 요구 수량
 - 스케일 정책 설정
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/593c6432-5426-43a4-a75b-ae16feb39184/Untitled.png)
+![images/high_availability_and_scalability/22.png](images/high_availability_and_scalability/22.png)
 
 ### ASG 클라우드워치 알람과 확장
 
@@ -341,7 +341,7 @@
   - 스케일 아웃 확장 정책 (인스턴스의 숫자 증가)
   - 스케일 인 감소 정책 (인스턴스의 숫자 감소)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/85d1e500-7990-4575-9dab-5f7bfdde8c02/Untitled.png)
+![images/high_availability_and_scalability/23.png](images/high_availability_and_scalability/23.png)
 
 ## ASG 스케일링 정책
 
@@ -361,7 +361,7 @@
 
 - 어느정도 쌓인 데이터를 바탕으로 부하를 예측하여 스케일링을 시도
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/20711c5c-ae0d-43ae-9fb1-a523274bbd1f/Untitled.png)
+![images/high_availability_and_scalability/24.png](images/high_availability_and_scalability/24.png)
 
 - AWS의 머신러닝으로 제공되는 기능
 
@@ -376,7 +376,7 @@
 - 기타 지표
   - 어떤 지표든 타겟으로 삼아 설정할 수 있음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/285140b3-5d1b-407f-b231-159933655c66/Untitled.png)
+![images/high_availability_and_scalability/25.png](images/high_availability_and_scalability/25.png)
 
 ## ASG 스케일 쿨다운
 
@@ -386,4 +386,4 @@
 - 만약 AMI를 전부 셋팅된 상태로 기본 설정값보다 빨리 안정되는 버전을 사용하고 있다면 300초가 생각보다 길게 느껴질 수 있으므로, 최소한도로 줄일 수 있음
   - 줄이게 되면 ASG가 다시 동작하는데 걸리는 시간이 줄어들기 때문에 바로 바로 인스턴스를 조절 가능
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2beb365f-0a69-4298-a3e9-a3e4c7ede967/Untitled.png)
+![images/high_availability_and_scalability/26.png](images/high_availability_and_scalability/26.png)
