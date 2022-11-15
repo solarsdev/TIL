@@ -10,3 +10,4 @@
 - [High Availability and Scalability](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/high_availability_and_scalability.md)
 - [RDS Aurora ElastiCache](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/rds_aurora_elasticache.md)
 - [Route 53](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/route53.md)
+- [Elastic Beanstalk](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/elastic_beanstalk.md)
