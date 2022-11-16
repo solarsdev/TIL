@@ -210,6 +210,7 @@
 - [RDS Aurora ElastiCache](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/rds_aurora_elasticache.md)
 - [Route 53](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/route53.md)
 - [Elastic Beanstalk](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/elastic_beanstalk.md)
+- [S3](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/s3.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
