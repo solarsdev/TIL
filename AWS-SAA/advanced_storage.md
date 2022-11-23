@@ -138,3 +138,107 @@
 - S3을 거쳐서 lifecycle policy를 통해 글래시어로 전환해야 함
 
 ![images/advanced_storage/10.png](images/advanced_storage/10.png)
+
+## Amazon FSx 개요
+
+- 서드파티 고성능 파일 시스템을 AWS에서 구현
+- 완전 관리형 서비스
+
+![images/advanced_storage/11.png](images/advanced_storage/11.png)
+
+## FSx for Windows (File Server)
+
+- 윈도우용 FSx는 완전 관리형 윈도우 파일 공유 서비스
+- SMB와 윈도우 NTFS를 제공
+- Microsoft Active Directory와 연계되며, ACL과 유저 quota 관리 가능
+- 리눅스 EC2 인스턴스에도 마운트 가능
+- Microsoft 분산 파일 시스템 (DFS) 네임스페이스를 지원 (다수의 FS를 하나의 파일서버로 묶는 것)
+- 몇십 GB/s로 자동 스케일, 수백만 IOPS, PB단위의 데이터까지 증가
+- 스토리지 옵션
+  - SSD 지연속도에 민감한 워크로드 (데이터베이스, 미디어 프로세싱, 데이터 분석 등)
+  - HDD 저렴한 사용요금을 목표로 한 일반적인 워크로드 (홈 디렉토리, CMS 등)
+- 온프레미스 인프라에서도 VPN이나 다이렉트 커넥트를 통해 접근 가능
+- Multi-AZ 구성 가능
+- S3에 데일리 백업 지원
+
+## FSx for Lustre
+
+- 러스터는 대규모 스케일 컴퓨팅을 위한 병렬 파일 시스템
+- 러스터의 명칭은 Linux Cluster의 약어
+- 사용 사례
+  - 머신 러닝 (HPC) High Performance Computing
+  - 비디오 처리, 파이낸셜 모델링, 전기 디자인 자동화
+- 100s GB/s, 백만 IOPS, 수밀리초 지연속도
+- 스토리지 옵션
+  - SSD 저지연 IOPS 민감 워크로드, 랜덤 파일 쓰기 작업
+  - HDD 처리량에 민감한 워크로드 큰 파일, 순차 파일 쓰기 작업
+- S3과 유연하게 연동
+  - S3을 파일 시스템으로 읽어들일 수 있음
+  - S3에 파일 쓰기 가능
+- 온프레미스에서 VPN이나 다이렉트 커넥트를 이용하여 접속 가능
+
+## FSx Lustre 파일시스템 배포 옵션
+
+- 스크래치 파일 시스템
+  - 임시 스토리지
+  - 데이터가 복제되지 않음 (서버 실패시 복구 불가)
+  - 고성능 (6x faster 200Mbps per TB)
+  - 짧은 처리, 비용 최적화
+- 영속적 파일 시스템
+  - 장기 보존 스토리지
+  - 데이터는 같은 AZ에서 복제됨
+  - 실패시 파일 바로 교체 (1분 이내)
+  - 장기적 처리 프로세스, 민감한 데이터 (복구가능)
+
+![images/advanced_storage/12.png](images/advanced_storage/12.png)
+
+## FSx for NetApp ONTAP
+
+- NetApp ONTAP을 AWS에서 구현
+- NFS SMB iSCSI 프로토콜을 지원 (거의 모두)
+- ONTAP 또는 NAS를 AWS환경으로 이전 가능
+- 호환성
+  - Linux
+  - Windows
+  - MacOS
+  - VMWare Cloud
+  - Amazon Workspace & App Stream 2.0
+  - Amazon EC2, ECS and EKS
+- 스토리지는 프로비전형이 아닌 자동으로 스케일됨
+- 스냅샷, 복제, 저비용, 압축 및 중복제거 기능
+- 특정 시간에 있던 파일들을 클론 가능 (테스트 환경 구축 등에 유용)
+
+![images/advanced_storage/13.png](images/advanced_storage/13.png)
+
+## FSx for OpenZFS
+
+- 관리형 OpenZFS 시스템을 AWS에서 구현
+- NFS의 다양한 프로토콜과 호환 가능
+- 호환성
+  - Linux
+  - Windows
+  - MacOS
+  - VMWare Cloud
+  - Amazon Workspace & AppStream 2.0
+  - Amazon EC2, ECS and EKS
+- 0.5ms 안에 백만 IOPS까지 스케일링
+- 스냅샷, 압축 및 저비용
+- 특정 시간에 있던 파일들 클론 기능 (테스트 환경 구축 등)
+
+## Hybrid Cloud for Storage
+
+- AWS는 하이브리드 클라우드를 밀고 있음
+  - 클라우드에 존재하는 일부 인프라
+  - 온프레미스에 존재하는 일부 인프라
+  - 서로간의 결합
+- 이러한 이유로서
+  - 장기간의 클라우드로의 마이그레이션
+  - 보안 요구사항
+  - 컴플라이언스 요구사항
+  - IT 전략 등이 있을 수 있음
+- S3은 스토리지로서 훌륭한 대체제가 되지만 이를 어떻게 온프레미스상에 노출시킬 수 있을까
+  - AWS Storage Gateway
+
+## Storage Cloud Native Options
+
+![images/advanced_storage/14.png](images/advanced_storage/14.png)
