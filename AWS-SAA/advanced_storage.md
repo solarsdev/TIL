@@ -242,3 +242,143 @@
 ## Storage Cloud Native Options
 
 ![images/advanced_storage/14.png](images/advanced_storage/14.png)
+
+## AWS Storage Gateway
+
+- 온프레미스 데이터와 클라우드 데이터 간의 다리역할
+- 사용 사례
+  - DR (장애복구)
+  - 백업과 복원
+  - 계층 스토리지 (온프레미스는 핫데이터, 클라우드는 콜드데이터)
+  - 온프레미스 데이터의 캐시, 저지연 파일 엑세스
+- 스토리지 게이트웨이 타입
+  - S3 File Gateway
+  - FSx File Gateway
+  - Volume Gateway
+  - Tape Gateway
+
+## S3 File Gateway
+
+- S3 버킷을 NFS 혹은 SMB 프로토콜로 접속 할 수 있게 지원
+- 최근에 이용한 데이터가 파일 게이트웨이에 캐시로서 남음
+- S3 스탠다드, IA, One Zone IA, Intelligent Tiering을 지원
+- S3 글래시어로의 이관은 lifecycle policy를 이용하여 도입 가능
+- 각각의 파일 게이트웨이마다 IAM 역할을 통한 권한제어 가능
+- SMB 프로토콜은 AD와 연계하여 유저 인증 가능
+
+![images/advanced_storage/15.png](images/advanced_storage/15.png)
+
+## FSx File Gateway
+
+- FSx 윈도우 파일 서버와의 네이티브 엑세스를 제공
+- 이미 FSx 파일 서버에는 온프레미스에서 접속 가능
+  - 자주 사용하는 파일들을 로컬 캐시로 사용하여 퍼포먼스 상승 효과
+- 윈도우 네이티브 호환성 (SMB, NTFS, AD 등)
+- 그룹 파일 공유와 홈 디렉토리 등으로 활용하기에 좋음
+
+![images/advanced_storage/16.png](images/advanced_storage/16.png)
+
+## Volume Gateway
+
+- iSCSI 프로토콜을 사용하는 블록 스토리지로, 백엔드가 S3로 구성됨
+- EBS 스냅샷으로 블록이 백업되며 온프레미스 볼륨으로 복원 가능
+- 캐시 볼륨
+  - 볼륨을 캐시로 사용하여 빠르게 엑세스 할 수 있도록 함
+- 저장 볼륨
+  - 모든 데이터셋을 온프레미스에 두고 S3을 백업으로 둠
+
+![images/advanced_storage/17.png](images/advanced_storage/17.png)
+
+## Tape Gateway
+
+- 테이프에 저장하는 백업 프로세스를 가진 회사의 경우
+- 테이프 게이트웨이를 이용하면 기존 방식 그대로 하면서 S3에 백업을 둘 수 있음 (테이프 머신과 연동)
+- Virtual Tape Library(VTL)이 백엔드로 S3과 글래시어에서 제공되기 때문임
+- 기존 테이프 벤더들과의 호환성
+
+![images/advanced_storage/18.png](images/advanced_storage/18.png)
+
+## Storage Gateway 지원 하드웨어
+
+- 스토리지 게이트웨이를 이용하기 위한 온프레미스 하드웨어가 필요
+- 지원되는 벤더의 모델이 있다면 사용해도 되고, 필요하다면 아마존에서 구입도 가능
+- 파일 게이트웨이, 볼륨 게이트웨이, 테이프 게이트웨이와 연계됨
+- 게이트웨이 작업을 수행하기에 필요한 CPU, 메모리, 기타 사양들이 갖추어져 있음
+- 작은 양의 NFS 백업 정도는 자체 지원도 가능
+
+![images/advanced_storage/19.png](images/advanced_storage/19.png)
+
+## Storage Gateway 정리
+
+![images/advanced_storage/20.png](images/advanced_storage/20.png)
+
+## AWS Transfer Family
+
+- 완전 관리형 서비스로 S3나 EFS에 FTP 프로토콜로 접속하여 이용할 수 있게 해줌
+- 지원되는 프로토콜
+  - FTP
+  - FTPS
+  - SFTP
+- 관리형 인프라로 확장, 안정성, 고가용성 (Multi-AZ)
+- 엔드포인트에 접속된 프로비전 시간당 과금 + 데이터 전송 GB당 과금
+- 유저의 크레덴셜을 서비스 내에서 관리할 수 있음
+- 다른 인증 서비스들과의 연계 또한 지원 (AD, LDAP, Okta, Cognito 등)
+- 사용 사례
+  - 파일 공유
+  - 퍼블릭 데이터셋
+  - CRM, ERP 등
+
+![images/advanced_storage/21.png](images/advanced_storage/21.png)
+
+## AWS DataSync
+
+- 대량의 데이터를
+  - 온프레미스 / 다른 클라우드에서 AWS로 이동 (NFS, SMB, HDFS, S3 API 등) → 에이전트 필요
+  - AWS에서 다른 AWS 스토리지 타입으로 → 에이전트 불필요
+- 동기화 가능
+  - S3 (스토리지 클래스별 - 글래시어 포함)
+  - EFS
+  - FSx (Windows, Lustre, NetApp, OpenZFS 등)
+- 복제 작업은 범위 시간당, 일당, 주당으로 설정 가능
+- 파일 퍼미션과 메타데이터가 그대로 복사됨 (NFS POSIX, SMB 등)
+- 에이전트는 최대 10 Gbps의 대역폭을 소화할 수 있지만, 설정으로 제한 가능
+
+## NFS / SMB to AWS (S3, EFS, FSx)
+
+![images/advanced_storage/22.png](images/advanced_storage/22.png)
+
+## AWS 서비스 내에 데이터 이동
+
+![images/advanced_storage/23.png](images/advanced_storage/23.png)
+
+## 스토리지 비교
+
+- S3
+  - 오브젝트 스토리지
+- S3 Glacier
+  - 오브젝트 아카이빙
+- EBS volume
+  - 하나의 EC2 인스턴스에서 사용 가능한 네트워크 스토리지 (io1/io2는 멀티 어태치 가능)
+- Instance Storage
+  - 물리적 스토리지로 EC2에서 사용 가능 (고성능 IOPS)
+- EFS
+  - Linux 인스턴스 전용으로 POSIX 파일시스템으로 운영됨
+- FSx for Windows
+  - 윈도우 서버를 위한 네트워크 파일 시스템
+- FSx for Lustre
+  - 고성능의 컴퓨팅 리눅스 파일 시스템
+- FSx for NetApp ONTAP
+  - 높은 OS 호환성을 가진 파일 시스템
+- FSx for OpenZFS
+  - 관리형 ZFS 파일 시스템
+- Storage Gateway
+  - S3, FSx File Gateway, Volume Gateway (cached & stored), Tape Gateway
+- Transfer Family
+  - FTP, FTPS, SFTP, 인터페이스를 통해 S3 혹은 EFS에 직접 접속 가능함
+- DataSync
+  - 스케줄 관리로 AWS와 온프레미스간 데이터 동기화, AWS 서비스 내의 데이터 동기화 (메타데이터 동기화)
+- Snowcone / Snowball / Snowmobile
+  - 데이터를 클라우드 내 외부로 물리적 디바이스를 통해 이동
+  - 엣지 컴퓨팅 실현
+- Database
+  - 쿼리와 인덱싱을 이용한 특정 워크로드에서 전용으로 사용하는 데이터 관리 시스템
