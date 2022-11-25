@@ -14,3 +14,4 @@
 - [S3](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/s3.md)
 - [CloudFront](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/cloudfront.md)
 - [Advanced Storage](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/advanced_storage.md)
+- [Integration and Messaging](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/integration_messaging.md)
