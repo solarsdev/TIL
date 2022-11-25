@@ -138,3 +138,25 @@
 
 - SQS를 RDS의 전달자 EC2 플릿의 매개체로 선택해서 RDS가 감당 가능한 만큼의 쓰기 작업을 최대치로 정할 수 있음
   - EnQueue DeQueue 패턴
+
+## Amazon SNS
+
+- 메시지 하나를 다른 여러 서비스들에 보내고 싶을 때
+
+![images/integration_messaging/14.png](images/integration_messaging/14.png)
+
+![images/integration_messaging/15.png](images/integration_messaging/15.png)
+
+- 직접 서비스들과 연계하여 메시지를 작성할 수도 있지만, 디커플링을 위해 서비스는 SNS를 통해 메시지를 발행하고 구독자(연계하는 다른 서비스)에서 발행된 메시지를 보게 할 수도 있음
+- 이를 발행자 구독자 패턴이라고 함
+- 이벤트 발행자는 하나의 메시지만을 SNS에 발행하면 됨
+- 필요한 만큼의 이벤트 수신자(구독)들이 구독된 SNS 토픽에서 메시지를 받아볼 수 있음
+- 각각의 구독자들은 모든 메시지를 받아볼 수 있음 (필터를 통해 일부 구독자들에게만 받아보게 할 수도 있음)
+- 토픽 당 12,500,000 구독자(서비스) 연계 가능
+- 100,000 개의 토픽까지 생성 가능
+
+![images/integration_messaging/16.png](images/integration_messaging/16.png)
+
+## 대부분의 서비스들이 SNS와 연계 가능
+
+![images/integration_messaging/17.png](images/integration_messaging/17.png)
