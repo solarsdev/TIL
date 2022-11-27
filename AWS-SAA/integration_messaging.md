@@ -160,3 +160,68 @@
 ## 대부분의 서비스들이 SNS와 연계 가능
 
 ![images/integration_messaging/17.png](images/integration_messaging/17.png)
+
+## SNS 발행 방법
+
+- SDK를 이용한 토픽에 메시지 발행
+  - 토픽 생성
+  - 원하는 만큼 연계할 서비스로부터 구독 설정
+- 다이렉트 발행 (모바일 앱을 위한 SDK)
+  - 플랫폼 어플리케이션을 생성
+  - 엔드포인트 작성
+  - 플랫폼 엔드포인트로 메시지 발행
+  - Google GCM, Apple APNS, Amazon ADM 등과 연계 가능
+
+## SNS 보안
+
+- 암호화
+  - HTTPS API를 통한 전송 중 암호화
+  - KMS 키를 통안 데이터 암호화
+  - 클라이언트의 필요에 의해 암호화 직접 수행 가능
+- 접근 제어
+  - IAM 정책을 통한 SNS API 접근 제어
+- SNS 접근 정책 (S3 버킷 정책과 유사)
+  - 다른 계정의 SNS 토픽에 접근 제어
+  - 다른 서비스들이 SNS 토픽에 발행권한을 줄 때 유효
+
+## SNS와 SQS를 연계한 Fan Out 패턴
+
+![images/integration_messaging/18.png](images/integration_messaging/18.png)
+
+- SNS에 하나 발행한 메시지를 통해 구독자에서 SQS 큐를 사이에 두고 전달자 역할로 대신 활용
+- 완전 디커플링 데이터 소실 없음
+- SQS는 데이터 영속화, 서비스에 맞춰진 데이터 처리량 (직접 처리하고 삭제하기 때문), 가능할 때까지 재처리를 지원하기 때문에 연계하면 장점이 생김
+- 구독하려는 서비스가 추가되면 SQS를 추가하면 됨
+- SQS의 접근 제어 정책에 SNS로부터의 쓰기 권한을 줘야 함
+
+### 팬아웃을 이용한 사례 (S3 이벤트를 복수의 큐로)
+
+- S3 이벤트 룰은 하나의 프리픽스에 대해 하나밖에 설정 가능
+- S3 이벤트를 SNS로 연계하여 SNS를 복수의 큐나 필요한 다른 서비스에서 구독하면 팬아웃으로 연계 가능
+
+![images/integration_messaging/19.png](images/integration_messaging/19.png)
+
+## SNS FIFO 토픽
+
+- FIFO = First In First Out
+
+![images/integration_messaging/20.png](images/integration_messaging/20.png)
+
+- SQS FIFO와 유사
+  - 메시지 그룹 ID별 순서가 보장됨 (같은 그룹 내 메시지는 순서대로 도착함)
+  - 중복제거 ID 또는 컨텐츠 기반으로 중복제거 기능
+- SQS FIFO만 구독자로 설정 가능
+- 처리량 제한 (SQS FIFO와 동일한 처리량)
+
+## SNS FIFO와 SQS FIFO를 결합한 팬아웃
+
+- 팬아웃 모델을 순서에 맞는 메시지 처리와 중복제거를 이용하며 활용하고 싶을 경우
+
+![images/integration_messaging/21.png](images/integration_messaging/21.png)
+
+## Message Filtering
+
+- JSON 정책으로 SNS 토픽의 구독자를 필터링하여 메시지를 보낼 수 있음
+- 필터가 설정되지 않은 구독자는 모든 메시지를 받아봄
+
+![images/integration_messaging/22.png](images/integration_messaging/22.png)
