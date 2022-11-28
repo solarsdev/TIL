@@ -225,3 +225,149 @@
 - 필터가 설정되지 않은 구독자는 모든 메시지를 받아봄
 
 ![images/integration_messaging/22.png](images/integration_messaging/22.png)
+
+## Kinesis 개요
+
+- 실시간 데이터를 통해 수집, 처리, 분석등을 수행하기 쉽게 도움을 주는 서비스
+- 어플리케이션 실시간 로그, 지표, 웹사이트 클릭 스트림, IoT 데이터 등
+- Kinesis Data Stream
+  - 데이터 스트림을 보존하고 저장, 처리하는데 활용
+- Kinesis Data Firehose
+  - AWS 안팎으로 데이터를 보내는 역할
+- Kinesis Data Analytics
+  - 실시간 데이터를 SQL이나 아파치 Flink등을 통해 분석
+- Kinesis Video Streams
+  - 비디오 영상을 실시간으로 캡쳐하여 처리
+
+## Kinesis Data Streams
+
+![images/integration_messaging/23.png](images/integration_messaging/23.png)
+
+- 데이저 보존 기한을 1일~365일까지 설정 가능
+- 데이터의 재전송 기능 존재
+- 데이터가 한번 키네시스 데이터 스트림으로 들어와서 저장되면 불변함
+- 같은 샤드로 전송되는 같은 파티션 키를 가진 데이터는 순서가 보장됨
+- 생산자로서 AWS SDK, 키네시스 생산자 라이브러리 (KPL), 키네시스 에이전트 등이 있을 수 있음
+- 소비자로 키네시스 소비자 라이브러리 (KCL), AWS SDK 등이 있고, 관리형 서비스로 람다, 키네시스 데이터 파이어호스, 키네시스 데이터 애널리틱스 등이 있을 수 있음
+
+## 키네시스 데이터 스트림 용량 모델
+
+- 프로비전 모드
+  - 샤드의 갯수를 사용자가 정하고 직접 API를 이용해서 스케일링
+  - 샤드 당 1MB/s 의 처리량 (쓰기)
+  - 샤드 당 2MB/s 의 처리량 (읽기) → 강화된 팬아웃 소비자 선택시
+  - 샤드당 시간당 과금 모델
+- 온디맨드 모드
+  - 프로비전이나 용량을 관리할 필요 없이 자동으로 증가
+  - 기본 용량이 4MB/s 설정되며 계속 스케일링됨
+  - 스케일 기준은 30일간의 피크 처리량을 관찰하고 자동으로 설정됨
+  - 스트림을 시간당 과금하고 처리된 용량에 따라서도 추가과금이 있음
+
+## 키네시스 보안
+
+- IAM 정책에 의한 접근제어, 인증
+- HTTPS를 통한 전송 중 암호화
+- KMS를 통한 데이터 암호화
+- 직접 암호화/복호화 가능 (복잡한 방식이 있지만 대응 가능)
+- VPC 엔드포인트를 이용해 키네시스 전용 인터페이스를 VPC 내에 설치 가능
+- API 요청을 CloudTrail을 통해 감사 가능
+
+![images/integration_messaging/24.png](images/integration_messaging/24.png)
+
+## Kinesis Data Firehose
+
+![images/integration_messaging/25.png](images/integration_messaging/25.png)
+
+- 완전 관리형 서비스로, 유저측에서 관리할 필요없이 자동으로 스케일링 됨
+  - AWS Redshift / Amazon S3 / ElasticSearch
+  - 서드파티와 연동 Splunk / MongoDB / DataDog / NewRelic 등
+  - HTTP 엔드포인트로의 전송 지원
+- 데이터를 보낸 만큼만 과금
+- 거의 실시간
+  - 60초의 최소 배치 가동 주기
+  - 또는 1MB의 데이터가 쌓였을때 송신
+- 많은 데이터 포맷 지원, 람다를 통한 변환, 압축 등 지원
+- S3 버킷에 실패한 데이터 또는 전체 데이터를 보존 가능
+
+## Kinesis Data Stream vs Firehose
+
+### Kinesis Data Stream
+
+- 데이터를 저장해두고 스케일링을 통해 전송하는 서비스
+- 생산자, 소비자 파트를 일정부분 코딩을 통해 구현해야 함
+- 실시간 (~200ms)
+- 스케일링을 컨트롤 가능 (샤드 분산/병합)
+- 1~365일간의 데이터 저장
+- 데이터 재전송 지원
+
+### Kinesis Data Firehose
+
+- 서드파티 데이터 관리 툴 / S3 / 커스텀 HTTP 엔드포인트에 전송
+- 완전 관리형
+- 거의 실시간 (최소 60초)
+- 자동으로 스케일링
+- 데이터 저장 없음
+- 재전송 지원 안함
+
+## Kinesis Ordering
+
+- 키네시스에서는 파티션 키를 통해 해싱으로 샤드를 결정하고 매칭된 샤드를 통해 데이터를 송신
+- 같은 샤드에서는 순서가 지켜짐
+
+![images/integration_messaging/26.png](images/integration_messaging/26.png)
+
+## SQS Ordering
+
+- SQS 스탠다드에서는 순서를 보장하지 않음
+- SQS FIFO 모델에서는 순서가 보장되는데, Group ID 기반으로 된 순서를 보장함
+- Group ID가 없다면 모든 메시지는 순서가 보장됨
+- Group ID를 지정하는 것은 Kinesis에서 파티션 키를 통한 샤드를 정하는 것과 비슷함
+- SQS에서는 처리량 제한 (300메시지/초, 배치를 통해 10개씩 전송한다고 가정하면 3000메시지/초)
+
+## Kinesis vs SQS Ordering
+
+- Kinesis Data Stream과 SQS의 특성을 잘 이해하고 어떤 것을 선택할지 정하는 것이 중요
+- Kinesis의 제약사항으로는 샤드당 1MB/s의 송신을 지원한다는 것과 병렬적으로 데이터 송신이 가능하다는 점
+- SQS FIFO의 제약사항으로는 100개의 Group ID가 최대라는 점과 300msg/s의 처리량 제약이 있다는 점
+
+## SQS vs SNS vs Kinesis
+
+### SQS
+
+- 소비자가 데이터를 끌어다 사용
+- 데이터는 소비된 이후 삭제됨
+- 원하는 만큼의 소비자를 둘 수 있음
+- 데이터 처리량의 프로비전이 필요하지 않음
+- FIFO 모델을 이용하면 데이터의 순서가 보장됨
+- 풀링된 데이터의 비표시 기간을 제공함
+
+## SNS
+
+- 구독들에게 메시지를 푸시함
+- 12,500,000의 구독자 제한 제약사항이 존재
+- 데이터는 영속적이지 않음 (데이터가 전달되지 못하면 소실됨)
+- 발행/구독 모델
+- 100,000개의 토픽 수 제한 제약사항이 존재
+- 데이터 처리량의 프로비전이 필요하지 않음
+- SQS와 연계하여 팬아웃 설계가 가능
+- FIFO를 통한 발행 순서 보장 / SQS FIFO와 연계한 순서 보장 팬아웃 설계 가능
+
+### Kinesis
+
+- 스탠다드 데이터 프로비전 모델
+  - 데이터를 폴링해서 사용
+- 강화된 팬아웃 모델
+  - 데이터가 푸시되며 샤드당 2MB/s의 처리량을 지원
+- 데이터의 재전송 가능 (Kinesis Data Stream)
+- 빅데이터 처리와 같은 실시간 처리에 사용됨
+- 샤드 단위에서 순서가 보장됨
+- 데이터는 1~365일 보전 가능하고 이후 소실됨
+- 처리량(샤드 숫자)에 대한 프로비전 모델과 온디맨드 스케일링 모드가 존재
+
+## Amazon MQ
+
+- 온프레미스 서비스가 MQ 프로토콜을 이용중이고 이를 SNS, SQS로의 재개발 없이 이전하고 싶을 때
+- MQ 브로커를 아마존에서 제공해주는 관리형 서비스로 이전 가능
+- 멀티AZ을 지원하기 때문에 가용성이 보장됨
+
+![images/integration_messaging/27.png](images/integration_messaging/27.png)
