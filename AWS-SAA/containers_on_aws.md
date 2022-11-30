@@ -51,3 +51,40 @@
   - ECS 또는 EKS에 레버리징 가능
 - Amazon ECR
   - 프라이빗 컨테이너 리포지토리
+
+## ECS (EC2 Launch Type)
+
+- 도커 컨테이너를 AWS에서 구현하는 방식은 ECS Task를 ECS Cluster에서 실행하는 것
+- ECS Cluster에는 두가지 방식이 존재하는데 그 중 EC2 인스턴스에 ECS 에이전트를 설치하여 실행하는 방식임
+- EC2 인스턴스를 미리 구성하여 해당 EC2 인스턴스에 도커 기반 ECS 에이전트를 설치
+- 각각의 EC2 인스턴스는 ECS 클러스터의 구성요소로 등록됨
+- ECS 클러스터가 각 EC2에서 운영되고 있는 ECS 에이전트에 명령을 내리고, 태스크를 올림
+  - 태스크 = 이미지
+
+![images/containers_on_aws/4.png](images/containers_on_aws/4.png)
+
+## ECS (Fargate Launch Type)
+
+- 백엔드 인프라를 관리할 필요 없이 AWS에서 관리형 서비스로 운영
+- 태스크에 대한 정의와 세부 사항만을 제공하면 해당 요구사항에 맞추어 인프라를 구성해줌
+
+![images/containers_on_aws/5.png](images/containers_on_aws/5.png)
+
+## IAM Role for ECS
+
+- EC2 인스턴스 프로필 (EC2 실행 타입)
+  - ECS 에이전트에서 사용되는 역할
+  - ECS 서비스에 API 요청에 대한 권한을 컨트롤
+  - CloudWatch Logs에 로그를 저장하거나, ECR에서 이미지를 풀링하거나, 설정 파일/패스워드 등과 같이 민감한 정보들을 Secret Manager나 Parameter Store등에서 읽어들일때 필요한 권한등을 명시
+- ECS 태스크 역할
+  - 각각의 태스크마다 필요한 권한을 별도로 명시
+
+![images/containers_on_aws/6.png](images/containers_on_aws/6.png)
+
+## Load Balancer Integrations
+
+- 어플리케이션 로드 밸런서가 지원되며 일반적으로 이용됨
+- 네트워크 로드 밸런서는 고성능의 네트워크나 처리량을 요구할때 추천됨
+- CLB는 추천되지 않음 (포트 맵핑등을 지원안하고, Fargate에서 이용 불가)
+
+![images/containers_on_aws/7.png](images/containers_on_aws/7.png)
