@@ -150,3 +150,237 @@
 - 이미지 취약점 검사, 버전 관리, 이미지 태깅, 라이프사이클(만료) 관리 등을 지원
 
 ![images/containers_on_aws/12.png](images/containers_on_aws/12.png)
+
+## Amazon EKS 개요
+
+- Amazon EKS (Elastic Kubernetes Service)
+- 아마존에서 제공하는 관리형 쿠버네티스 클러스터
+- 쿠버네티스는 오픈소스로 자동으로 배포, 스케일, 컨테이너등을 관리할 수 있는 도구
+- ECS의 대체제로, API가 다른 형태임
+- EKS는 EC2와 Fargate를 둘 다 지원하기 때문에 어느것을 사용해도 됨
+- 사용 사례
+  - 회사에서 이미 쿠버네티스로 만들어진 인프라가 존재할 경우
+  - AWS로의 마이그레이션이나 다른 클라우드와 동시에 이용 등
+
+![images/containers_on_aws/13.png](images/containers_on_aws/13.png)
+
+## Node Types
+
+- 관리형 노드 그룹
+  - EC2 내에 관리형 노드를 작성해줌
+  - EKS의 ASG 관리에 노드도 포함됨
+  - On-Demand 또는 Spot타입을 지원
+- 직접 관리하는 노드
+  - 설정등을 직접 관리하고 싶을 경우 활용
+  - EKS 최적화 API를 사용하거나 직접 인스톨 가능
+  - On-Demand 또는 Spot타입을 지원
+- AWS 파게이트
+  - 인프라에 대한 관리 없이 노드 사용 가능
+
+## Serverless 정의
+
+- 서버리스는 개발자들의 새로운 패러다임으로 서버를 더이상 관리하지 않는 것
+- 코드 혹은 함수를 그대로 배포하여 사용
+- 최초의 서버리스는 함수를 배포하는것으로 FaaS (Function as a Service) 를 의미했음
+- 근래에는 서버리스가 단순히 함수 뿐 아니라, 다양한 분야 (데이터베이스, 메시지, 스토리지 등) 로 퍼져서 사용되고 있음
+- 서버리스는 서버가 없는것이 아닌, 백엔드 인프라를 관리하지 않아도 된다는 의미
+
+## Serverless in AWS
+
+- Lambda
+- DynamoDB
+- Cognito
+- API Gateway
+- SNS & SQS
+- Kinesis
+- Aurora Serverless
+- Step Function
+- Fargate
+
+![images/containers_on_aws/14.png](images/containers_on_aws/14.png)
+
+## AWS Lambda
+
+### EC2
+
+- 클라우드 상의 가상 서버
+- RAM과 CPU가 제한됨
+- 계속해서 가동됨
+- 스케일링의 의미는 서버 자체를 추가하거나 삭제하는 것
+
+### Lambda
+
+- 가상 함수 (관리할 서버는 없음)
+- 시간이 제한됨 (15분)
+- 필요한 만큼 실행할 수 있음 (병렬적으로)
+
+## Benefits of Lambda
+
+- 심플한 과금 모델
+  - 요청한 횟수와 실행한 시간에 따라 과금
+  - 프리 티어로 1,000,000회의 실행 횟수와 400,000GB 초 만큼의 시간을 제공
+- 다양한 AWS 서비스와 연계 가능
+- 다양한 프로그래밍 언어와 연계 가능
+- AWS CloudWatch를 통한 모니터링 가능
+- 최대 10GB의 메모리까지 리소스 할당 가능
+- 메모리를 증가시키면 CPU와 네트워크 대역폭이 자동으로 증가
+
+## AWS Lambda Language
+
+- Node.js (JavaScript)
+- Python
+- Java (Java 8 compatible)
+- C# (.NET Core)
+- Golang
+- C# / Powershell
+- Ruby
+- Custom Runtime API
+- Lambda Container Image
+  - 컨테이너 이미지를 통한 람다 API 실행
+  - ECS / Fargate 도커 이미지를 가상화하여 실행 가능
+
+## 람다와 연계하는 메인 서비스들
+
+![images/containers_on_aws/15.png](images/containers_on_aws/15.png)
+
+- API Gateway
+  - HTTP 엔드포인트를 직접 JSON 형태로 람다 함수에 연결 가능
+- Kinesis
+  - 데이터 전송 중 실시간 처리를 람다 함수에 연결 가능
+- DynamoDB
+  - 테이블에 데이터가 들어올 때 람다 함수를 연결해서 작업 수행 가능
+- S3
+  - 오브젝트가 생성될 때 람다 함수 연계 가능
+- CloudFront
+  - Lambda@Edge
+- CloudWatch EventBridge
+  - AWS의 각종 서비스에 대한 이벤트를 람다 함수와 연결
+- CloudWatch Logs
+- SNS
+- SQS
+- Cognito
+  - 유저 로그인 시 람다 함수 연계 가능
+
+## Serverless Thumbnail creation
+
+![images/containers_on_aws/16.png](images/containers_on_aws/16.png)
+
+- S3에 파일이 인풋되었을 때 람다 함수를 연계하여 썸네일을 작성하고 썸네일 메타데이터를 다이나모DB에 저장
+
+## Serverless CRON job
+
+![images/containers_on_aws/17.png](images/containers_on_aws/17.png)
+
+- CloudWatch EventBridge를 통해 스케줄된 람다 함수 실행 가능
+
+## Lambda Pricing
+
+- 요청
+  - 1백만 요청까지 무료
+  - 그 이후 백만단위당 $0.2
+- 사용시간
+  - 400,000GB 초까지 무료
+  - 그 이후 600,000GB초당 $1.0
+
+## Lambda 제약사항
+
+- 실행
+  - RAM 128MB ~ 10GB
+  - 실행시간 900초
+  - 환경변수 4KB
+  - 함수 컨테이너 512MB ~ 10GB
+  - 동시 실행수 1000 (증가 가능)
+- 배포
+  - 배포 사이즈 50MB
+  - 비압축 배포 code + 종속성 250MB
+  - /tmp 저장소를 파일 스타트업으로 활용 가능
+  - 환경변수 4KB
+
+## Edge Customization
+
+- 특정 로직을 엣지에서 실행하고 있는 어플리케이션
+- 엣지 함수
+  - CloudFront 배포 (엣지 로케이션)에서 코드를 실행
+  - 유저에게 최단거리에서 실행할수 있기 때문에 지연시간 최적화
+- CloudFront는 두가지 타입의 함수를 지원
+  - CloudFront Function
+  - Lambda@Edge
+- 서버를 관리할 필요는 없고, 자동으로 글로벌 배포가 됨
+- 사용 사례
+  - 웹사이트 보안 및 프라이버시
+  - Edge에서의 다이나믹 웹 어플리케이션
+  - SEO (Search Engine Optimization)
+  - 지능적 라우팅
+  - 실시간 이미지 변환
+  - AB 테스팅
+  - 유저 인증 및 인가
+  - 유저 우선순위 할당
+  - 유저 추적 및 분석
+
+## CloudFront Functions
+
+- JavaScript로 구성된 경량화 함수
+- 고성능의 스케일업, 지연시간에 민감한 CDN 함수 처리
+- 밀리초 단위의 실행대기시간, 초당 수백만 요청 처리 가능
+- 요청자에게 보내는 응답과 요청을 수정 가능
+  - Viewer Request 클라우드 프론트에 요청자의 요청을 전달
+  - Viewer Response 처리된 결과를 클라우드 프론트로부터 요청자에게 전달
+- CloudFront의 네이티브 기능
+
+![images/containers_on_aws/18.png](images/containers_on_aws/18.png)
+
+## Lambda@Edge
+
+- NodeJS와 Python과 같은 백엔드 함수 수행
+- 초당 수천단위의 요청 처리 가능
+- Viewer Request
+- Viewer Response
+- Origin Request
+- Origin Response
+- 함수 자체는 하나의 리전에 존재하고, 해당 함수를 클라우드프론트가 글로벌에 배포
+
+## CloudFront Functions vs Lambda@Edge
+
+### CloudFront Functions
+
+- 캐시 키 일반화
+  - 요청에 대한 헤더 쿠키 쿼리 스트링등을 최적화하는 캐시 키로 생성
+- 헤더 조작
+  - HTTP 헤더에 특정 값을 Insert/Modify/Delete 가능
+- URL 재작성
+  - 요청을 덮어쓰기 가능
+- Request Authentication & Authorization
+  - JWT등의 토큰을 작성하여 허가/불허가 가능
+
+### Lambda@Edge
+
+- 더 긴 시간동안의 작업 (백엔드, API 요청 등)
+- CPU와 RAM 조정 가능
+- 서드파티 라이브러리에 의존함
+
+## Lambda 네트워킹
+
+### default
+
+![images/containers_on_aws/19.png](images/containers_on_aws/19.png)
+
+- 기본적으로 람다 함수는 VPC 밖에서 수행됨 (AWS 람다 전용 VPC)
+- 그래서 VPC 내부의 프라이빗 리소스와 직접적인 연계가 불가 (RDS, ElastiCache, ELB 등)
+
+### Lambda in VPC
+
+![images/containers_on_aws/20.png](images/containers_on_aws/20.png)
+
+- 람다를 생성할 때 VPC를 지정하여 서브넷과 SG를 지정함
+- 람다는 ENI를 작성하여 서브넷과 직접 교류할 수 있게 됨
+
+## Lambda with RDS Proxy
+
+![images/containers_on_aws/21.png](images/containers_on_aws/21.png)
+
+- 람다함수가 직접적으로 데이터베이스에 접근하게 되면 단위 함수로 너무 많은 데이터베이스 커넥션 오버헤드가 발생할 수 있음
+- RDS Proxy
+  - 프록시를 사용하여 DB 풀 커넥션을 공유하게 됨
+  - 66% 실패 감소등 효과를 볼 수 있음 (커넥션 보존)
+  - IAM 인증을 강제하고 Secret Manager에 크레덴셜을 저장하여 활용 가능
+- 람다 함수는 in VPC로 배포되어야 하며, 그 이유는 RDS Proxy는 외부 공개가 불가능하기 때문
