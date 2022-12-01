@@ -88,3 +88,65 @@
 - CLB는 추천되지 않음 (포트 맵핑등을 지원안하고, Fargate에서 이용 불가)
 
 ![images/containers_on_aws/7.png](images/containers_on_aws/7.png)
+
+## Data Volumes (EFS)
+
+- ECS는 EFS와 궁합이 좋은데, 각각의 EC2 인스턴스 내의 태스크들이 모두 볼륨으로 EFS를 사용하게 되면 전부 공유하는 스토리지로 이용 가능하기 때문임
+- 또한 EFS도 서버리스이기 때문에 Fargate와 함께 사용하면 인프라에 대한 걱정 없이 서비스를 운영 가능
+- 사용 사례
+  - 복수 AZ에 대한 가용성 높은 공유 스토리지를 이용하는 서비스
+- S3은 서비스에 볼륨으로 사용할 수 없음 (오브젝트형 스토리지)
+
+## ECS Service Auto Scaling
+
+- 자동으로 ECS 숫자를 늘리거나 줄이는 기능
+- AWS Application Auto Scaling을 이용
+  - ECS Service Average CPU Utilization
+  - ECS Service Average Memory Utilization (Scale on RAM)
+  - ALB Request Count Per Target (ALB의 지표를 이용)
+- 타겟 트래킹
+  - CloudWatch에 등록된 지표에 의해
+- 스텝 스케일링
+  - CloudWatch에 등록된 지표의 알람에 의해
+- Scheduled Scaling
+  - 정해진 시간에
+- ECS에서 스케일링을 한다고 EC2 인스턴스가 증가하는것은 아님
+- 설정 CPU와 RAM에 따라 EC2 내에 여러개의 태스크를 가동할 수 있기 때문임
+
+## EC2 Launch Type - Auto Scaling EC2 Instances
+
+- ECS 백엔드 인스턴스를 ECS 서비스가 오토 스케일함
+- Auto Scaling Group Scaling
+  - CPU 사용량에 따라서 ASG가 자동으로 인스턴스를 조절
+- ECS Cluster Capacity Provider
+  - ECS 태스크를 기동할때 자동으로 인프라를 관리
+  - Capacity Provider가 ASG와 연계되어 있음
+
+![images/containers_on_aws/8.png](images/containers_on_aws/8.png)
+
+## EventBridge에 의해 트리거되는 ECS 태스크
+
+![images/containers_on_aws/9.png](images/containers_on_aws/9.png)
+
+- Amazon EventBridge가 ECS 태스크를 실행할 수 있기 때문에, 서버리스 환경을 이용하여 S3 버킷에 파일을 업로드 했을때, 해당 파일에 대한 처리를 수행할 수 있음
+- 또한 태스크 IAM 역할을 이용하면 그때 수행되는 태스크에 필요한 권한을 부여할 수 있음
+
+![images/containers_on_aws/10.png](images/containers_on_aws/10.png)
+
+- EventBridge는 스케줄링에 의해 시간단위로 태스크 실행이 가능하기 때문에, 이를 이용해서 정기적으로 배치 작업을 수행 가능
+
+![images/containers_on_aws/11.png](images/containers_on_aws/11.png)
+
+- SQS 큐에 들어와있는 메시지 수를 CloudWatch를 통해 지표로 설정하고, 해당 지표에 따라서 ECS 태스크의 Auto Scaling이 동작하게 설정 가능
+- 따라서 큐에 작업이 밀려있을 경우 태스크를 증가시켜서 처리량을 올릴 수 있게 됨
+
+## Amazon ECR
+
+- ECR (Elastic Container Registry)
+- AWS에 도커 이미지를 저장
+- 프라이빗과 퍼블릭이 존재 (퍼블릭은 AWS에서 제공하는 퍼블릭 갤러리)
+- ECS와 완벽하게 연동되며, S3이 백엔드 저장소로 사용되고 있음
+- IAM에 의한 접근제어 정책
+- 이미지 취약점 검사, 버전 관리, 이미지 태깅, 라이프사이클(만료) 관리 등을 지원
+
+![images/containers_on_aws/12.png](images/containers_on_aws/12.png)
