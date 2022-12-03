@@ -415,7 +415,7 @@
 
 ## 테이블 예제
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4d4430c8-9d27-43e0-a89c-deebc879472f/Untitled.png)
+![images/containers_on_aws/22.png](images/containers_on_aws/22.png)
 
 - 메인 키인 파티션키와 보조 키인 소트키로 이루어진 테이블에, 속성이 계속해서 추가될 수 있음
 
@@ -440,7 +440,7 @@
 - 다이나모DB의 로직 변경 불필요, 앞단에서 자동 수행
 - 기본 5분 캐시타임 (변경 가능)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/83c5970b-1d0b-46e4-9b54-1058bb993c92/Untitled.png)
+![images/containers_on_aws/23.png](images/containers_on_aws/23.png)
 
 ## DAX vs ElastiCache
 
@@ -448,11 +448,11 @@
 - DAX는 오브젝트 단위의 캐시 능력을 보여주고, ElastiCache는 결과를 저장하는데 특화되어 있음
 - 일반적으로 다이나모DB에서는 굳이 ElastiCache보다는 DAX를 유효화하면 해결되는 경우가 많음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1838715-19bc-42c0-8288-18a3b10b41ee/Untitled.png)
+![images/containers_on_aws/24.png](images/containers_on_aws/24.png)
 
 ## DynamoDB Stream Processing
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7cbd0f9a-1ed1-4866-8f92-3c8dd9f91283/Untitled.png)
+![images/containers_on_aws/25.png](images/containers_on_aws/25.png)
 
 - 테이블 내 변경사항이 생겼을 경우 (아이템레벨) 순서에 따라 데이터를 처리하는 스트림을 생성
 - 사용 사례
@@ -476,7 +476,7 @@
 
 ## DDB Global Tables
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/055d4724-0597-4756-a0b0-0b14a9c1f82b/Untitled.png)
+![images/containers_on_aws/26.png](images/containers_on_aws/26.png)
 
 - 복수의 리전으로 복제되는 테이블 (양방향 복제)
 - 여러 리전에서 접근하는 어플리케이션이 DDB와 연계되는 경우
@@ -487,7 +487,7 @@
 
 - 테이블의 속성값에 따라 일정 기간이 지난 후 자동으로 아이템을 삭제
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f715f1c2-2694-4ff6-89e6-a6d4ec02db63/Untitled.png)
+![images/containers_on_aws/27.png](images/containers_on_aws/27.png)
 
 - 특정 시점 이전의 데이터가 필요 없는 경우와 웹 세션의 경우 주로 채택되는 방법
 
