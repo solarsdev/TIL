@@ -516,3 +516,74 @@
   - 쓰기 퍼포먼스에 영향 없음
   - 새로운 테이블을 생성
   - CloudWatch Logs를 통해 에러 발생시 로그 확인 가능
+
+## Serverless API
+
+![images/containers_on_aws/28.png](images/containers_on_aws/28.png)
+
+- 클라이언트에 REST API를 이용한 엔드포인트 노출
+- 클라이언트의 요청을 프록시로 람다에 요청 전달
+- 람다함수가 DDB등에 데이터를 처리하는 로직을 수행
+
+## API Gateway
+
+- 람다와 연계하면 인프라를 관리할 필요가 없어짐
+- 웹소켓 프로토콜을 지원
+- API 버전관리를 지원 (v1, v2)
+- 여러 환경관리를 지원 (dev, test, prod)
+- 보안관리 (인증 및 인가)
+- API 키를 이용한 요청 제한 가능
+- Swagger / Open API 포맷으로 API를 정의할 수 있음
+- 요청과 응답을 일부 수정 가능
+- SDK와 API 사양서 작성 가능
+- API 응답을 캐시화 가능
+
+## API Gateway 연계
+
+- 람다함수
+  - 람다 함수 호출
+  - REST API를 람다 함수와 직접 연결 가능
+- HTTP
+  - HTTP 엔드포인트에 연결 가능
+  - 인터널 HTTP API가 존재하거나 ELB에 백엔드 서비스가 존재하여 그곳으로 연결
+  - API Gateway 고유기능인 캐시, 요청 제한, 인증 및 인가를 사용하기 위함
+- 각종 AWS 서비스
+  - AWS 서비스를 API형태로 제공
+  - Step Function의 호출, SQS에 메시지 기재
+
+## Kinesis Data Streams 예제
+
+![images/containers_on_aws/29.png](images/containers_on_aws/29.png)
+
+## API Gateway Endpoint Types
+
+- Edge-Optimized (default)
+  - 엣지 로케이션에 API를 배포하여 지연속도 최적화
+  - API는 하나의 리전에만 존재
+- Regional
+  - 모든 클라이언트를 같은 리전에서 처리
+  - CloudFront와 연계시켜 캐시 컨트롤 등에 대한 권한을 좀 더 확장 가능
+- Private
+  - VPC 내부에서만 연결할 수 있도록 제한
+  - 접근 제어를 위해 리소스 정책을 활용
+
+## API Gateway 보안
+
+- 유저 인증
+  - IAM 역할 (내부 어플리케이션에 유용)
+  - Cognito (외부 유저를 위한 인증, 모바일 유저들을 위한 인증)
+  - 커스텀 인증자 (작성자의 로직에 맞춤)
+- 커스텀 도메인 이름 HTTPS (ACM을 이용한 보안 강화)
+  - Edge-Optimized 엔드포인트를 이용하고 있는 경우 ACM은 us-east-1에 설치
+  - Regional 엔드포인트를 이용하는 경우 ACM은 각각의 리전에 설치
+  - CNAME 또는 A-Alias로 Route53에 설치해야 함
+
+## AWS Step Function
+
+- 람다 함수를 연계한 워크플로우를 작성하고 시각화
+- 순차, 병렬, 조건, 타임아웃, 에러 처리 등
+- EC2, ECS, 온프레미스 서버, API 게이트웨이, SQS 큐 등과 연계 가능
+- 사람이 직접 승인하는 플로우도 구축 가능
+- 웹 어플리케이션 등 원하는 어떤 것들과도 연계 가능
+
+![images/containers_on_aws/30.png](images/containers_on_aws/30.png)
