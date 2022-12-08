@@ -215,6 +215,8 @@
 - [Advanced Storage](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/advanced_storage.md)
 - [Integration and Messaging](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/integration_messaging.md)
 - [Containers on AWS](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/containers_on_aws.md)
+- [Serverless Architecture](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/serverless_architecture.md)
+- [Databases](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/databases.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
