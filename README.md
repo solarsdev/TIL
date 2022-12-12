@@ -217,6 +217,7 @@
 - [Containers on AWS](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/containers_on_aws.md)
 - [Serverless Architecture](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/serverless_architecture.md)
 - [Databases](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/databases.md)
+- [Data and Analytics](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/data_and_analytics.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
