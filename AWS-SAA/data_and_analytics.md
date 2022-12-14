@@ -53,7 +53,7 @@
 
 ## Redshift Cluster
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/08c58513-a491-4a04-9086-647e5456ae12/Untitled.png)
+![images/data_and_analytics/3.png](images/data_and_analytics/3.png)
 
 - 레드시프트는 리더노드와 컴퓨트노드로 나누어짐
 - 리더노드는 질의자의 쿼리를 받아주는 노드로 컴퓨트 노드는 리더노드의 지시하에 쿼리를 수행하는 인스턴스
@@ -67,13 +67,13 @@
 - 온디맨드 백업은 PITR을 지원하고 삭제 전까지 유지 가능
 - 레드시프트 자동 백업을 통해 스냅샷을 다른 리전에 자동으로 복제 하는 기능도 설정 가능
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ac482025-7d3d-4217-a697-cadef9cb7653/Untitled.png)
+![images/data_and_analytics/4.png](images/data_and_analytics/4.png)
 
 ## Redshift 데이터 로딩
 
 - 레드시프트에 데이터를 쌓는 방식으로는 3가지 패턴이 있음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8427b3e2-ff8b-4b87-b0d3-0764f653d0d3/Untitled.png)
+![images/data_and_analytics/5.png](images/data_and_analytics/5.png)
 
 ### Amazon Kinesis Data Firehose
 
@@ -92,4 +92,35 @@
 - S3에 있는 데이터를 분석할때 사용
 - 레드시프트 스펙트럼이 S3에 병렬적으로 쿼리를 처리하여 컴퓨트노드↔리더노드를 통해 질의자에게 결과를 전달해줌
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67b918ca-936c-453d-ab7a-6eb4ebb1edbc/Untitled.png)
+![images/data_and_analytics/6.png](images/data_and_analytics/6.png)
+
+## Amazon OpenSearch Service
+
+- Amazon ElasticSearch의 다른 이름
+- DDB에서 쿼리는 프라이머리 키 또는 인덱스에 대해서만 수행 가능
+- OpenSearch를 이용하면 어떤 필드도 검색 가능하며, 일부 매칭도 가능
+- OpenSearch를 검색용 DB로 사용하는 것은 흔한 패턴
+- OpenSearch는 개별적인 클러스터 관리형 인스턴스를 요구 (서버리스가 아님)
+- SQL을 지원하지 않음 (독자적인 쿼리 언어가 존재, JSON타입)
+  [Query DSL | Elasticsearch Reference [5.4] | Elastic](https://www.elastic.co/guide/en/elasticsearch/reference/5.4/query-dsl.html)
+- Kinesis Data Firehose나 AWS IoT, CloudWatch Logs등과 같은 데이터 수집기로 데이터 보존 필요
+- Cognito와 IAM을 통한 보안 인증 지원, KMS, TLS를 통한 전송, 저장 데이터의 암호화 지원
+- OpenSearch Dashboard 지원
+
+## DDB에서 OpenSearch 패턴
+
+![images/data_and_analytics/7.png](images/data_and_analytics/7.png)
+
+- DDB에서 Streams를 이용하여 모든 아이템에 대한 변경사항을 람다를 이용하여 OpenSearch에 저장
+- 아이템에 대한 검색은 OpenSearch를 이용하고, 특정 데이터를 확정하여 가져오는 부분을 DDB에서 수행
+
+## CloudWatch Logs에서의 OpenSearch 패턴
+
+![images/data_and_analytics/8.png](images/data_and_analytics/8.png)
+
+- 클라우드워치 로그를 필터를 통해 람다함수로 실시간으로 오픈서치에 저장
+- 키네시스 파이어호스는 60초 또는 1MB(최대 버퍼 저장량)의 데이터 전송 딜레이가 존재
+
+## Kinesis Data Streams에서 OpenSearch 패턴
+
+![images/data_and_analytics/9.png](images/data_and_analytics/9.png)
