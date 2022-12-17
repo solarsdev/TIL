@@ -180,3 +180,42 @@
 - 대시보드 및 분석 결과를 유저 및 그룹과 공유 가능
 - 대시보드를 공유하기 위해서는 발행해야 함
 - 대시보드를 볼 수 있는 권한이 있다면, 데이터도 볼 수 있음
+
+## AWS Glue
+
+- 관리형 Extract, Transform, Load (ETL) 서비스
+- 분석을 위한 데이터 변환과 준비에 유용
+- 완전 서버리스로 제공됨
+
+![images/data_and_analytics/12.png](images/data_and_analytics/12.png)
+
+## 예제: parquet 포맷으로 데이터 치환
+
+![images/data_and_analytics/13.png](images/data_and_analytics/13.png)
+
+- S3 버킷에 CSV 데이터를 저장
+- 저장된 CSV를 글루 ETL을 통해 Parquet으로 변환하여 다른 버킷에 결과를 저장
+- Athena를 통해 Parquet 데이터를 읽어서 쿼리
+  - Parquet은 Columnar 형식으로 쿼리 퍼포먼스의 증가, 특정 칼럼만 읽어 읽기 대상 감소로 비용 절감을 노릴 수 있음
+- S3 이벤트를 통한 람다 혹은 EventBridge로 Glue ETL 작업을 주기적으로 실행 가능
+
+## Glue에서 연동 가능한 서비스들
+
+![images/data_and_analytics/14.png](images/data_and_analytics/14.png)
+
+- 글루를 통해 다양한 데이터 소스로부터 크롤링하여 데이터를 테이블화 시키고, 해당 데이터를 분석 도구 서비스에서 활용 가능
+
+## Glue 정리
+
+- Glue Job Bookmarks
+  - 기존 데이터를 재작업 하는것을 방지
+- Glue Elastic Views
+  - SQL을 이용하여 다양한 데이터 저장소를 하나로 합치고 복제함
+  - 서버리스로 제공되는 글루를 통해 소스 데이터의 변경을 감지하고 모니터링 가능
+  - 가상 테이블을 구현함
+- Glue DataBrew
+  - 미리 정의된 변경을 이용해 데이터를 정규화하고 정리함
+- Glue Studio
+  - GUI를 통해 Glue Job을 모니터링 하고 관리 가능
+- Glue Streaming ETL (Apache Spark 기반)
+  - Kinesis Data Streaming, Kafka, MSK와 호환됨
