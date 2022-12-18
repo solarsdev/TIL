@@ -219,3 +219,22 @@
   - GUI를 통해 Glue Job을 모니터링 하고 관리 가능
 - Glue Streaming ETL (Apache Spark 기반)
   - Kinesis Data Streaming, Kafka, MSK와 호환됨
+
+## AWS Lake Formation
+
+- Data Lake = 분석 목적의 데이터를 하나로 집약해놓은 것
+- 데이터 레이크를 몇일 만에 구축할 수 있도록 하는 완전 관리형 서비스
+- 구축한 데이터 레이크 안에서 탐색, 클렌징, 치환등을 수행
+- 복잡한 수동 프로세스 (수집, 클렌징, 이동, 분류 등) 를 자동화하고 중복 제거를 수행 (ML 변환)
+- 구조화/비구조화 데이터를 하나로 통합
+- S3, RDS, RDB, NoSQL DB등 관계 없이 블루프린트를 통해 데이터를 하나의 포맷으로 통합
+- 어플리케이션을 위한 통합 접근제어를 수행 (행/열 단위)
+- AWS Glue 기반으로 구성된 툴
+
+![images/data_and_analytics/15.png](images/data_and_analytics/15.png)
+
+### LakeFormation을 사용하는 목적
+
+![images/data_and_analytics/16.png](images/data_and_analytics/16.png)
+
+- 집약된 데이터의 분석을 수행할때, 데이터를 칼럼 단위로 접근제어 할 수 있기 때문에 통합된 권한 관리를 목적으로 LakeFormation을 도입
