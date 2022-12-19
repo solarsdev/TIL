@@ -238,3 +238,32 @@
 ![images/data_and_analytics/16.png](images/data_and_analytics/16.png)
 
 - 집약된 데이터의 분석을 수행할때, 데이터를 칼럼 단위로 접근제어 할 수 있기 때문에 통합된 권한 관리를 목적으로 LakeFormation을 도입
+
+## Kinesis Data Analytics for SQL applications
+
+![images/data_and_analytics/17.png](images/data_and_analytics/17.png)
+
+- SQL을 이용한 Kinesis Data Streams와 Firehose의 데이터를 실시간 분석
+- S3로부터 레퍼런스 데이터를 실시간으로 읽어들여 분석 가능
+- 완전 관리형으로 프로비전 불필요
+- 자동 스케일링
+- 실제로 처리된 데이터 만큼 과금
+- 결과
+  - Kinesis Data Streams를 통해 새로운 스트림을 생성해서 분석 가능
+  - Kinesis Data Firehose를 통해 새로운 타겟으로 데이터를 보낼 수 있음
+- 사용 사례
+  - 시간 흐름에 따른 분석
+  - 실시간 대시보드
+  - 실시간 지표
+
+## Kinesis Data Analytics for Apache Flink
+
+- Flink (Java, Scala, SQL)를 이용해서 실시간 데이터 분석
+
+![images/data_and_analytics/18.png](images/data_and_analytics/18.png)
+
+- AWS 관리형 클러스터에 Apache Flink를 가동
+  - 처리 리소스 할당, 병렬 컴퓨팅, 자동 스케일링
+  - 백업 자동화 (체크 포인트 및 스냅샷)
+  - Apache Flink를 이용한 프로그래밍 기능
+  - Flink는 Firehose로부터 데이터를 읽을 수 없기 때문에 Firehose를 사용하려면 SQL방식을 이용해야 함
