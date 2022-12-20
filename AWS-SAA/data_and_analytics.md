@@ -267,3 +267,55 @@
   - 백업 자동화 (체크 포인트 및 스냅샷)
   - Apache Flink를 이용한 프로그래밍 기능
   - Flink는 Firehose로부터 데이터를 읽을 수 없기 때문에 Firehose를 사용하려면 SQL방식을 이용해야 함
+
+## Amazon managed Streaming for Apache Kafka (MSK)
+
+- Amazon Kinesis의 대체
+- AWS 완전 관리형 Apache Kafka
+  - create update delete 클러스터
+  - MSK 클러스터는 Kafka 브로커 노드와 Zookeeper 노드를 관리
+  - MSk 클러스터를 VPC 내에 배포 가능 (다중 AZ 지원)
+  - Apache kafka의 리커버리를 지원
+  - 데이터는 EBS 볼륨에 저장되어 원하는 기간동안 보존 가능
+- MSK 서버리스
+  - Kafka를 서버리스로 운영
+  - MSK의 인프라를 구성할 필요 없이 필요에 의한 만큼 자동으로 스케일링
+
+![images/data_and_analytics/19.png](images/data_and_analytics/19.png)
+
+## Kinesis Data Streams vs Amazon MSK
+
+### Kinesis Data Streams
+
+- 1MB 사이즈 제한
+- 데이터 스트림은 샤드로 구성
+- 샤드 분할/병합 지원
+- TLS를 통한 전송 시 암호화
+- KMS를 통한 데이터 암호화
+
+### MSK
+
+- 1MB 기본 지원 (10MB까지 설정에 의해 증가 가능)
+- Kafka 토픽을 통한 파티션
+- 파티션은 추가만 가능 (병합 불가)
+- 평문 혹은 TLS 암호화
+- KMS를 통한 데이터 암호화 (EBS 암호화)
+
+## MSK의 데이터 소비자들
+
+![images/data_and_analytics/20.png](images/data_and_analytics/20.png)
+
+- Kinesis Data Analytics for Apache Flink (Apache Flink로 Kafka 데이터 엑세스)
+- Glue를 통한 데이터 처리
+- Lambda로 직접 처리
+- EC2, ECS, EKS등으로 직접 처리 작업을 구현한 서비스를 운영
+
+## 빅데이터 처리 파이프라인 구축
+
+![images/data_and_analytics/21.png](images/data_and_analytics/21.png)
+
+- IoT 코어는 IoT 디바이스로 데이터를 수집
+- Kinesis는 실시간으로 데이터를 수집
+- Firehose로 1분마다 데이터를 S3에 저장 (데이터 처리가 필요하다면 Lambda로 변환 가능)
+- 데이터 수집 버킷은 이벤트를 통해 Lambda를 실행하고 람다는 Athena의 쿼리를 트리거링
+- 아테나는 결과를 버킷에 저장하고, 해당 결과를 QuickSight또는 Redshift와 연동
