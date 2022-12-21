@@ -218,6 +218,7 @@
 - [Serverless Architecture](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/serverless_architecture.md)
 - [Databases](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/databases.md)
 - [Data and Analytics](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/data_and_analytics.md)
+- [Machine Learning](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/machine_learning.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
