@@ -44,3 +44,22 @@
   - AWS ⇒ Amazon Web Service
 - Lexicon을 업로드하고 SSML을 설정하면 됨
 - SSML에는 여러가지 지원 명령들이 있는데, 말하는 도중 쉼이라던가, 속삭임과 같은 것도 지정 가능
+
+## Amazon Translate
+
+- 자연어 언어 번역기
+- 컨텐츠의 로컬라이징을 지원하며, 웹사이트 등의 번역 등을 지원하여 인터네셔널 사이트등을 제작하는데 도움이 될 수 있음
+
+## Amazon Lex
+
+- Alexa와 동일하게 음성 인식을 통한 명령 수행 가능
+- 자연어 이해로 화자를 인식함
+- 챗봇이나 콜센터 봇을 만드는데 도움
+
+### Amazon Connect
+
+- 전화를 받고 연락 흐름을 만드는 클라우드 기반 가상 콜센터
+- AWS로 다른 CRM 시스템과 연계 (salesforce등)
+- 선금이 없고 다른 콜센터 솔루션 대비 80%이상 저렴
+
+![images/machine_learning/2.png](images/machine_learning/2.png)
