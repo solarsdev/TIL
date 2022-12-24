@@ -63,3 +63,42 @@
 - 선금이 없고 다른 콜센터 솔루션 대비 80%이상 저렴
 
 ![images/machine_learning/2.png](images/machine_learning/2.png)
+
+## Amazon Comprehend
+
+- 자연어 처리 NLP (Natural Language Processing)
+- 완전 관리형 서버리스 서비스
+- 텍스트 안에서 인사이트와 관계등을 찾아냄
+  - 텍스트의 언어 (한국어, 영어 등)
+  - 핵심 구문, 장소, 사람, 브랜드, 이벤트 등의 추출
+  - 텍스트의 긍정적, 부정적 척도
+  - 토픽에 따른 파일 분류
+- 사용 사례
+  - 고객의 응답 (이메일) 등의 긍정도 척도 분석을 통한 대응
+  - 여러 파일들의 토픽에 따른 분류 등
+
+## Comprehend Medical
+
+- Amazon Comprehend Medical은 진료 기록을 분석하는 툴
+  - 진단 수첩 분석
+- PHI 분석
+- 결과를 S3에 저장하여 Kinesis Data Firehose로 실시간 분석 또는 환자의 진료 내용을 텍스트로 기록하여 Comprehend Medical과 연동
+
+## Amazon SageMaker
+
+- 완전 관리형 머신 러닝 모델 개발/데이터 과학용 툴
+- 일반적으로 서버를 구성하여 분석용 도구를 설치하고 운용하는 것은 쉬운 일이 아님
+- 머신 러닝의 과정을 단순화 하면 아래와 같음
+
+![images/machine_learning/3.png](images/machine_learning/3.png)
+
+- 과거의 기록과 공부 자료를 통해 성적을 예상하는 프로그램
+
+## Amazon Forecast
+
+- 완전 관리형 서비스로 어떤 특정한 상황을 머신러닝으로 유추하여 예상하는 것
+- 샘플: 비옷의 할인 예측
+- 몇달에 걸쳐 예상되는 결과를 몇시간 안에 도출
+- 사용 사례
+  - 제품 출시 예상
+  - 주가 예상
