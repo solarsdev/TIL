@@ -102,3 +102,13 @@
 - 사용 사례
   - 제품 출시 예상
   - 주가 예상
+
+## Amazon Kendra
+
+- 머신러닝에 의한 완전 관리형 문서 검색 서비스
+- 각종 문서 형태 (텍스트, pdf, HTML, PPT, word, FAQs 등) 에서 결과를 도출
+- 자연어 검색과 호환됨
+- 유저의 선호도에 따라서 학습하여 액션/피드백을 돌려줌 (계속적인 러닝)
+- 수동으로 검색 결과를 최적화 할 수 있는 기능이 존재 (커스텀 형태로)
+
+![images/machine_learning/4.png](images/machine_learning/4.png)
