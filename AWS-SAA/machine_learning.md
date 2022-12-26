@@ -112,3 +112,16 @@
 - 수동으로 검색 결과를 최적화 할 수 있는 기능이 존재 (커스텀 형태로)
 
 ![images/machine_learning/4.png](images/machine_learning/4.png)
+
+## Amazon Personalize
+
+- 실시간 개인화 추천에 따른 완전 관리형 앱 빌딩 서비스
+- 사용 예제
+  - 쇼핑몰에서 몇개의 물건을 구매 후 필요한 다른 물건들을 추천해주는 서비스
+  - Amazon.com에서 사용되고 있는 머신러닝 추천 알고리즘
+- 서비스는 웹사이트, 어플리케이션, SMS, 이메일 마케팅 서비스 등과 연계
+- 일일히 머신러닝 모델을 빌드하고 트레이닝 할 필요 없이 바로 사용 가능
+- 사용 사례
+  - 리테일 샵, 미디어 및 엔터테인먼트 등
+
+![images/machine_learning/5.png](images/machine_learning/5.png)
