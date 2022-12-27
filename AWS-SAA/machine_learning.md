@@ -125,3 +125,16 @@
   - 리테일 샵, 미디어 및 엔터테인먼트 등
 
 ![images/machine_learning/5.png](images/machine_learning/5.png)
+
+## Amazon Textract
+
+- 자동으로 텍스트, 손글씨, 각종 데이터에서 문서를 스캔하고 문자열을 추출해내는 서비스
+
+![images/machine_learning/6.png](images/machine_learning/6.png)
+
+- 폼과 테이블 등에서 데이터를 추출
+- PDF, Image 등과 같은 문서 및 이미지 등에서도 추출 가능
+- 사용 예제
+  - 금융 서비스 (청구서, 금융 레포트)
+  - 헬스케어 (메디컬 기록, 보험 약관)
+  - 공공기관 (세금 고지, 인증 문서, 여권 등)
