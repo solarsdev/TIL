@@ -18,3 +18,61 @@
 - 옵션으로 필터링을 통해 원하는 조건의 데이터만 스트림 가능
 
 ![images/monitoring_audit_and_performance/1.png](images/monitoring_audit_and_performance/1.png)
+
+## CloudWatch Logs
+
+- 로그 그룹
+  - 로그 집합의 이름, 일반적으로는 어플리케이션의 이름을 선정
+- 로그 스트림
+  - 어플리케이션/로그 파일/컨테이너의 인스턴스 (디멘션)
+- 로그 만료 기간 설정
+  - 로그가 기록되고 나서 얼마나 보존할지 기한을 설정 (만료 없음부터 최대 10년까지)
+- CloudWatch 로그는 다양한 곳으로 보내거나/저장 가능
+  - AWS S3 (추출)
+  - Kinesis Data Streams (실시간 연계)
+  - Kinesis Data Firehose (엔드포인트 송신)
+  - AWS Lambda (변환)
+  - ElasticSearch (키밸류 검색엔진)
+
+## CloudWatch Logs Sources
+
+- SDK, CloudWatch Logs Agent, CloudWatch Unified Agent
+- Elastic Beanstalk: 어플리케이션 로그 수집
+- ECS: 컨테이너 로그 수집
+- AWS Lambda: 함수 실행 기록 (로그, 에러 검증)
+- VPC Flow Logs: VPC 전용 메타데이터 로그
+- API Gateway: 요청 로그
+- CloudTrail based on filter: 특정 설정에 따른 감사 기록 로그
+- Route53 Logs: DNS 쿼리 기록
+
+## CloudWatch Logs Metric Filter & Insights
+
+- 클라우드워치 로그는 필터링 식이 존재하며 이용 가능
+  - 예를 들면 특정 아이피에 대한 로그만
+  - 에러 코드나 특정 에러 텍스트에 대한 검출 등
+- 지표 필터를 이용하여 해당 로그가 발생했을 때 클라우드워치 알람과 연동 가능
+- 클라우드워치 로그 인사이트는 특정 쿼리를 지정해두고 대시보드에서 게속 활용하고 시각화 할 수 있도록 하기 위함
+
+## CloudWatch Logs - S3 Export
+
+- 로그 데이터는 추출을 위해 최대 12시간까지 대기
+- API요청은 CreateExrportTask
+- 실시간 추출은 불가능 (로그 구독을 대신 활용할것)
+
+## CloudWatch Logs Subscriptions
+
+![images/monitoring_audit_and_performance/2.png](images/monitoring_audit_and_performance/2.png)
+
+- 클라우드워치 로그를 실시간으로 필터링하여 다양한 엔드포인트 및 서비스로 송신할 수 있음
+- 또한 다양한 계정의 각기 다른 리전으로부터의 로그를 하나의 데이터 스트림을 통해 Firehose로 S3에 모아둘 수도 있음
+
+![images/monitoring_audit_and_performance/3.png](images/monitoring_audit_and_performance/3.png)
+
+## CloudWatch Logs for EC2
+
+- 디폴트로 EC2에서 클라우드워치로의 로그를 보내는 기능은 없음
+- CloudWatch 에이전트를 설치하여 로그 파일을 전송 가능
+- IAM 권한을 적절하게 설정해야 함
+- CloudWatch Logs 에이전트는 온프레미스 환경에도 설치 가능
+
+![images/monitoring_audit_and_performance/4.png](images/monitoring_audit_and_performance/4.png)
