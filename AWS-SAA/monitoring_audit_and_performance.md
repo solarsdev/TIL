@@ -76,3 +76,24 @@
 - CloudWatch Logs 에이전트는 온프레미스 환경에도 설치 가능
 
 ![images/monitoring_audit_and_performance/4.png](images/monitoring_audit_and_performance/4.png)
+
+## Logs Agent와 Unified Agent
+
+- EC2 인스턴스나 온프레미스 서버에 설치 가능
+- Logs Agent
+  - 오래된 버전 (권장되지 않음)
+  - CloudWatch Logs에 로그를 보내는 기능만 존재
+- Unified Agent
+  - RAM이나 프로세스 등을 보내는 기능도 추가되어 있음
+  - 로그를 수집하여 CloudWatch Logs에 전송 가능
+  - SSM Parameter Store를 이용하여 설정을 중앙화 관리 가능
+
+## CloudWatch Unified Agent 지표
+
+- CPU (활성화, 게스트, 유휴, 시스템, 유저 단위)
+- Disk 지표 (가용, 사용중, 전체), Disk IO (쓰기, 읽기, 바이트 IOPS 등)
+- RAM (가용, 사용중, 전체, 캐시)
+- Netstat (TCP 또는 UDP 커넥션, 패킷 수, 인아웃 바이트)
+- 프로세스 (전체, 종료, 유휴, 가동중, 슬립)
+- Swap 용량 (가용, 사용중, 전체 사용량 %)
+- EC2의 기본 지표와는 다른 추가적인 지표 수집 가능
