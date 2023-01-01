@@ -97,3 +97,30 @@
 - 프로세스 (전체, 종료, 유휴, 가동중, 슬립)
 - Swap 용량 (가용, 사용중, 전체 사용량 %)
 - EC2의 기본 지표와는 다른 추가적인 지표 수집 가능
+
+## CloudWatch Alarms
+
+- 알람은 어떤 지표든 이용하여 트리거될 수 있음
+- 다양한 옵션을 제공 (샘플링, %, 최대 최소, 기타)
+- 알람 상태
+  - OK
+  - INSUFFICIENT_DATA (지표 데이터 부족)
+  - ALARM
+- 기간
+  - 상태가 평가될때까지의 시간
+  - 커스텀 지표를 통한 고해상도 설정: 10초, 30초 또는 60초의 배수
+
+## CloudWatch Alarm Targets
+
+- EC2 인스턴스에 대한 정지, 삭제, 재기동, 복구 등
+- ASG에 대한 트리거
+- SNS로 메시지 발행 (이것과 연계한 다양한 액션들)
+
+### Composite Alarm
+
+- 알람은 하나의 지표를 통해 설정됨
+- 컴포지트 알람은 여러개의 지표 상태를 등록할 수 있음
+- AND 또는 OR 연결
+- 특정 상태에 대해서만 알람을 설정하고 싶을 때 유용하게 활용될 수 있음
+
+![images/monitoring_audit_and_performance/5.png](images/monitoring_audit_and_performance/5.png)
