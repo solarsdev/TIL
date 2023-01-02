@@ -124,3 +124,24 @@
 - 특정 상태에 대해서만 알람을 설정하고 싶을 때 유용하게 활용될 수 있음
 
 ![images/monitoring_audit_and_performance/5.png](images/monitoring_audit_and_performance/5.png)
+
+## EC2 인스턴스 복구
+
+- 상태 검사
+  - 인스턴스 상태 = EC2의 VM
+  - 시스템 상태 = 백엔드 하드웨어
+  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f4915b2e-627e-44be-9811-fb4b5fad0ed8/Untitled.png)
+- 복구
+  - 같은 프라이빗, 퍼블릭 Elastic IP, metadata, 배치 그룹 등
+
+## 기타 CloudWatch Alarm 정보
+
+- 알람은 Logs 지표 필터에 의해 활성화 될 수 있음
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0420853b-a17c-4a27-9b69-1109a55db627/Untitled.png)
+
+- 알람을 수동으로 설정할 수 있음
+
+```bash
+aws cloudwatch set-alarm-state --alarm-name "myAlarm" --state-value ALARM --state-reason "testing purpose"
+```
