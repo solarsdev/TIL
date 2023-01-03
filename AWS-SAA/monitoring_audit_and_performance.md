@@ -130,7 +130,7 @@
 - 상태 검사
   - 인스턴스 상태 = EC2의 VM
   - 시스템 상태 = 백엔드 하드웨어
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f4915b2e-627e-44be-9811-fb4b5fad0ed8/Untitled.png)
+    ![images/monitoring_audit_and_performance/6.png](images/monitoring_audit_and_performance/6.png)
 - 복구
   - 같은 프라이빗, 퍼블릭 Elastic IP, metadata, 배치 그룹 등
 
@@ -138,10 +138,28 @@
 
 - 알람은 Logs 지표 필터에 의해 활성화 될 수 있음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0420853b-a17c-4a27-9b69-1109a55db627/Untitled.png)
+![images/monitoring_audit_and_performance/7.png](images/monitoring_audit_and_performance/7.png)
 
 - 알람을 수동으로 설정할 수 있음
 
 ```bash
 aws cloudwatch set-alarm-state --alarm-name "myAlarm" --state-value ALARM --state-reason "testing purpose"
 ```
+
+## Amazon EventBridge
+
+- 원래 Amazon CloudWatch Events에서 기능이 강화되면서 명칭이 변경됨
+- 스케줄링: 크론 작업 (일정화 스크립트)
+
+![images/monitoring_audit_and_performance/8.png](images/monitoring_audit_and_performance/8.png)
+
+- 이벤트 패턴: 이벤트 발생 베이스로 특정 작업을 수행
+
+![images/monitoring_audit_and_performance/9.png](images/monitoring_audit_and_performance/9.png)
+
+- 람다 함수를 트리거하거나 SQS/SNS 메시지를 발행
+
+![images/monitoring_audit_and_performance/10.png](images/monitoring_audit_and_performance/10.png)
+
+- 각종 이벤트 소스로부터의 이벤트를 필터링(옵션)하여 이벤트 브리지는 다양한 AWS 타겟 서비스에 트리거 및 패러미터 전달자로서의 역할을 수행
+- 전달되는 패터리터는 JSON 형식
