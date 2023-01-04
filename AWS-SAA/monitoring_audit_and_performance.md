@@ -163,3 +163,28 @@ aws cloudwatch set-alarm-state --alarm-name "myAlarm" --state-value ALARM --stat
 
 - 각종 이벤트 소스로부터의 이벤트를 필터링(옵션)하여 이벤트 브리지는 다양한 AWS 타겟 서비스에 트리거 및 패러미터 전달자로서의 역할을 수행
 - 전달되는 패터리터는 JSON 형식
+
+### Event Bus
+
+![images/monitoring_audit_and_performance/11.png](images/monitoring_audit_and_performance/11.png)
+
+- 이벤트 버스는 크게 3가지 타입이 존재
+- Default Event Bus: AWS의 기본 서비스들
+- Partner Event Bus: AWS 이벤트 브리지를 지원하는 서드파티 서비스 (미리 준비된 템플릿이 존재)
+- Custom Event Bus: 어플리케이션에서 직접 이벤트 브리지와 호환되는 형태의 데이터를 전달 (JSON)
+- 이벤트 버스는 이벤트를 아카이브 가능하며 재전송할수 있기 때문에 (동일한 이벤트 재발생) 디버깅과 테스트에 유용함
+
+### Schema Registry
+
+- 이벤트 브릿지는 이벤트를 자체적으로 분석해서 스키마를 제공해줌
+- 스키마 레지스트리는 어플리케이션을 위한 코드를 만들고 데이터 구조를 이벤트버스에 맞추어 제공
+- 스키마는 버전관리로 이력을 남길 수 있음
+
+### Resource-based policy
+
+- 이벤트 버스에 대한 권한 관리
+- 다른 AWS 리전 및 계정에서 접근을 허용할 수 있음
+- 사용 사례
+  - 이벤트 버스의 중앙집중화 (한 계정에서 통합 관리)
+
+![images/monitoring_audit_and_performance/12.png](images/monitoring_audit_and_performance/12.png)
