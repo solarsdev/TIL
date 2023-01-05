@@ -188,3 +188,48 @@ aws cloudwatch set-alarm-state --alarm-name "myAlarm" --state-value ALARM --stat
   - 이벤트 버스의 중앙집중화 (한 계정에서 통합 관리)
 
 ![images/monitoring_audit_and_performance/12.png](images/monitoring_audit_and_performance/12.png)
+
+## CloudWatch Container Insights
+
+- 컨테이너로부터의 지표와 로그를 수집하고 정제하고 종합
+- ECS, EKS, Kubernetes on EC2, Fargate에서 동작
+- EKS와 Kubernetes에서 CloudWatch 에이전트가 컨테이너로 동작하며 다른 컨테이너들의 정보를 수집함
+
+![images/monitoring_audit_and_performance/13.png](images/monitoring_audit_and_performance/13.png)
+
+## CloudWatch Lambda Insights
+
+- AWS Lambda의 지표들과 데이터를 모니터링
+- 람다가 실행되는 환경의 CPU시간 및 메모리, 디스크, 네트워크등을 모니터링
+- 람다 특징인 콜드 스타트, 워커 셧다운 등 또한 분석하고 모니터링 가능
+
+![images/monitoring_audit_and_performance/14.png](images/monitoring_audit_and_performance/14.png)
+
+## CloudWatch Contributor Insights
+
+- 로그 자료를 분석하여 시간 기반의 기여도 데이터를 보여줌
+  - Top N의 기여자를 지표로 보여줌
+  - 기여자를 중복제거 후 계산, 사용량을 표시
+- 특정 시스템 퍼포먼스에 특정 유저의 영향도를 파악할 수 있음
+- AWS에서 발생하는 각종 다양한 로그와 연동됨 (VPC, DNS 등)
+- 예를 들면, 특정 네트워크 하에서 악영향을 미치고 있는 유저를 판별하거나 특정 에러를 계속해서 발생시키고 있는 웹페이지를 특정
+- 적용할 룰을 직접 정할 수도 있지만 CloudWatch Logs에서 정한 샘플 룰을 이용할 수 있음
+
+![images/monitoring_audit_and_performance/15.png](images/monitoring_audit_and_performance/15.png)
+
+## CloudWatch Application Insights
+
+- 현재 진행중인 문제점에 대한 문석과 가능성 있는 문제에 대한 지원등을 포함한 자동화된 대시보드를 제공함
+- Amazon EC2 인스턴스에서 작동중인 어플리케이션 및 특정에 대해서만 지원
+  - Java, .NET, Microsoft IIS Web Server, Databases
+- AWS의 다양한 서비스와도 연동 가능
+- SageMaker 기반
+- 어플리케이션 상태에 대한 모니터링 가시성 증강 및 문제 해결 및 해소에 걸리는 시간의 감소
+- Amazon EventBridge로의 알림 전송 및 연계
+
+## CloudWatch Insights and Operational Visibility
+
+- CloudWatch Container Insights
+- CloudWatch Lambda Insights
+- CloudWatch Contributors Insights
+- CloudWatch Application Insights
