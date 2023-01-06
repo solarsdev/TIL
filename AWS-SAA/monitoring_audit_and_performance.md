@@ -233,3 +233,79 @@ aws cloudwatch set-alarm-state --alarm-name "myAlarm" --state-value ALARM --stat
 - CloudWatch Lambda Insights
 - CloudWatch Contributors Insights
 - CloudWatch Application Insights
+
+## CloudTrail
+
+- 가버넌스와 컴플라이언스 준수를 위해 AWS 계정을 감사
+- 기본으로 ON 설정이 됨
+- 이벤트 및 API 요청에 대한 정보를 저장
+  - Console
+  - SDK
+  - CLI
+  - AWS 서비스
+- CloudTrail로부터 로그를 S3 또는 CloudWatch Logs로 저장 가능
+- 모든 리전 (기본) 또는 하나의 리전만 감시 가능
+- AWS에서 어떤 리소스가 삭제되면 CloudTrail을 먼저 조사
+
+![images/monitoring_audit_and_performance/16.png](images/monitoring_audit_and_performance/16.png)
+
+## CloudTrail Events
+
+### Management Events
+
+- AWS 계정 내 전반적인 활동이력에 대한 로그
+- 예를 들어
+  - 보안 설정 (IAM AttachRolePolicy)
+  - 라우팅 데이터 설정 (Amazon EC2 CreateSubnet)
+  - 로깅 설정 (AWS CloudTrail CreateTrail)
+- 기본적으로 클라우드 트레일은 관리 이벤트에 대해서는 로그를 남김
+- 이벤트는 Read Event와 Write Event로 구분됨
+  - Read Event (읽기, 변경하지 않는 것)
+  - Write Event (서비스를 변경하는 것)
+
+### Data Event
+
+- 데이터 이벤트는 볼륨이 크기 때문에 기본적으로는 꺼져 있음
+- S3의 오브젝트 단위 레벨의 로그 등
+- 람다함수의 실행 로그 등
+
+## CloudTrail Insights
+
+- CloudTrail Insights는 계정 내 일반적이지 않은 행동을 감지
+  - 리소스의 프로비전
+  - 서비스 리밋 (AWS 제한) 도달
+  - IAM 액션의 증가
+  - 유지보수성 행동과 다른 것들
+- 클라우드 트레일 인사이트는 평상시의 관리 이벤트를 분석하여 베이스라인을 잡음
+- 쓰기 이벤트를 계속해서 분석하여 일반적이지 않은 패턴을 검출
+  - CloudTrail 콘솔에서 확인 가능
+  - Amazon S3로 이벤트를 송신 가능
+  - EventBridge 기반으로 작동됨
+
+![images/monitoring_audit_and_performance/17.png](images/monitoring_audit_and_performance/17.png)
+
+## CloudTrail Events Retention
+
+- 기본적으로 클라우드트레일은 90일간의 데이터를 보존
+- 추가적으로 기간을 늘리고 싶다면 S3에 저장하고 Athena를 통한 분석이 유효
+
+![images/monitoring_audit_and_performance/18.png](images/monitoring_audit_and_performance/18.png)
+
+## Amazon EventBridge - Intercept API Calls
+
+- 클라우드 트레일에서 API 요청에 대한 인터셉트가 가능하기 때문에 중요 요소에 대한 API 요청을 이벤트 브릿지와 연계하면 SNS로 발행 가능
+
+![images/monitoring_audit_and_performance/19.png](images/monitoring_audit_and_performance/19.png)
+
+## CloudTrail 실습
+
+- 로그 상세 (JSON 형태로 상세한 기록이 남아 있음)
+- Read-Only true false로 읽기 쓰기 조회가능
+- CloudTrail 생성 (기본 생성되어 있는것과 다른 것을 생성)
+  - Organization을 사용중일 경우 중앙화 설정 있음
+  - 버킷이름 설정 가능 (클라우드 트레일 외에 S3에 추가적으로 저장하여 보존기간 증가)
+  - 어떤 로그를 저장할지 체크 가능 (관리, 데이터, 인사이트)
+    - 관리형은 무료이며 KMS는 별도로 로깅 할지 말지 설정 가능
+    - 데이터형은 다양한 이벤트 소스르 선택하고 각종 이벤트 API를 설정 가능
+    - 인사이트는 설정하면 자동으로 분석시작
+- 아테나에서 클라우드 트레일용 샘플 테이블 생성 쿼리를 제공함
