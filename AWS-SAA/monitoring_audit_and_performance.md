@@ -309,3 +309,95 @@ aws cloudwatch set-alarm-state --alarm-name "myAlarm" --state-value ALARM --stat
     - 데이터형은 다양한 이벤트 소스르 선택하고 각종 이벤트 API를 설정 가능
     - 인사이트는 설정하면 자동으로 분석시작
 - 아테나에서 클라우드 트레일용 샘플 테이블 생성 쿼리를 제공함
+
+## AWS Config
+
+- AWS 리소스에 대한 컴플라이언스 적용으로 감사 및 기록이 가능
+- 시계열에 따른 설정 변경을 기록 가능
+- AWS Config 도입에 따른 사례들
+  - SG에 대한 허가되지 않은 SSH 접속이 허용되어 있는가?
+  - 퍼블릭 공개된 버킷이 존재하는가?
+  - ALB 설정이 어떻게 변경되어 왔는가?
+- 설정에 변화가 생겼을때 알람(SNS)을 받아볼 수 있음
+- AWS Config은 리전별 서비스
+- 다른 리전과 계정에 대한 중앙집중식 관리를 허용 (한곳에서 볼 수 있음)
+- 데이터는 S3에 저장하고 아테나를 통한 분석 가능
+
+## Config Rules
+
+- AWS 관리형 룰이 75개 이상 제공됨
+- 커스텀 룰을 작성하여 원하는 감시대상을 선정 가능 (AWS Lambda를 통한 정의가 필요)
+  - gp2 타입을 사용하는 EBS 디스크를 알고 싶을 경우
+  - t2.micro 인스턴스가 얼마나 존재하는지 알고 싶을 경우
+- 룰은 평가되고 또한 트리거될 수 있음
+  - 각각의 룰을 위반/준거하는 설정 변경이 발생했을 시
+  - 일정 시간마다
+- AWS Config 룰은 기록을 하고 알림은 가능하지만 해당 액션을 블록하는 것은 아님
+
+### 컴플라이언스 평가
+
+![images/monitoring_audit_and_performance/20.png](images/monitoring_audit_and_performance/20.png)
+
+### 시계열에 의한 리소스 설정 표시
+
+![images/monitoring_audit_and_performance/21.png](images/monitoring_audit_and_performance/21.png)
+
+### 시계열에 의한 CloudTrail API 요청 확인
+
+![images/monitoring_audit_and_performance/22.png](images/monitoring_audit_and_performance/22.png)
+
+## Config Rules Remediations
+
+- SSM 오토메이션을 이용하면 규정 준수에 실패한 리소스에 대한 자동 교정 절차를 밟을 수 있음
+- AWS 관리형 자동화 도큐멘트가 존재하며, 커스텀화 하여 필요한 작업을 수행할 수 있음
+- 교정 작업은 재시도가 가능하고 리소스가 규정 준수에 실패한 상태에 있을 경우 지속적으로 교정을 시도할 수 있음
+
+![images/monitoring_audit_and_performance/23.png](images/monitoring_audit_and_performance/23.png)
+
+## Config Rules Notifications
+
+- 규정 준수에 실패한 리소스에 대한 알림을 트리거할 수 있음 (EventBridge 경유)
+
+![images/monitoring_audit_and_performance/24.png](images/monitoring_audit_and_performance/24.png)
+
+- 설정 변경으로 인한 규정 준수/실패에 대한 알림을 SNS를 통해 받을 수 있음 (필터링 적용)
+
+![images/monitoring_audit_and_performance/25.png](images/monitoring_audit_and_performance/25.png)
+
+## CloudWatch vs CloudTrail vs Config
+
+### CloudWatch
+
+- 퍼포먼스 모니터링 (지표) 대시보드
+- 이벤트 및 알람
+- 로그 수집 및 분석
+
+### CloudTrail
+
+- 계정단위 API 요청을 기록
+- 특정 리소스에 대한 추적
+- 글로벌 서비스
+
+### Config
+
+- 설정 변경을 추적 및 기록
+- 리소스의 컴플라이언스 준수 여부 평가
+- 시계열로 설정 변경을 표시
+
+## ELB와의 연동
+
+### CloudWatch
+
+- 접속 상태 등을 모니터링
+- 에러 코드의 비율을 시각화
+- 대시보드를 통해 로드밸런서 퍼포먼스에 대한 인사이트 획득
+
+### Config
+
+- 로드밸런서의 SG 룰 추적
+- 로드밸런서의 설정 변경 추적
+- SSL 인증서가 적용되었는지 확인 (규정 준수여부)
+
+### CloudTrail
+
+- 누가 ELB에 대한 API 요청을 했는지 추적
