@@ -220,6 +220,7 @@
 - [Data and Analytics](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/data_and_analytics.md)
 - [Machine Learning](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/machine_learning.md)
 - [Monitoring, Audit and Performance](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/monitoring_audit_and_performance.md)
+- [Identity and Access Management Advanced](https://github.com/solarsdev/TIL/blob/master/AWS-SAA/identity_and_access_management_advanced.md)
 
 ### [Cloudflare](https://github.com/solarsdev/TIL/blob/master/Cloudflare)
 
