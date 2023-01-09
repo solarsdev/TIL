@@ -31,3 +31,35 @@
 - OU나 계정에 대한 통합 IAM 정책 적용
 - 관리 계정에는 적용되지 않음 (최고 관리자 권한)
 - IAM처럼 명시적 허용이 필요 (기본 거부)
+
+## SCP 상속도
+
+![images/identity_and_access_management_advanced/3.png](images/identity_and_access_management_advanced/3.png)
+
+### 관리 계정
+
+- 어떤 것도 할 수 있음 (SCP 적용 안됨)
+
+### Account A
+
+- 어떤 것도 할 수 있음 (FullAWSAccess) Root OU 정책
+- Redshift에 대한 접근 거부 (DenyRedshift) Prod OU 정책
+
+### Account B
+
+- 어떤 것도 할 수 있음 (FullAWSAccess) Root OU 정책
+- Redshift에 대한 접근 거부 (DenyRedshift) Prod OU 정책
+- Lambda에 대한 접근 거부 (DenyAWSLambda) HR OU 정책
+
+### Account C
+
+- 어떤 것도 할 수 있음 (FullAWSAccess) Root OU 정책
+- Redshift에 대한 접근 거부 (DenyRedshift) Prod OU 정책
+- Lambda에 대한 접근 거부 (DenyAWSLambda) Finance OU 정책
+
+## SCP 샘플
+
+![images/identity_and_access_management_advanced/4.png](images/identity_and_access_management_advanced/4.png)
+
+- 블랙리스트
+- 화이트리스트
