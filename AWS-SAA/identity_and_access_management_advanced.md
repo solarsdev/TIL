@@ -208,3 +208,77 @@
 ## IAM 정책 평가 로직
 
 ![images/identity_and_access_management_advanced/9.png](images/identity_and_access_management_advanced/9.png)
+
+## Amazon Cognito
+
+- 웹 또는 모바일에서의 유저 인증 수행
+- Cognito User Pools
+  - 앱 유저를 위한 로그인 기능 지원
+  - API Gateway 또는 ALB와 연계
+- Cognito Identity Pools (Federated Identity)
+  - AWS 크레덴셜을 제공하여 AWS 리소스 접근을 허용
+  - Cognito User Pool 및 각종 Identity provider와 연계
+- Cognito vs IAM: 코그니토는 수많은 유저, 모바일, SAML등의 포인트 워드가 존재함
+
+## Cognito User Pool (CUP)
+
+- 서버리스 데이터베이스를 통해 유저 인증을 수행
+- 간단 로그인: 유저명/패스워드, 이메일 등
+- 패스워드 리셋
+- 이메일, 모바일 인증
+- MFA 적용
+- Facebook, Google, SAML등 연계
+
+### API Gateway 및 ALB와의 연계
+
+![images/identity_and_access_management_advanced/10.png](images/identity_and_access_management_advanced/10.png)
+
+## Cognito Identity Pools (Federated Identities)
+
+- AWS 서비스에 임시 접근하기 위한 토큰(크레덴셜)을 발행
+- 유저는 CUP 또는 기타 서드파티 로그인과 연계 가능
+- 인증된 유저는 API Gateway에 직접 접근 가능
+- Cognito에 정의된 IAM 정책에 해당하는 크레덴셜을 획득
+- user_id 기반으로 유저별 권한을 커스터마이징 가능
+- 기본 IAM 롤이 존재하며, 게스트 유저에게 적용됨
+
+![images/identity_and_access_management_advanced/11.png](images/identity_and_access_management_advanced/11.png)
+
+## AWS IAM Identity Center (AWS Single Sign-On)
+
+- 로그인 한번을 통해 연동
+  - AWS 계정 컨트롤
+  - 비지니스 클라우드 어플리케이션 (세일즈포스, 박스, 마이크로소프트 365 등)
+  - SAML 2.0 기반 어플리케이션
+  - EC2 윈도우 인스턴스
+- 인증 제공자
+  - IAM Identity Center에서 제공되는 빌트인 인증
+  - 서드파티 인증 (AD, OneLogin, Okta 등)
+
+### Login Flow
+
+![images/identity_and_access_management_advanced/12.png](images/identity_and_access_management_advanced/12.png)
+
+### 연동 서비스
+
+![images/identity_and_access_management_advanced/13.png](images/identity_and_access_management_advanced/13.png)
+
+## Fine-Grained Permissions and Assignments
+
+### 다중 계정 권한
+
+- Organization 내의 복수 계정에 대한 접근 권한 관리
+- 권한 셋: AWS 엑세스에 대한 유저와 그룹 IAM 정책 컬렉션
+
+### 어플리케이션 적용
+
+- SSO 접근을 통한 SAML 2.0 대응 비지니스 어플리케이션
+- URL, 인증서, 메타데이터 제공
+
+### Attribute-Based Access Control (ABAC)
+
+- IAM Identity Center에 저장된 유저의 속성값에 의한 Fine-Grained 권한 조절
+- Cost Center, title, locale 등
+- 권한을 한번 적용하고 AWS에서 속성값에 따라 다른 접근방식을 허용
+
+![images/identity_and_access_management_advanced/14.png](images/identity_and_access_management_advanced/14.png)
