@@ -293,3 +293,4 @@
 - [Git Restore](https://github.com/solarsdev/TIL/blob/master/Git/git_restore.md)
 - [Git Reset](https://github.com/solarsdev/TIL/blob/master/Git/git_reset.md)
 - [Git Reflog](https://github.com/solarsdev/TIL/blob/master/Git/git_reflog.md)
+- [Git Revert](https://github.com/solarsdev/TIL/blob/master/Git/git_revert.md)
