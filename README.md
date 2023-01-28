@@ -295,3 +295,4 @@
 - [Git Reflog](https://github.com/solarsdev/TIL/blob/master/Git/git_reflog.md)
 - [Git Revert](https://github.com/solarsdev/TIL/blob/master/Git/git_revert.md)
 - [Git Interactive Rebasing](https://github.com/solarsdev/TIL/blob/master/Git/git_interactive_rebasing.md)
+- [Git Fetch Pull](https://github.com/solarsdev/TIL/blob/master/Git/git_fetch_pull.md)
