@@ -54,3 +54,19 @@
   - 조직 내에서 직접 테라폼 모듈을 설계하고 작성하여 관리
 - Use After Fork
   - 외부 모듈을 사용하고자 한다면 조직 내부에 복제 후 사용
+
+## 모듈의 버전을 관리하라
+
+### 로컬 모듈
+
+- 로컬 경로를 사용하면 버전을 선택할 수 없음
+- 문제점
+  ![images/expandable_terraform_code_management/1.png](images/expandable_terraform_code_management/1.png)
+
+### 원격 모듈
+
+![images/expandable_terraform_code_management/2.png](images/expandable_terraform_code_management/2.png)
+
+### 버전 제약 조건 (Version Constraint)
+
+![images/expandable_terraform_code_management/3.png](images/expandable_terraform_code_management/3.png)
