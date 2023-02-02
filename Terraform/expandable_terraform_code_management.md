@@ -70,3 +70,30 @@
 ### 버전 제약 조건 (Version Constraint)
 
 ![images/expandable_terraform_code_management/3.png](images/expandable_terraform_code_management/3.png)
+
+## 두 종류의 테라폼 모듈을 관리하라
+
+### 어떤 모듈을 만들 것인가?
+
+- 조직의 컨벤션과 룰을 적용한 모듈?
+- 추상화와 캡슐화를 적용한 유연한 모듈?
+
+### 모듈 (Module)
+
+- 기존 리소스들을 유의미한 객체 단위로 다시 추상화한 리소스 모음
+- 조직의 정보를 담고 있지 않도록 한다
+- 어떤 조직에서든 용도에 무관하게 재사용하기 쉽도록 하는 것이 목적
+
+### 스택 (Stack)
+
+- 조직의 기술 표준과 컨벤션이 적용되어 제한된 인터페이스만 제공하는 테라폼 모듈
+- 스택은 리소스와 모듈의 모음으로 구성
+- 사용 용도와 옵션을 제한하여 사용성을 향상시키고 기술 표준을 강제 적용하는 것이 목적
+
+### 예시: ecr-repository
+
+![images/expandable_terraform_code_management/4.png](images/expandable_terraform_code_management/4.png)
+
+### 예시: micro-backend
+
+![images/expandable_terraform_code_management/5.png](images/expandable_terraform_code_management/5.png)
