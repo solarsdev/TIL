@@ -79,3 +79,33 @@ image_id = "abc123"
 
 - 쉘에서 쓰는 #, C와 같은 언어에서 사용하는 //, /\*\*/ 등을 지원
 - 내부적으로는 #을 주석으로 사용하고 문법상 처리로 //를 #으로 변경하게 됨 /\*\*/의 경우 전부 앞에 #을 붙임
+
+## 테라폼 코딩 스타일 컨벤션
+
+- 들여쓰기는 2 스페이스를 이용
+- 블록 내에 여러가지 인자를 입력할때는 이퀄기호를 기준으로 들여쓰기를 맞춤
+
+```bash
+ami           = "abc123"
+instance_type = "t2.micro"
+```
+
+- 논리적 그룹으로 구분해야 함
+- 리소스의 메타 인자의 경우는 단일 인자의 경우 정의문의 제일 위에, 블럭의 경우에는 마지막에 위치
+
+```bash
+resource "aws_instance" "example" {
+  count = 2 # meta-argument first
+
+  ami           = "abc123"
+  instance_type = "t2.micro"
+
+  network_interface {
+    # ...
+  }
+
+  lifecycle { # meta-argument block last
+    create_before_destroy = true
+  }
+}
+```
