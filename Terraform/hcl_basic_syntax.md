@@ -194,3 +194,129 @@ resource "aws_db_instance" "example" {
 ```
 
 - timeouts 블럭은 리소스 유형에 따라서 지원하지 않는 경우가 많으므로, 지원 여부를 리소스 문서에서 확인 한 뒤에 사용하는 것이 바람직함
+
+## 변수 (variable)
+
+### 인풋 변수 (Input Variables)
+
+- 인풋 변수는 모듈 자체의 소스 코드를 변경하지 않고 커스터마이징 기능을 활용 할 수 있게 해줌
+- 이 기능을 통해 다른 테라폼 설정과 모듈을 재사용 가능하게 함
+- 루트 모듈에 변수를 사용하게 되면 환경 변수나 CLI를 통한 주입이 필요하고 자식 모듈에서 선언된 변수의 경우에는 루트 모듈에서 module 블럭에 주입을 해주어야 함
+- 프로그래밍 언어와 비교 (테라폼 <> 함수)
+  - 인풋 변수와 함수의 인자
+  - 아웃풋 값과 함수의 리턴값
+  - 로컬 값과 함수의 로컬 변수
+
+### 인풋 변수의 선언방법
+
+```bash
+variable "image_id" {
+  type = string
+}
+
+variable "availability_zone_names" {
+  type    = list(string)
+  default = ["us-west-1a"]
+}
+
+variable "docker_ports" {
+  type = list(object({
+    internal = number
+    external = number
+    protocol = string
+  }))
+  default = [
+    {
+      internal = 8300
+      external = 8300
+      protocol = "tcp"
+    }
+  ]
+}
+```
+
+- variable 키워드 뒤에 변수 이름을 명시하고, 동일 모듈 내 이름은 유일해야 함
+- 선언된 이름을 통해 모듈 내 다른 리소스 및 외부에서 주입이 가능해짐
+- 이름으로 사용할 수 없는 것들이 존재하는데, 테라폼 키워드로 지정된 것들은 사용 불가
+  - source
+  - version
+  - providers
+  - count
+  - for_each
+  - lifecycle
+  - depends_on
+  - locals
+
+### 인풋 변수의 인자들
+
+- default
+  - 인풋 변수에 값이 지정되지 않을 경우 기본으로 지정될 값
+  - 인풋 변수에 default가 적시될 경우 인풋 변수는 optional이 되는 것과 동일함
+- type
+  - 인풋 변수의 타입
+- description
+  - 인풋 변수의 문서적 설명
+- validation
+  - 인자의 검증 블럭 (추가적 타입 제약조건을 검사하는데 보통 사용됨)
+- sensitive
+  - 테라폼 UI상에서 노출되지 말아야 함을 적시
+- nullable
+  - 인풋 변수가 null 상태를 가질 수 있음을 적시
+
+### 인풋 변수의 타입 제약사항
+
+- type 인자는 variable 블럭에 어떤 타입의 값이 들어올지 정하는 것
+- 만약 타입이 지정되지 않으면 어떤 타입의 값도 허용됨
+- type은 꼭 지정할 필요는 없으나 지정하는 것이 권장됨, 모듈 사용자와 에러 메시지의 원인 규명에 도움이 되기 때문임
+- 현재 테라폼에서 지정 가능한 타입은 총 3가지가 존재함
+  - string
+  - number
+  - bool
+- 세가지 타입을 다음과 같은 자료구조로 묶어줄 수 있음
+  - list
+  - set
+  - map
+  - object
+  - tuple
+- 키워드 any를 사용할 수 있으나 지정하지 않는것과 동일
+- type과 default를 둘 다 지정할 경우 default 값은 type의 제약조건을 만족시켜야 함
+
+### 인풋 변수를 위한 문서화
+
+- description은 모듈 사용자 관점에서 작성해야 함
+  - 모듈 사용자에게 CLI등으로 입력을 받을 때 표시될 수 있기 때문임
+- 모듈 관리자/유지보수자에게 전달하기 위한 문서의 경우 주석으로 적어줄 것
+
+### 인풋 변수의 sensitive 설정과 CLI 표시에 대해서
+
+- 변수에 sensitive를 표시할 경우 terraform plan apply시 값이 표시되지 않음
+- 단, 여전히 상태 정보에는 평문으로 기재되기 때문에 모든 노출로부터 안전해지는 것은 아님
+- 또한 변수가 sensitive로 선언되어 plan 및 apply에서 숨겨졌다고 하더라도, 실제로 apply 작업에서 발생하는 특정 값에 해당 변수가 이용된다면 의도와 다르게 표시될 수도 있음
+
+```bash
+# random_pet.animal will be created
+  + resource "random_pet" "animal" {
+      + id        = (known after apply)
+      + length    = 2
+      + prefix    = (sensitive value)
+      + separator = "-"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+...
+
+random_pet.animal: Creating...
+random_pet.animal: Creation complete after 0s [id=jae-known-mongoose]
+# jae was sensitive value
+```
+
+### 변수 선언 우선도
+
+- 테라폼에서는 여러가지 변수 주입 방법을 지원하는데, 방법에 따라 우선도가 결정됨
+- 나중에 기재된 것이 먼저 기재된 것을 덮어씀
+  - 환경 변수
+  - terraform.tfvars (존재하면)
+  - terraform.tfvars.json (존재하면)
+  - _.auto.tfvars 또는 _.auto.tfvars.json (파일이름에 따라 순서대로 적용됨)
+  - CLI상에서 -var 또는 -var-file로 주입된 파일이나 변수
