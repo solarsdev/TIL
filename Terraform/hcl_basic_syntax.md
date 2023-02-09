@@ -320,3 +320,52 @@ random_pet.animal: Creation complete after 0s [id=jae-known-mongoose]
   - terraform.tfvars.json (존재하면)
   - _.auto.tfvars 또는 _.auto.tfvars.json (파일이름에 따라 순서대로 적용됨)
   - CLI상에서 -var 또는 -var-file로 주입된 파일이나 변수
+
+## 로컬 값 (local value)
+
+- 테라폼 코드를 작성하다 보면, 여러번 반복해서 사용하는 이름이 있음
+- 로컬 변수로 해당 이름을 선언하고 값을 주입할 수 있음
+
+### 로컬 값의 선언
+
+```bash
+locals {
+  service_name = "forum"
+  owner        = "Community Team"
+}
+```
+
+- 로컬 값의 선언은 리터럴에 국한되지 않고, 다양한 포맷으로 선언이 가능함
+
+```bash
+locals {
+  # EC2 인스턴스의 ID집합을 연결
+  instance_ids = concat(aws_instance.blue.*.id, aws_instance.green.*.id)
+}
+
+locals {
+  # 모든 리소스에 부여할 기본 태그
+  common_tags = {
+    Service = local.service_name
+    Owner   = local.owner
+  }
+}
+```
+
+## 출력 값 (output value)
+
+- 출력은 테라폼 코드에서 작성된 리소스의 값을 외부로 노출시키는 용도로 활용됨
+- 부모 모듈은 자식 모듈에서 노출된 값을 활용하여 리소스를 정의할 수 있음
+- terraform apply를 이용해서 적용된 출력 값은 CLI의 마지막에 출력됨
+
+### 출력 값의 선언
+
+```bash
+output "instance_ip_addr" {
+  value = aws_instance.server.private_ip
+}
+```
+
+### 자식 모듈에서 정의된 출력 값에 접근
+
+- 부모 모듈에서 module.<모듈명>.<출력값이름>을 통해 자식 모듈에서 정의된 값에 접근 가능
