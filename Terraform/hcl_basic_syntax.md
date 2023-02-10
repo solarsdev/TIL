@@ -369,3 +369,26 @@ output "instance_ip_addr" {
 ### 자식 모듈에서 정의된 출력 값에 접근
 
 - 부모 모듈에서 module.<모듈명>.<출력값이름>을 통해 자식 모듈에서 정의된 값에 접근 가능
+
+## 테라폼 워크스페이스
+
+- Use Cases
+  - Dev/Staging/Prod
+  - kr/jp/us
+  - 샘플
+    - 네트워크 관리 코드
+    - dev/staging/prod에 해당하는 워크스페이스 생성
+- 워크스페이스 관련 terraform 명령어
+- 주의사항
+  - workspace 기능은 테라폼 클라우드 remote backend에서는 workspace가 다르게 동작
+  -
+
+## 테라폼 클라우드
+
+### 워크스페이스
+
+- 실행 모드
+  - 테라폼 명령어를 어디서 실행할지 선택
+  - Remote → 테라폼 클라우드 인프라에 위치한 terraform runner에서 실행
+    - 테라폼에서 인트라넷에 접근할 수 있는 터널링을 해줘야 하는 경우가 있음
+  - Local → 작업자 PC에서 테라폼 명령어를 수행 (테라폼 클라우드는 상태 저장만 수행)
