@@ -7,3 +7,4 @@
 - [Inventory](https://github.com/solarsdev/TIL/blob/master/Ansible/inventory.md)
 - [Ad-hoc Command](https://github.com/solarsdev/TIL/blob/master/Ansible/ad-hoc_command.md)
 - [Playbook](https://github.com/solarsdev/TIL/blob/master/Ansible/playbook.md)
+- [Module](https://github.com/solarsdev/TIL/blob/master/Ansible/module.md)
