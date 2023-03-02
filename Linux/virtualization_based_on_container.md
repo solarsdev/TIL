@@ -85,3 +85,37 @@ NAME="Fedora Linux"
   - 불가, 커널을 공유하는 구조로는 윈도우를 리눅스 커널에 올릴 수 없음
 - 그럼 윈도우나 맥호스트에 우분투 컨테이너가 동작하는가?
   - 가능, 단, 가상화 환경 (LinuxKit) 위에서 동작하기 때문에, 리눅스 컨테이너는 리눅스에서 동작시키는 것이 바람직하다.
+
+## 컨테이너 관련 에코/용어 정리
+
+### CNCF (Cloud Native Computing Foundation)
+
+- 벤더 중립적인 클라우드향 오픈소스 프로젝트를 관리하는 재단
+- 대표 프로젝트로 쿠버네티스, HELM, CoreDNS, etcd, fluentd, containerd, Prometheus 등
+- 클라우드 네이티브
+  - 퍼블릭/프라이빗/하이브리드 클라우드 환경에서 확장 가능한 형태로 빠르고 민첩하게 어플리케이션을 빌드하고 실행하는 것을 목표로 함
+  - 뒷받침하는 기술로 컨테이너, 마이크로서비스, 서비스 메시, 변경 불가능한 인프라 등
+- CNCF에 등록된 프로젝트들은 100개 이상 있고, + 벤더 기술까지 포함하면 많은 기술들이 존재함
+  - 너무 많은 툴이 있어서 개별적으로 전부 알아보는 것은 불가
+  - 문제나 프로세스에 대한 이해와 더불어 적합한 툴을 찾는것을 목표로 할것
+
+## Cloud Native Trail Map
+
+1. Containerization
+2. CI/CD
+   1. Argo
+3. Orchestration
+   1. Kubernetes
+4. Observability
+   1. Prometheus, Fluentd
+5. Service proxy, discovery, mesh
+   1. envoy, CoreDNS
+6. Networking, Security
+   1. CNI (Calico, Flannel, Weave Net, Cilium)
+7. Database & Storage
+   1. etcd
+8. Streaming & Messaging
+   1. gRPC (http/2 base, protobuf), cloudevents
+9. Container registry & Runtime
+   1. containerd
+10. Software distribution
