@@ -125,15 +125,16 @@ NAME="Fedora Linux"
 ### OCI (Open Container Initiative)
 
 - OCI (Open Container Initiative)는 컨테이너 포맷과 런타임을 표준화 하는 업계 표준 기구이다. OCI는 Docker, CoreOS, Google, Amazon 등 다양한 기업들이 참여하여 컨테이너 기술의 호환성과 이식성을 높이기 위해 설립되었다.
+
   1. OCI 설립 이전의 형태
 
-     ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a7ce6aad-e288-469d-a045-e89fde4955f7/Untitled.png)
+     ![images/virtualization_based_on_container/6.png](images/virtualization_based_on_container/6.png)
 
      - 리눅스 커널에서 도커가 쿠버네티스 사이에 모든 처리를 담당하는 형태
 
   2. 다양한 런타임이 등장하며 쿠버네티스의 인터페이스가 세분화되고 그에 따른 표준화 필요성 대두
 
-     ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c65a8f83-c1a2-41c1-8383-0a671a1a8917/Untitled.png)
+     ![images/virtualization_based_on_container/7.png](images/virtualization_based_on_container/7.png)
 
      - 이에 대한 솔루션으로 컨테이너의 런타임 표준을 구성
      - OCI(Open Container Initiative)가 등장하여 컨테이너 형식(format)과 런타임(runtime)의 표준을 구성 (Docker, IBM, CoreOS, Google, MS, …)
@@ -142,3 +143,20 @@ NAME="Fedora Linux"
        - 컨테이너 실행에 필요한 저수준 컨테이너의 런타임을 지칭
        - CGroups, namespace, security 등의 기본적인 실행 환경
        - runc는 OCI 기준 스펙에 따라 컨테이너를 생성 및 실행하기 위한 CLI 툴
+
+### CRI (Container Runtime Interface)
+
+- CRI (Container Runtime Interface)는 쿠버네티스와 컨테이너 런타임 사이의 표준 인터페이스를 정의한다. CRI는 쿠버네티스가 다양한 컨테이너 런타임을 지원할 수 있도록 하는데 도움이 된다. CRI에는 RuntimeService와 ImageService 두 가지 API가 있다. RuntimeService는 컨테이너 라이프사이클을 관리하고, ImageService는 컨테이너 이미지를 관리한다.
+
+  1. OCI를 이용한 다양한 컨테이너 런타임이 등장하며 쿠버네티스에서 해당 런타임들을 지원하기 위해 인터페이스들을 만들어야 했음
+
+     ![images/virtualization_based_on_container/8.png](images/virtualization_based_on_container/8.png)
+
+  2. 이에 따라서 고수준의 컨테이너 런타임 표준을 만들 필요가 생김
+
+     ![images/virtualization_based_on_container/9.png](images/virtualization_based_on_container/9.png)
+
+     - CRI(Container Runtime Interface)는 쿠버네티스에서 다양한 컨테이너 런타임을 사용할 수 있도록 하는 플러그인의 인터페이스
+     - 현재 대부분의 컨테이너 런타임이 이 형식을 따름
+     - CRI runtime은 컨테이너 라이프사이클과 이미지 등을 관리
+     - 쿠버네티스에서 지원하는 컨테이너 런타임 종료로 containerd, CRI-O, Mirantis Container Runtime, Docker Engine 등이 존재
