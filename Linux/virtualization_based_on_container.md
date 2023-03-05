@@ -160,3 +160,19 @@ NAME="Fedora Linux"
      - 현재 대부분의 컨테이너 런타임이 이 형식을 따름
      - CRI runtime은 컨테이너 라이프사이클과 이미지 등을 관리
      - 쿠버네티스에서 지원하는 컨테이너 런타임 종료로 containerd, CRI-O, Mirantis Container Runtime, Docker Engine 등이 존재
+
+## OCI, CRI Security
+
+- 컨테이너의 근본적인 기술인 리눅스 커널을 공유하는데서 오는 보안상의 문제
+  - 어플리케이션의 악의적, 의도치 않은 취약점으로 인해 리눅스 커널이 영향을 받는 경우, 공유된 다른 어플리케이션 및 서비스가 영향을 받을 가능성이 존재
+    ![images/virtualization_based_on_container/10.png](images/virtualization_based_on_container/10.png)
+- 하지만 그렇다고 리눅스 커널에 기존의 하이퍼바이저를 통한 게스트OS 설치를 하는 것은 회귀가 되버리기 때문에, 경량 VM을 이용하여 컨테이너 런타임을 구성하고자 함
+  ![images/virtualization_based_on_container/11.png](images/virtualization_based_on_container/11.png)
+  - Firecracker
+    - AWS에서 개발한 경량 microVM(마이크로 가상머신)을 위한 VMM
+    - 보안, 고성능, 운영환경 적용, 낮은 오버헤드, 오픈소스
+  - Kata Containers
+    - 쿠버네티스에서 다양한 런타임을 사용할 수 있도록 하는 플러그인 인터페이스
+  - 컨테이너의 보안을 위해 Firecracker와 Kata Containers와 같은 경량 가상머신을 이용하여 컨테이너 런타임을 구성하는 것이 좋다. 이러한 마이크로 VM 기반의 컨테이너 런타임은 컨테이너의 고유한 커널을 갖기 때문에 공유된 리눅스 커널이 악성 코드에 노출될 가능성을 낮출 수 있다.
+    ![images/virtualization_based_on_container/12.png](images/virtualization_based_on_container/12.png)
+    QEMU를 경량화하도록 수정 (96% 코드 감소)
