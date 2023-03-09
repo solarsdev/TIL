@@ -33,3 +33,20 @@
 - 하드웨어 상태 조회 시 사용 가능
 - 호스트 머신 하드웨어에서 문제가 발생한 경우
   - stop + start (다른 호스트에서 구동) ≠ restart (동일 호스트에서 재구동)
+
+### BIOS에서 시스템 정보 읽기
+
+- dmidecode
+  - DMI 테이블 정보를 사람이 읽을 수 있는 형태로 출력해주는 도구
+  - DMI 테이블
+    - 하드웨어 구성 요소에 대한 정보를 추적하기 위한 산업 표준
+    - 시스템 하드웨어 정보, 시리얼 번호, BIOS 리비전 등의 정보가 유지됨
+  ```
+  $ dmidecode -t memory
+  ```
+  - 물리 호스트
+    ![images/booting_process/2.png](images/booting_process/2.png)
+  - AWS EC2
+    ![images/booting_process/3.png](images/booting_process/3.png)
+    - 가상화된 환경이기 때문에 대부분 Not Specified로 표시됨
+    - 가상화 환경은 벤더에 종속적이지 않기 때문임
