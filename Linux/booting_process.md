@@ -50,3 +50,16 @@
     ![images/booting_process/3.png](images/booting_process/3.png)
     - 가상화된 환경이기 때문에 대부분 Not Specified로 표시됨
     - 가상화 환경은 벤더에 종속적이지 않기 때문임
+
+### 부트모드: BIOS / UEFI
+
+- BIOS (Basic Input/Output System) vs UEFI (Unified Extensible Firmware Interface)
+- BIOS는 전통적인 PC 펌웨어로 Legacy BIOS
+- UEFI는 BIOS를 계승한 좀 더 정형화되고 표준화된 PC 펌웨어
+  - 2TB이상의 스토리지 지원, 더 빠른 부팅시간, UI 및 기능 개선 (주소공간 추가)
+- PC 환경에서는 UEFI가 표준화되어 가고 있지만, 가상화 환경에서는 여전히 BIOS가 많이 사용됨
+- (참고) AWS EC2 기본 구성
+  - Intel 및 AMD 인스턴스 유형 → 레거시 BIOS에서 실행
+  - Graviton 인스턴스 유형 → UEFI에서 실행
+
+![images/booting_process/4.png](images/booting_process/4.png)
