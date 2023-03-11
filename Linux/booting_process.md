@@ -63,3 +63,14 @@
   - Graviton 인스턴스 유형 → UEFI에서 실행
 
 ![images/booting_process/4.png](images/booting_process/4.png)
+
+### 부트로더 (Boot Loader)
+
+- 사용 가능한 커널을 확인하고 로드하는 작업을 수행
+- 대부분의 부트 로더는 **부팅 타임에 사용 가능한 운영체제를 선택하기 위한 UI를 제공**
+- 커널 부팅 방법에 대한 설정
+  -s 옵션: 런레벨 1, 단일 사용자 모드, 시스템 관리 목적으로 부팅 (예, 네트워크 연결 안됨)
+
+![images/booting_process/5.png](images/booting_process/6.png)
+
+![images/booting_process/5.png](images/booting_process/6.png)
