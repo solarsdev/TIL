@@ -74,3 +74,44 @@
 ![images/booting_process/5.png](images/booting_process/6.png)
 
 ![images/booting_process/5.png](images/booting_process/6.png)
+
+### 부트로더의 종류
+
+- GRUB (Grand Unified Boot Loader)
+  - 대부분(Ubuntu, RHEL 등)의 리눅스 배포판에서 기본 부트 로더로 사용
+  - GRUB의 두 브랜치: GRUB Legacy, GRUB 2
+  - GRUB 설정
+    - 커널 목록, 부팅 옵션 등
+    - 부팅 옵션: debug, init=/bin/bash, root=/dev/foo, single
+    - 일반 텍스트 파일로 설정을 관리 (`/boot/grub/grub.cfg`, `/boot/grub2/grub.cfg`)
+  - 운영체제 구동 전이지만 다양한 파일시스템을 인식 가능
+    - ext3, ext4, BtrFS, ZFS, FAT32, exFAT
+- 클라우드 환경에서의 GRUB 사용 사례
+  - EC2에 커널 업데이트를 수행했지만, 커널이 손상되어 부팅 실패
+  - SSH를 사용 불가능하기 때문에 손상된 인스턴스에 연결 불가능
+  - 해결 방법
+    - 방법1: EC2 직렬 콘솔 사용
+      - 가상머신의 직렬 포트에 직접 엑세스 하는 기능을 지원
+      - 부팅, 네트워크 구성 및 기타 문제를 해결하는데 사용
+      - Nitro 기반 인스턴스 유형에서 사용 가능
+    - 방법2: 복구 인스턴스 사용
+      - 별도의 가상머신을 생성 → 인스턴스 볼륨을 마운트
+      - 마운트한 볼륨의 GRUB 설정의 기본 커널 정보를 변경
+      - 다시 원래 인스턴스에 마운트한뒤 부팅
+      [업데이트로 인해 Amazon EC2 인스턴스를 재부팅하지 못하는 경우 안정적인 커널로 되돌리기](https://aws.amazon.com/ko/premiumsupport/knowledge-center/revert-stable-kernel-ec2-reboot/)
+
+## 정리
+
+- 부팅
+  - BIOS → Boot Loader → Linux Kernel
+  - Boot Loader는 GRUB 2를 사용
+  - 리눅스 init 프로세스에서 시작 스크립트 실행
+- BIOS
+  - 컴퓨터에 전원이 인가되면 실행이 시작되는 최초의 프로그램
+  - 메인보드에 연결된 하드웨어 검사 및 부트로더 로딩
+  - Legacy BIOS, UEFI
+  - 가상화 환경에서는 Legacy BIOS가 여전히 사용됨
+  - 하드웨어 문제 해결은 STOP + START로 다른 물리 호스트로 이전시켜 해결
+- 커널 손상 발생 시
+  - 복구용 인스턴스 생성 및 문제되는 시스템의 루트 볼륨을 마운트
+  - GRUB 설정 파일을 수정하여 안전한 커널로 설정 변경 후 원래 인스턴스에 마운팅 후 재시작
