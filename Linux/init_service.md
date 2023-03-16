@@ -21,3 +21,14 @@
 ![실행 레벨에 맞게 시작 서비스가 구동됨 /etc/rd5.d/ (rc5)](images/init_service/2.png)
 
 실행 레벨에 맞게 시작 서비스가 구동됨 /etc/rd5.d/ (rc5)
+
+## 실행 레벨 / 오퍼레이팅 모드
+
+- 운영체제가 부팅 이후의 머신 상태를 결정 (어떤 프로그램을 실행할 것인지 결정)
+  - single user
+    - 파일시스템 마운트, 네트워크 비활성화, 시스템 관리용 쉘 접근
+  - multi user
+    - 일반적인 사용자 접근
+- SysV에서는 run level 개념 사용, systemd에서는 오퍼레이팅 모드 개념 사용
+
+![images/init_service/3.png](images/init_service/3.png)
