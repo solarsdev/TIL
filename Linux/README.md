@@ -9,3 +9,4 @@
 
 - [Understanding of booting process](https://github.com/solarsdev/TIL/blob/master/Linux/booting_process.md)
 - [Init service](https://github.com/solarsdev/TIL/blob/master/Linux/init_service.md)
+- [About systemd](https://github.com/solarsdev/TIL/blob/master/Linux/about_systemd.md)
