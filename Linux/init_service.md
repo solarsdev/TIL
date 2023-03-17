@@ -32,3 +32,20 @@
 - SysV에서는 run level 개념 사용, systemd에서는 오퍼레이팅 모드 개념 사용
 
 ![images/init_service/3.png](images/init_service/3.png)
+
+## 시작서비스 (System V / Upstart / systemd)
+
+### init 프로세스 구현
+
+- System V init, Upstart
+- launchd (MacOS)
+- systemd
+  - 기존 init 프로세스보다 더 넓은 범위의 기능을 제공
+  - 공격 포인트 → Unix 철학 “단순하고 짧고 명료하고 모듈 방식의 확장”과 상충
+  - Red Hat, Debian, Ubuntu에서 기본 init 프로세스로 선택되며 논란의 종지부
+- 시스템 어드민 관점 → 유지할 레거시 시스템이 없는 경우, 대부분 환경에서 systemd가 사용
+- 도입 시기
+  - Fedora 2011년 5월 (v15) ← systemd 메인 개발은 Red Hat 엔지니어
+  - Red Hat Enterprise Linux 2014년 10월 (v12)
+  - Debian 2015년 4월 (v8.0)
+  - Ubuntu 2015년 4월 (v15.04)
