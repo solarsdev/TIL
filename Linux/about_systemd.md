@@ -30,3 +30,29 @@
     - WantedBy: Unit간 종속성 지정 (예: multi-user.target: 해당 실행 모드 구동시 자동실행)
 
 ![images/about_systemd/1.png](images/about_systemd/1.png)
+
+### systemd 관리용 도구: **systemctl**
+
+- systemd의 상태를 조사하고 설정을 변경하는데 사용되는 도구
+  - 현재 load되어 있고 active 상태의 서비스 확인
+    ```
+    $ systemctl **list-units** --type=service
+    ```
+  - 활성화(active)여부와 관계없이 모든 설치된 서비스 확인
+    ```
+    $ systemctl **list-unit-files** --type=service
+    ```
+- 자주 사용되는 systemctl 서브 명령어
+  ```
+  $ systemctl list-unit-files [pattern]   # 설치된 Unit 목록 확인
+  **$ systemctl enable unit**                 # unut이 부팅시 자동 활성화
+  $ systemctl disable unit                # unit이 부팅 시 자동 활성화 방지
+  $ systemctl isolate target              # 타겟의 실행 모드를 변경
+  **$ systemctl start unit**                  # unit을 즉시 활성화
+  **$ systemctl stop unit**                   # unit을 즉시 비활성화
+  **$ systemctl restart unit**                # unit을 재시작. 실행되지 않은 상태였다면 start
+  **$ systemctl status unit**                 # unit의 상태 및 최근 로그 내용을 확인
+  $ systemctl kill pattern                # 패턴과 일치하는 unit에 시그널을 보냄
+  $ systemctl reboot                      # 컴퓨터를 재시작
+  **$ systemctl daemon-reload**               # unit 파일들과 systemd 설정 정보를 다시 로드
+  ```
