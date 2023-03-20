@@ -286,6 +286,8 @@
 - [Linux technology that makes up container](https://github.com/solarsdev/TIL/blob/master/Linux/linux_tech_for_container.md)
 - [Init service](https://github.com/solarsdev/TIL/blob/master/Linux/init_service.md)
 - [About systemd](https://github.com/solarsdev/TIL/blob/master/Linux/about_systemd.md)
+- [Booting process](https://github.com/solarsdev/TIL/blob/master/Linux/booting_process.md)
+- [System rebooting and shutdown](https://github.com/solarsdev/TIL/blob/master/Linux/system_rebooting_and_shutdown.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
