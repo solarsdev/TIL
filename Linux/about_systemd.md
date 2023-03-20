@@ -56,3 +56,23 @@
   $ systemctl reboot                      # 컴퓨터를 재시작
   **$ systemctl daemon-reload**               # unit 파일들과 systemd 설정 정보를 다시 로드
   ```
+
+### Unit간의 의존성
+
+- Unit 파일의 [Unit] 영역에 명시적 종속성 설정을 지원
+- 패키지 매니저를 통해 설치한 경우, 관련된 설정이 포함됨
+  - Watns
+    - 가능하다면 함께 실행이 필요한 unit
+    - 반드시 요구되는 종속성은 아님
+  - Requires
+    - 엄격한 의존성을 가짐
+    - 종속성을 가진 unit이 실패하는 경우 서비스가 종료됨
+- Unit간의 실행 순서 조정
+  - Before, After 제약을 지정하여 순서를 조정할 수 있음
+  - Wants, Requires보다 After 속성이 자주 사용됨
+- 명시적으로 요청되지 않은 경우 직렬적인 종속성은 없음
+  - 병렬적 수행이 용이하도록 설계됨
+
+![ex) docker.service](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/715eb6bd-676f-4789-a7e3-4bb5047c7ea8/Untitled.png)
+
+ex) docker.service
