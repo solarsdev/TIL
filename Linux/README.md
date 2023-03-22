@@ -12,3 +12,4 @@
 - [About systemd](https://github.com/solarsdev/TIL/blob/master/Linux/about_systemd.md)
 - [Booting process](https://github.com/solarsdev/TIL/blob/master/Linux/booting_process.md)
 - [System rebooting and shutdown](https://github.com/solarsdev/TIL/blob/master/Linux/system_rebooting_and_shutdown.md)
+- [Systemd practice](https://github.com/solarsdev/TIL/blob/master/Linux/systemd_practice.md)
