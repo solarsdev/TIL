@@ -7,9 +7,9 @@
 ### 커스텀 스크립트
 
 - 시스템 구동 정보를 로그 파일에 기록
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/34d0dae6-81aa-478c-9fcc-909e383db369/Untitled.png)
+  ![images/systemd_practice/1.png](images/systemd_practice/1.png)
   `/etc/systemd/system/uptime-logger.service`
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6033cc33-9318-477a-bb6b-c35cb93ce8f5/Untitled.png)
+  ![images/systemd_practice/2.png](images/systemd_practice/2.png)
   `/usr/local/bin/uptime-logger`
 
 ### 서비스 목록 리로드
