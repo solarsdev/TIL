@@ -13,3 +13,4 @@
 - [Booting process](https://github.com/solarsdev/TIL/blob/master/Linux/booting_process.md)
 - [System rebooting and shutdown](https://github.com/solarsdev/TIL/blob/master/Linux/system_rebooting_and_shutdown.md)
 - [Systemd practice](https://github.com/solarsdev/TIL/blob/master/Linux/systemd_practice.md)
+- [Understanding process components](https://github.com/solarsdev/TIL/blob/master/Linux/understanding_process_components.md)
