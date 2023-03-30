@@ -291,6 +291,7 @@
 - [Systemd practice](https://github.com/solarsdev/TIL/blob/master/Linux/systemd_practice.md)
 - [Understanding process components](https://github.com/solarsdev/TIL/blob/master/Linux/understanding_process_components.md)
 - [Process lifecycle](https://github.com/solarsdev/TIL/blob/master/Linux/process_lifecycle.md)
+- [Proc filesystem](https://github.com/solarsdev/TIL/blob/master/Linux/proc_filesystem.md)
 
 ### [Terraform](https://github.com/solarsdev/TIL/blob/master/Terraform)
 
