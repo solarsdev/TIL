@@ -42,3 +42,26 @@
 - `-`기호는 분리된 두 정수 범위 값과 일치
 - 범위 값 다음에는 단계 값이 포함 (예, 1-10/2)
 - `,`로 분리된 범위 목록은 나열된 값중 하나와 일치
+
+## crontab 실습
+
+### 매분 타임스탬프 값을 로그 파일에 기록
+
+- 설정 내용
+  ```bash
+  매분: * * * * *
+  타임스탬프 값: echo $(/bin/date) - $(/usr/bin/uptime)
+  로그 파일에 기록: >> /tmp/uptime.log
+  ```
+- crontab 편집
+  ```bash
+  # crontab 편집
+  $ crontab -e
+
+  # crontab 내용 확인
+  $ crontab -l
+  $ cat /tmp/uptime.log
+
+  # crontab 내용 삭제
+  $ crontab -r
+  ```
