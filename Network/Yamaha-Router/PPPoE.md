@@ -37,3 +37,89 @@
 - 압축이란?
   - PPP Compression Control Protocol (CCP) RFC1962
 - CHAP/PAP인증, IPCP에 의한 아이피 주소나 DNS주소의 취득 또는 NAT/IP마스커레이드에 대해서는 종래의 PP설정과 동일
+
+## 설정 예시
+
+### 패턴1 IP마스커레이드 기능을 이용한 PPPoE접속
+
+![images/1.png](images/1.png)
+
+- LAN1을 이용하여 내부 통신, LAN2를 이용하여 외부 통신
+- 내부측 복수 호스트에서 동시접속 가능하기 떄문에 외부측에 대한 IP 마스커레이드를 이용
+- IP 마스커레이드 (IP Masquerade) ?
+  - 리눅스의 NAT 기능으로 내부 컴퓨터들이 서버를 통해 인터넷 등 다른 네트워크에 접속할 수 있도록 하는 기능
+  - 내부 컴퓨터들이 생성한 모든 네트워크 요청들이 MASQ를 통해서 서버의 외부 공인 IP로 변환되어 인터넷에 연결됨, 따라서 외부에서는 서버측의 IP만 인지 가능하고 내부 호스트의 존재를 알 수 없음
+  - 보안이 높다는 것이 장점이지만, 외부에서 접근이 불가능한것이 단점임
+  - 외부에서 내부로의 접속이 필요한 경우 특정 포트를 내부의 호스트와 연결하는 포트포워딩 기술이 적용되면 통신 가능해짐
+- 내부측에 대한 DHCP 서버로서의 기능 수행
+- 외부측 브로드밴드 회선 모뎀등에서 이더넷 회선에 접속함
+
+```bash
+# ip lan1 address 192.168.0.1/24
+# 내부 lan1 주소 대역을 192.168.0.0/24로 지정하고, 게이트웨이 주소를 .1로 설정
+
+# nat descriptor type 1 masquerade
+# pp1에 대한 ip masq를 위한 디스크립터를 설정
+
+# pp select 1
+# pp1번을 선택
+
+pppoe use lan2
+# lan2에서 pppoe를 사용함을 명시
+
+pp auth accept chap pap
+pp auth myname id pass
+# PPPoE 서버에 대한 인증정보를 설정함
+
+ppp ipcp ipaddress on
+# 접속시 서버에서 아이피 주소를 취득
+
+ppp ipcp msext on
+# 이 설정을 통해 서버로부터 DNS서버주소를 얻어오는 것이 가능해짐
+
+ip pp nat descriptor 1
+# ip masq기능을 정의해둔 nat 디스크립터를 pp1에 적용
+
+ppp lcp mru on 1454
+# LCP 네고시에이션의 Maximum-Receive-Unit 옵션을 이용해서 패킷의 최대값을 제한
+
+ip pp mtu 1454
+# 접속처에서 LCP로 MRU 옵션을 제공받으면 필요없음, pp1에 대한 MTU(Maximum-Transfer-Unit)을 설정
+
+ppp ccp type none
+# 압축기능을 사용할 수 없지만, 기본적으로 stac압축을 사용하도록 설정되므로 none으로 설정할 필요가 있음
+
+pp enable 1
+pp select none
+# pp1을 유효로 설정하고 루트로 돌아감
+
+# ip route default gateway pp 1
+# 접속이 랜이 아닌것에 대한 모든 연결을 pp1로 보냄
+
+# dns server pp 1
+# DNS서버 주소는 pp1에서 취득한 주소로 함
+
+# dns private address spoof on
+# 개인 주소의 DNS 주소 확인 요청을 DNS 서버로 전달하지 않도록 설정
+
+# dhcp service server
+# dhcp scope 1 192.168.0.2-192.168.0.254/24
+# LAN1측의 DHCP 서버 기능 및 주소 범위를 지정
+
+# save
+```
+
+```bash
+console character en.ascii
+# 야마하 라우터의 언어설정을 영어로 변경
+
+connect pp 1
+disconnect pp 1
+# pp 1 접속 및 접속 해제
+
+pp select 1
+pp keepalive interval 30 retry-interval=30 count=12
+pp always-on on
+pppoe auto disconnect off
+# pp 1 자동접속 설정
+```
