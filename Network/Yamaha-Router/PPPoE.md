@@ -42,7 +42,7 @@
 
 ### 패턴1 IP마스커레이드 기능을 이용한 PPPoE접속
 
-![images/1.png](images/1.png)
+![images/pppoe/1.png](images/pppoe/1.png)
 
 - LAN1을 이용하여 내부 통신, LAN2를 이용하여 외부 통신
 - 내부측 복수 호스트에서 동시접속 가능하기 떄문에 외부측에 대한 IP 마스커레이드를 이용
