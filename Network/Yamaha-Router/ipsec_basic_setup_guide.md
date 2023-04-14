@@ -89,6 +89,7 @@
 - 이는 상대방 랜인 192.168.1.0/24로의 IP패킷을 정의한 터널 인터페이스로 송신하게 됨
 - 여기까지 RT1의 설정을 설명했고, 다음은 RT2에서 설정을 구성할텐데, RT1과 거의 동일하지만 경로의 설정에서 네트워크의 주소 정도만 다르게 됨
 - RT2 설정
+
   ```
   # ipsec sa policy 101 1 esp des-cbc
 
@@ -97,4 +98,80 @@
   # tunnel enable 1
 
   # ip route 192.168.0.0/24 gateway tunnel 1
+  ```
+
+## 기타 설정 (RT1)
+
+- IPSec에 대한 설정은 대부분 끝났으나 여기서 회선 설정을 추가하여 전체 설정을 살펴보자
+- RT1 설정
+  ```
+  ; LAN
+
+  ip lan1 address 192.168.0.1/24
+
+  ; WAN
+
+  line type bri1 l128
+  pp select 1
+  pp bind bri1
+  ip pp address 172.16.253.100
+  pp enable 1
+  ip route default gateway pp 1
+
+  ; IPsec
+
+  ipsec ike local address 1 172.16.253.100
+  ipsec ike remote address 1 172.17.254.30
+  ipsec ike pre-shared-key 1 text himitsu
+
+  ; TUNNEL
+
+  ipsec sa policy 101 1 esp des-cbc
+  tunnel select 1
+  ipsec tunnel 101
+  tunnel enable 1
+  ip route 192.168.1.0/24 gateway tunnel 1
+  ```
+- 여기에 LAN의 단말이 인터넷에 접속할수 있도록, NAT 설정이 필요
+  ```
+  nat descriptor type 1 masquerade
+  nat descriptor address outer 1 172.16.253.100
+  nat descriptor address inner 1 172.16.253.100 192.168.0.1-192.168.0.254
+  nat descriptor masquerade static 1 1 172.16.253.100 udp 500
+  nat descriptor masquerade static 1 2 172.16.253.100 esp *
+
+  pp select 1
+  ip pp nat descriptor 1
+  pp enable 1
+  ```
+- 3행이 중요한 포인트로 NAT의 내부 주소로 라우터의 IP주소(172.16.253.100)을 포함하는 것에 주의할것
+- NAT에는 외부 주소와 동시에 내부 주소도 있는데, 그 이유로는 단말과 동시에 라우터도 172.16.253.100을 사용하기 때문임 (RT1은 1개의 글로벌IP주소만 가지는것에 주의)
+- 4행에서 IKE를 위해 UDP500번 포트를 라우터에 배당하는데, 이 설정으로 라우터가 IKE패킷을 수신할 수 있게 됨
+- 그와 동시에 5행의 ESP를 라우터에 배당하여 라우터가 ESP패킷을 수신할 수 있게 됨
+- NAT설정에서 주의해야 할 포인트는 아래처럼 4개의 명령어에 같은 IP를 설정하는 것
+  ```
+  ipsec ike local address 1 172.16.253.100
+  nat descriptor address inner 1 172.16.253.100 192.168.0.1-192.168.0.254
+  nat descriptor masquerade static 1 1 172.16.253.100 udp 500
+  nat descriptor masquerade static 1 2 172.16.253.100 esp *
+  ```
+- 이것만 지키면 라우터의 IP주소로 다른 주소를 선택하는 것 또한 가능한데, 예를 들면 LAN1 인터페이스의 주소인 192.168.0.1을 선택하여 아래처럼 설정을 변경하는 것도 가능
+  ```
+  ipsec ike local address 1 192.168.0.1
+  nat descriptor address inner 1 192.168.0.1-192.168.0.254
+  nat descriptor masquerade static 1 1 192.168.0.1 udp 500
+  nat descriptor masquerade static 1 2 192.168.0.1 esp *
+  ```
+- 어느쪽의 설정을 사용할지는 선호도 문제이지만, 전자의 설정에 비해 후자의 설정이 알기 쉬울수 있음
+- RT1에서 ipsec ike local address 명령어로 프라이빗 주소를 설정한 경우에도 RT2에서 설정을 변경할 필요는 없음
+- 이를 통해 양쪽 라우터에서의 주소가 반드시 일치하는 것은 아니라는 것을 알 수 있음
+- RT1 설정
+  ```
+  # ipsec ike local address 1 192.168.0.1
+  # ipsec ike remote address 1 172.17.254.30
+  ```
+- RT2 설정
+  ```
+  # ipsec ike local address 1 192.168.1.1
+  # ipsec ike remote address 1 172.16.253.100
   ```
