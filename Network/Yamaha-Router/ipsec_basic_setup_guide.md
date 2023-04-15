@@ -104,6 +104,7 @@
 
 - IPSec에 대한 설정은 대부분 끝났으나 여기서 회선 설정을 추가하여 전체 설정을 살펴보자
 - RT1 설정
+
   ```
   ; LAN
 
@@ -132,7 +133,9 @@
   tunnel enable 1
   ip route 192.168.1.0/24 gateway tunnel 1
   ```
+
 - 여기에 LAN의 단말이 인터넷에 접속할수 있도록, NAT 설정이 필요
+
   ```
   nat descriptor type 1 masquerade
   nat descriptor address outer 1 172.16.253.100
@@ -144,6 +147,7 @@
   ip pp nat descriptor 1
   pp enable 1
   ```
+
 - 3행이 중요한 포인트로 NAT의 내부 주소로 라우터의 IP주소(172.16.253.100)을 포함하는 것에 주의할것
 - NAT에는 외부 주소와 동시에 내부 주소도 있는데, 그 이유로는 단말과 동시에 라우터도 172.16.253.100을 사용하기 때문임 (RT1은 1개의 글로벌IP주소만 가지는것에 주의)
 - 4행에서 IKE를 위해 UDP500번 포트를 라우터에 배당하는데, 이 설정으로 라우터가 IKE패킷을 수신할 수 있게 됨
@@ -175,3 +179,48 @@
   # ipsec ike local address 1 192.168.1.1
   # ipsec ike remote address 1 172.16.253.100
   ```
+
+## 기타 설정 (RT2)
+
+- 다음으로 RT2의 설정의 경우인데, 회선 설정을 추가한 경우
+- RT2 설정
+  ```
+  ; LAN
+
+  ip lan1 address 192.168.1.1/24
+
+  ; WAN
+
+  line type pri1 leased
+  pri leased channel 1/1 1 24
+  pp select 1
+  pp bind pri1/1
+  ip pp address 172.17.254.30
+  pp enable 1
+  ip route default gateway pp 1
+
+  ; IPsec
+
+  ipsec ike local address 1 172.17.254.30
+  ipsec ike remote address 1 172.16.253.100
+
+  ; TUNNEL
+
+  ipsec sa policy 101 1 esp des-cbc
+  tunnel select 1
+  ipsec tunnel 101
+  tunnel enable 1
+  ip route 192.168.0.0/24 gateway tunnel 1
+  ```
+- 여기에 LAN의 단말들이 인터넷에 접속할 수 있도록 NAT의 설정을 추가한다
+  ```
+  nat descriptor type 1 nat-masquerade
+  nat descriptor address outer 1 172.17.254.17-172.17.254.29
+  nat descriptor address inner 1 192.168.1.1-192.168.1.254
+
+  pp select 1
+  ip pp nat descriptor 1
+  pp enable 1
+  ```
+- RT1과 달리 글로벌IP주소가 여러개가 되므로 IPSec에서 사용하는 주소(172.17.254.30)을 라우터에 전용으로 설정함
+- 따라서 RT1처럼 정적 IP 마스커레이드 설정은 필요하지 않음
