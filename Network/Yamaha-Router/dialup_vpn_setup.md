@@ -30,3 +30,31 @@
 
 - 구성도에서는 그려지지 않았지만 거점1과 거점2는 각각 센터에 접속하여 VPN을 구성하게 됨
 - 거점1과 거점2는 접속하지 않음
+
+## 거점의 설정
+
+- 회선 설정은 생략하고 IPSec 부분에 대해서만 설명하는 것으로 함
+- 먼저 라우터의 IP주소에 대해서 설정, 내부측의 주소에 대해서 고정 글로벌IP주소가 없이 LAN쪽 프라이빗 주소를 등록하게 되며, 상대방의 주소는 센터의 고정 IP주소인 172.16.0.2를 등록
+
+```
+# ipsec ike local address 1 192.168.1.1
+# ipsec ike remote address 1 172.16.0.2
+```
+
+- 다음으로 IKE에 대한 항목을 설정
+
+```
+# ipsec ike pre-shared-key 1 text password
+# ipsec ike local name 1 kyoten-1 [key-id]
+```
+
+- 2행의 새로운 명령은 내부 라우터의 이름을 설정하는 명령어로 마지막 key-id 매개변수는 설정하지 않아도 괜찮음
+- 여기에 터널 인터페이스의 설정을 더함
+
+```
+# ipsec sa policy 101 1 esp des-cbc
+# tunnel select 1
+# ipsec tunnel 101
+# tunnel enable 1
+# ip route 192.168.0.0/24 gateway tunnel 1
+```
