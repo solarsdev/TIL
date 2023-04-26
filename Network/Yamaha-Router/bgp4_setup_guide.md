@@ -33,3 +33,20 @@
     # bgp neighbor pre-shared-key 1 text password
     ```
   - 양단 라우터에 같은 사전공유키를 설정해야 함
+
+## 경로에 대한 필터링
+
+- RIP이나 OSPF와 같은 BGP이외의 경로를 BGP-4에 광고할 경우에는 `bgp import filter` 명령어와 `bgp import` 명령어를 사용하여, 경로를 필터링하는 것이 가능
+  ```
+  # bgp import filter 1 equal 172.16.1.0/24
+  # bgp import 65500 rip filter 1
+  ```
+- 또한, bgp export 명령어를 이용하여, BGP-4가 수신하는 경로에 대한 필터링을 거는 것이 가능함
+  - 상기 명령어에서 정의한 경로만을 받아들여서 라우팅에 사용하거나 OSPF, RIP에 광고하는 것이 가능
+  - bgp export 명령어의 설정예는 이하 표기
+    ```
+    # bgp export filter 1 equal 172.16.1.0/24
+    # bgp export 65500 filter 1
+    ```
+  - 상기 예에서는 BGP-4에서 받은 172.16.1.0/24의 경로의 라우팅 테이블에 한해 받아들이게 됨
+  - `bgp import filter` 명령어나 `bgp export filter` 명령어에서도 동일하지만, 네트워클 지정하지 않고 `all` 키워드를 사용하는 것이 가능한데, `all`은 `0.0.0.0/0`을 의미함
